@@ -1,50 +1,65 @@
-# Welcome to your Expo app 👋
+# React Native Challenge - App de Lectura de Noticias
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+El objetivo es conseguir una aplicación de lectura de noticias, donde sea posible explorar e interactuar con el contenido navegando entre noticias, autores, y permitiendo guardar artículos o marcar autores como favoritos. (Opcionalmente, se podrían implementar consultas basadas en esas preferencias).
 
-## Get started
+## Arquitectura
 
-1. Install dependencies
+Utilizo una **Clean Architecture** adaptada a React Native, esto lo hago manteniendo las clasicas caparas de entidades, use cases e infrastructura y, agrego una capa "Presenter" para manejar los eventos que se comuniquen con el modelo.
+
+- **Model**: Contiene entidades, casos de uso (actions), interfaces de servicios (gateways) y contratos de presentación.
+- **Infrastructure**: Implementa los gateways definidos en el dominio. Puede conectarse a servicios externos o ser mockeada para testing.
+- **View**: Implementa los presenters, captura eventos de la UI y muestra datos ya estructurados. Las pantallas (`screens`) están enfocadas solo en la representación visual.
+
+- Model  
+   1. **Entities**: Interfaces que definen los objetos centrales del universo (por ejemplo, Noticia, Autor).  
+   2. **Actions**: Interfaces que describen las operaciones permitidas sobre las entidades (use cases).  
+   3. **Gateways**: Interfaces tipo servicios, puertos de obtención y envío de datos. Intercambiables.  
+   4. **Presenters**: Interfaces que se diseñan para que los componentes se comuniquen con el modelo.  
+
+- Infrastructure  
+   1. **Gateways**: Se hace una implementación para el servicio o repositorio externo que se quiera usar. (Se puede mockear fácilmente).  
+
+- View  
+   1. **Presenter**: Se implementan los presenters definidos; un evento se procesa y el presenter se encargará de enviar una respuesta, canal de la UI con el modelo.
+   2. **Screens**: Aquí dentro hay archivos `.tsx`, lo que haga falta para las screens concretas.
+
+
+## Descripción general
+
+La aplicación permite al usuario:
+
+- Navegar por un listado de noticias actualizadas en formato de tarjetas.
+- Consultar un listado de autores de artículos.
+- Guardar noticias como favoritas y acceder a ellas posteriormente desde una pantalla dedicada.
+
+## Pantallas principales
+
+1. **Noticias**: Muestra un feed de noticias. Cada noticia se presenta en una tarjeta. Al presionar una tarjeta, se accede al detalle de la noticia.
+2. **Usuarios**: Lista de autores relacionados a los artículos mostrados. Puede incluir información adicional sobre cada autor.
+3. **Noticias guardadas**: Muestra todas las noticias que el usuario haya marcado como favoritas.
+
+## Tecnologías utilizadas
+
+- React Native
+- Redux Toolkit
+- TypeScript
+- React Navigation
+- Axios
+- API pública de noticias (por ejemplo: NewsAPI, GNews)
+
+## Estructura del proyecto
+
+## Comenzar
+
+1. Instalar dependencias
 
    ```bash
-   npm install
+   npx expo install
    ```
 
-2. Start the app
+2. Iniciar la aplicación
 
    ```bash
    npx expo start
    ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# conexa-news-challenge
