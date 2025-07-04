@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "conexa-rn-test",
-    "slug": "conexa-rn-test",
+    "name": "Noticias App",
+    "slug": "noticias-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "conexarntest",
+    "scheme": "noticias-app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

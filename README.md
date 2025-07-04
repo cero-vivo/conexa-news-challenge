@@ -4,7 +4,7 @@ El objetivo es conseguir una aplicación de lectura de noticias, donde sea posib
 
 ## Arquitectura
 
-Utilizo una **Clean Architecture** adaptada a React Native, esto lo hago manteniendo las clasicas caparas de entidades, use cases e infrastructura y, agrego una capa "Presenter" para manejar los eventos que se comuniquen con el modelo.
+Utilizo una **Clean Architecture** adaptada a React Native, esto lo hago manteniendo las clasicas capas de entidades, use cases e infrastructura y, agrego una capa extra "Presenter" para manejar los eventos que se comuniquen con el modelo.
 
 - **Model**: Contiene entidades, casos de uso (actions), interfaces de servicios (gateways) y contratos de presentación.
 - **Infrastructure**: Implementa los gateways definidos en el dominio. Puede conectarse a servicios externos o ser mockeada para testing.
