@@ -45,6 +45,8 @@
     "empty": "No se encontraron noticias",
     "error": "Error al cargar las noticias",
     "loading": "Cargando noticias...",
+    "loadingMore": "Cargando más noticias...",
+    "endOfList": "Has llegado al final de la lista",
     "save": "Guardar",
     "saved": "Guardado",
     "unsave": "Quitar de guardadas",

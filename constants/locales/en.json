@@ -45,6 +45,8 @@
     "empty": "No news found",
     "error": "Error loading news",
     "loading": "Loading news...",
+    "loadingMore": "Loading more news...",
+    "endOfList": "You've reached the end of the list",
     "save": "Save",
     "saved": "Saved",
     "unsave": "Remove from saved",

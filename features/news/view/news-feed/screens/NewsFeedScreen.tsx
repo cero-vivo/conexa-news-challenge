@@ -24,7 +24,7 @@ import { useNewsFeedScreen } from '../hooks/useNewsFeedScreen'
 import { useNewsSearch } from '../hooks/useNewsSearch'
 
 export const NewsFeedScreen = () => {
-    const { news, loading, error } = useNewsFeedScreen();
+    const { news, loading, loadingMore, error, loadMoreNews, hasMore, currentPage, totalItems, displayedItems } = useNewsFeedScreen();
     const flatListRef = useRef<FlatList>(null);
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -35,6 +35,7 @@ export const NewsFeedScreen = () => {
     const tintColor = useThemeColor({}, 'tint');
     const backgroundColor = useThemeColor({}, 'background');
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
+    const textColor = useThemeColor({}, 'text');
 
     // Animation values (reused for both keyboard and scroll)
     const headerHeight = useSharedValue(1);
@@ -134,6 +135,46 @@ export const NewsFeedScreen = () => {
             logoTranslateY.value = withTiming(0, { duration: 300 });
             logoOpacity.value = withTiming(1, { duration: 300 });
         }
+    };
+
+    const handleLoadMore = () => {
+        console.log('🔍 handleLoadMore llamado:', { loadingMore, hasMore, loading });
+        if (hasMore && !loadingMore && loading !== "loading") {
+            console.log("📰 Cargando más noticias...");
+            loadMoreNews();
+        } else {
+            console.log('🔍 No se puede cargar más:', { loadingMore, hasMore, loading });
+        }
+    };
+
+    const renderFooter = () => {
+        console.log('🔍 renderFooter llamado:', { hasMore, loadingMore, displayedItems, totalItems });
+        
+        if (!hasMore) {
+            console.log('🔍 Mostrando mensaje de fin de lista');
+            return (
+                <ThemedView style={styles(insets).footerContainer}>
+                    <ThemedText style={[styles(insets).footerText, { color: textColor }]}>
+                        {t('news.endOfList')} ({displayedItems}/{totalItems})
+                    </ThemedText>
+                </ThemedView>
+            );
+        }
+        
+        if (loadingMore) {
+            console.log('🔍 Mostrando spinner de carga');
+            return (
+                <ThemedView style={styles(insets).footerContainer}>
+                    <ActivityIndicator size="small" color={tintColor} />
+                    <ThemedText style={[styles(insets).footerText, { color: textColor, marginLeft: 8 }]}>
+                        {t('news.loadingMore')}
+                    </ThemedText>
+                </ThemedView>
+            );
+        }
+        
+        console.log('🔍 Footer retorna null');
+        return null;
     };
 
     // Keyboard event handlers
@@ -318,11 +359,14 @@ export const NewsFeedScreen = () => {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={[styles(insets).listContainer, { paddingBottom: insets.bottom + 20  }]}
                         ListEmptyComponent={renderEmptyState}
+                        ListFooterComponent={renderFooter}
                         onScroll={handleScroll}
                         onScrollBeginDrag={handleScrollBeginDrag}
                         onScrollEndDrag={handleScrollEndDrag}
                         onMomentumScrollEnd={handleMomentumScrollEnd}
                         scrollEventThrottle={16}
+                        onEndReached={handleLoadMore}
+                        onEndReachedThreshold={0.5}
                     />
                 )}
             </ThemedView>
@@ -442,5 +486,21 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
             width: 0,
             height: 2,
         },
+    },
+    footerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        marginTop: 10,
+        backgroundColor: 'rgba(0,0,0,0.02)',
+        borderRadius: 8,
+        marginHorizontal: 10,
+    },
+    footerText: {
+        fontSize: 14,
+        color: '#9BA1A6',
+        fontWeight: '500',
+        marginLeft: 8,
     },
 });
