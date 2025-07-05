@@ -17,8 +17,8 @@
     },
     "profile": {
       "title": "Hello! I'm Luis Espinoza",
-      "subtitle": "React Native Developer",
-      "description": "I'm excited about the opportunity to join the Conexa team and contribute with my experience in native mobile development."
+      "subtitle": "Software Engineer",
+      "description": "Software Engineer specialized in mobile and web development, with focus on React, React Native, Node.js and TypeScript. I have experience building scalable, modular and high-performance interfaces, as well as robust REST APIs, using both NoSQL and SQL databases."
     },
     "buttons": {
       "enter": "Enter",
@@ -129,18 +129,22 @@
     "name": "Name",
     "email": "Email",
     "memberSince": "Member since",
-    "logout": "Sign Out",
+    "logout": {
+      "title": "Sign Out",
+      "confirm": "Are you sure you want to sign out?"
+    },
     "anonymous": "Anonymous User",
     "about": {
       "title": "About me",
-      "description": "React Native Developer passionate about creating exceptional mobile experiences. Specialized in native development with React Native, TypeScript and scalable architectures.",
+      "description": "Software Engineer specialized in mobile and web development, with focus on React, React Native, Node.js and TypeScript. I have experience building scalable, modular and high-performance interfaces, as well as robust REST APIs, using both NoSQL and SQL databases.",
       "skills": "Skills",
-      "skillsList": "React Native, TypeScript, Redux, Expo, Node.js, Firebase",
+      "skillsList": "React, React Native, TypeScript, Node.js, REST APIs, NoSQL, SQL, Mobile Development, Web Development, Redux, Expo, Git, Figma, UX/UI Design",
       "experience": "Experience",
-      "experienceText": "More than 3 years developing native and cross-platform mobile applications.",
+      "experienceText": "I have worked on high-impact products for companies like Pago Fácil and Western Union, developing critical functionalities and ensuring efficient integrations with third-party services. I adapt easily to teams of different sizes and agile work environments, meeting demanding deadlines and quality standards.",
       "contact": "Contact",
-      "email": "luis.espinoza@example.com",
-      "linkedin": "linkedin.com/in/luisespinoza"
+      "email": "luis.espinoza.nav@outlook.com",
+      "phone": "+54 9 11 2388-1314",
+      "linkedin": "linkedin.com/in/luis-espinoza-dev"
     }
   },
   "common": {

@@ -1,6 +1,5 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
-import { Button } from '@/components/ui/Button'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { useThemeColor } from '@/hooks/useThemeColor'
@@ -9,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import {
   Alert,
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   TouchableOpacity
@@ -28,12 +28,12 @@ export default function ProfileScreen() {
 
   const handleLogout = () => {
     Alert.alert(
-      t('profile.logout'),
-      '¿Estás seguro de que quieres cerrar sesión?',
+      t('profile.logout.title'),
+      t('profile.logout.confirm'),
       [
-        { text: 'Cancelar', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         { 
-          text: 'Cerrar Sesión', 
+          text: t('profile.logout.title'), 
           style: 'destructive',
           onPress: () => {
             console.log("🚪 User confirmed logout")
@@ -52,6 +52,18 @@ export default function ProfileScreen() {
     })
   }
 
+  const handleEmailPress = () => {
+    Linking.openURL(`mailto:${t('profile.about.email')}`)
+  }
+
+  const handlePhonePress = () => {
+    Linking.openURL(`tel:${t('profile.about.phone')}`)
+  }
+
+  const handleLinkedInPress = () => {
+    Linking.openURL(`https://www.${t('profile.about.linkedin')}`)
+  }
+
   return (
     <ScrollView 
       style={[styles.container, { backgroundColor }]}
@@ -59,13 +71,7 @@ export default function ProfileScreen() {
     >
       <ThemedView style={[styles.header, { paddingTop: insets.top + 20 }]}>
         <TouchableOpacity style={styles.avatarContainer}>
-          {user?.avatar ? (
             <Image source={require('@/assets/images/me.jpeg')} style={styles.avatar} resizeMode='contain' />
-          ) : (
-            <ThemedView style={[styles.avatarPlaceholder, { backgroundColor: tintColor }]}>
-              <IconSymbol name="person.fill" size={40} color="#FFFFFF" />
-            </ThemedView>
-          )}
         </TouchableOpacity>
         
         <ThemedText style={[styles.name, { color: textColor }]}>
@@ -115,30 +121,35 @@ export default function ProfileScreen() {
           <ThemedText style={[styles.sectionTitle, { color: textColor }]}>
             {t('profile.about.contact')}
           </ThemedText>
-          <ThemedView style={styles.contactItem}>
+          <TouchableOpacity style={styles.contactItem} onPress={handleEmailPress}>
             <IconSymbol name="envelope" size={16} color={tintColor} />
             <ThemedText style={[styles.contactText, { color: textColor }]}>
               {t('profile.about.email')}
             </ThemedText>
-          </ThemedView>
-          <ThemedView style={styles.contactItem}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.contactItem} onPress={handlePhonePress}>
+            <IconSymbol name="phone" size={16} color={tintColor} />
+            <ThemedText style={[styles.contactText, { color: textColor }]}>
+              {t('profile.about.phone')}
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.contactItem} onPress={handleLinkedInPress}>
             <IconSymbol name="link" size={16} color={tintColor} />
             <ThemedText style={[styles.contactText, { color: textColor }]}>
               {t('profile.about.linkedin')}
             </ThemedText>
-          </ThemedView>
+          </TouchableOpacity>
         </ThemedView>
 
-        <Button
+        <TouchableOpacity
           onPress={handleLogout}
-          variant="outline"
-          style={styles.logoutButton}
+          style={[styles.logoutButton, { borderColor: '#FF3B30' }]}
         >
-          <IconSymbol name="rectangle.portrait.and.arrow.right" size={16} color="#FF3B30" />
-          <ThemedText style={[styles.logoutText, { color: '#FF3B30' }]}>
-            {t('profile.logout')}
+          <IconSymbol name="rectangle.portrait.and.arrow.right" size={24} color="#FF3B30" />
+          <ThemedText type='default' style={[styles.logoutText, { color: '#FF3B30' }]}>
+            {t('profile.logout.title')}
           </ThemedText>
-        </Button>
+        </TouchableOpacity>
       </ThemedView>
     </ScrollView>
   )
@@ -216,11 +227,15 @@ const styles = StyleSheet.create({
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: 'rgba(0, 122, 255, 0.05)',
   },
   contactText: {
     fontSize: 16,
-    marginLeft: 8,
+    marginLeft: 12,
     opacity: 0.8,
   },
   logoutButton: {
@@ -228,11 +243,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#FF3B30',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderWidth: 1,
+    borderRadius: 8,
+    gap: 8,
   },
   logoutText: {
-    fontSize: 16,
     fontWeight: '600',
-    marginLeft: 8,
   },
 }) 

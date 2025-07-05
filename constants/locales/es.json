@@ -17,8 +17,8 @@
     },
     "profile": {
       "title": "¡Hola! Soy Luis Espinoza",
-      "subtitle": "React Native Developer",
-      "description": "Estoy emocionado por la oportunidad de unirme al equipo de Conexa y contribuir con mi experiencia en desarrollo móvil."
+      "subtitle": "Software Engineer",
+      "description": "Software Engineer especializado en desarrollo mobile y web, con foco en React, React Native, Node.js y TypeScript. He trabajado en productos de alto impacto para empresas como Pago Fácil y Western Union, desarrollando funcionalidades críticas y asegurando integraciones eficientes con servicios de terceros."
     },
     "buttons": {
       "enter": "Entrar",
@@ -129,18 +129,22 @@
     "name": "Nombre",
     "email": "Correo electrónico",
     "memberSince": "Miembro desde",
-    "logout": "Cerrar Sesión",
+    "logout": {
+      "title": "Cerrar Sesión",
+      "confirm": "¿Estás seguro de que quieres cerrar sesión?"
+    },
     "anonymous": "Usuario Anónimo",
     "about": {
       "title": "Sobre mí",
-      "description": "React Native Developer apasionado por crear experiencias móviles excepcionales. Especializado en desarrollo nativo con React Native, TypeScript y arquitecturas escalables.",
+      "description": "Software Engineer especializado en desarrollo mobile y web, con foco en React, React Native, Node.js y TypeScript. Tengo experiencia construyendo interfaces escalables, modulares y de alto rendimiento, así como APIs REST robustas, utilizando tanto bases de datos NoSQL como SQL.",
       "skills": "Habilidades",
-      "skillsList": "React Native, TypeScript, Redux, Expo, Node.js, Firebase",
+      "skillsList": "React, React Native, TypeScript, Node.js, APIs REST, NoSQL, SQL, Mobile Development, Web Development, Redux, Expo, Git, Figma, UX/UI Design",
       "experience": "Experiencia",
-      "experienceText": "Más de 3 años desarrollando aplicaciones móviles nativas y multiplataforma.",
+      "experienceText": "He trabajado en productos de alto impacto para empresas como Pago Fácil y Western Union, desarrollando funcionalidades críticas y asegurando integraciones eficientes con servicios de terceros. Me adapto con facilidad a equipos de distintos tamaños y entornos de trabajo ágiles, cumpliendo con plazos exigentes y estándares de calidad.",
       "contact": "Contacto",
-      "email": "luis.espinoza@example.com",
-      "linkedin": "linkedin.com/in/luisespinoza"
+      "email": "luis.espinoza.nav@outlook.com",
+      "phone": "+54 9 11 2388-1314",
+      "linkedin": "linkedin.com/in/luis-espinoza-dev"
     }
   },
   "common": {

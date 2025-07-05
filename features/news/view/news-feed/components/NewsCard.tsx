@@ -116,7 +116,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
             
             <View style={styles.readMoreContainer}>
               <ThemedText style={[styles.readMore, { color: tintColor }]}>
-                Leer más
+                {t('news.detail.readMore')}
               </ThemedText>
               <IconSymbol name="chevron.right" size={12} color={tintColor} />
             </View>
