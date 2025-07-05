@@ -7,9 +7,7 @@ export const HttpNewsFeedGateway = (): INewsGateway => {
   return {
     getNews: async (): Promise<News[]> => {
       try {
-        console.log('getNews', Endpoints.newsFeed.getAll);
         const response = await apiClient.get<News[]>(Endpoints.newsFeed.getAll);
-        console.log('news feed response', response);
         return response.data;
       } catch (error) {
         console.error('Error fetching news feed:', error);

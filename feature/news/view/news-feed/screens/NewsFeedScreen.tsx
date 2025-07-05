@@ -11,27 +11,17 @@ import { useNewsFeedScreen } from '../hooks/useNewsFeedScreen'
 
 export const NewsFeedScreen = () => {
     const { news, loading, error } = useNewsFeedScreen();
-    console.log("🚀 ~ NewsFeedScreen ~ loading:", loading)
-    console.log("🚀 ~ NewsFeedScreen ~ news:", news)
     const flatListRef = useRef<FlatList>(null);
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    // Handle news card press - select news in store and navigate to detail
     const handleNewsPress = (newsItem: News) => {
-        console.log('🎯 Navigate to news detail:', newsItem.id);
-        // Seleccionar la noticia en el store antes de navegar
         dispatch(setSelectedNews(newsItem));
-        router.push(`/news-detail?newsId=${newsItem.id}`);
+        router.push(`/news-detail`);
     };
 
-    // Handle double tap on "News" title to scroll to top
-    const handleDoubleTapNews = () => {
-        console.log('🔄 Scrolling to top of news list');
-        flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    };
+    const handleDoubleTapNews = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
 
-    // Render individual news item
     const renderNewsItem = useMemo(() => {
         return ({ item }: { item: News }) => (
             <NewsCard 
@@ -41,7 +31,6 @@ export const NewsFeedScreen = () => {
         );
     }, [handleNewsPress, news?.length]);
 
-    // Render empty state when no news available
     const renderEmptyState = () => (
         <ThemedView style={styles.emptyContainer}>
             <ThemedText style={styles.emptyText}>

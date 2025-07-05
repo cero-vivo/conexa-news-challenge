@@ -30,16 +30,6 @@ export const NewsDetailScreen = () => {
         router.back()
     }
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        })
-    }
-
     return (
         <ThemedView style={styles.container}>
             {/* Header */}
@@ -83,7 +73,7 @@ export const NewsDetailScreen = () => {
                             {selectedNews?.category}
                         </ThemedText>
                         <ThemedText style={[styles.date, { color: secondaryTextColor }]}>
-                            {formatDate(selectedNews?.publishedAt || '')}
+                            {selectedNews?.publishedAt || ''}
                         </ThemedText>
                     </ThemedView>
 
