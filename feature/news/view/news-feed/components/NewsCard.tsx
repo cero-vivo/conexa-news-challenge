@@ -11,16 +11,6 @@ interface NewsCardProps {
 
 // NewsCard component - displays individual news item
 export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
-  // Format date for display
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
-
   // Handle card press
   const handlePress = () => {
     console.log('📰 News card pressed:', news.title);
@@ -30,33 +20,28 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress} activeOpacity={0.7}>
       <View style={styles.card}>
-        {/* News image */}
+        
         <Image 
           source={{ uri: news.image || news.thumbnail }} 
           style={styles.image}
           resizeMode="cover"
         />
         
-        {/* News content */}
         <View style={styles.content}>
-          {/* Category badge */}
           <View style={styles.categoryContainer}>
             <ThemedText style={styles.category}>{news.category}</ThemedText>
           </View>
           
-          {/* News title */}
           <ThemedText style={styles.title} numberOfLines={2}>
             {news.title}
           </ThemedText>
           
-          {/* News excerpt */}
           <ThemedText style={styles.excerpt} numberOfLines={3}>
             {news.content}
           </ThemedText>
           
-          {/* Publication date */}
           <ThemedText style={styles.date}>
-            {formatDate(news.publishedAt)}
+            {news.publishedAt}
           </ThemedText>
         </View>
       </View>

@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { News } from '@/feature/news/model/entities/News'
+import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
 import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { NewsCard } from '../components/NewsCard'
@@ -9,11 +10,12 @@ import { useNewsFeedScreen } from '../hooks/useNewsFeedScreen'
 export const NewsFeedScreen = () => {
     const { news, loading, error } = useNewsFeedScreen();
     const flatListRef = useRef<FlatList>(null);
+    const router = useRouter();
 
-    // Handle news card press - will be used for navigation later
+    // Handle news card press - navigate to news detail
     const handleNewsPress = (newsItem: News) => {
         console.log('🎯 Navigate to news detail:', newsItem.id);
-        // TODO: Implement navigation to news detail screen
+        router.push(`/news-detail?newsId=${newsItem.id}`);
     };
 
     // Handle double tap on "News" title to scroll to top
