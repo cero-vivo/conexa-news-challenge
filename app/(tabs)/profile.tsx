@@ -69,7 +69,7 @@ export default function ProfileScreen() {
       style={[styles.container, { backgroundColor }]}
       showsVerticalScrollIndicator={false}
     >
-      <ThemedView style={[styles.header, { paddingTop: insets.top + 20 }]}>
+      <ThemedView style={[styles.header]}>
         <TouchableOpacity style={styles.avatarContainer}>
             <Image source={require('@/assets/images/me.jpeg')} style={styles.avatar} resizeMode='contain' />
         </TouchableOpacity>

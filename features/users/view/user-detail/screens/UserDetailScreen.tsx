@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { Image, Linking, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const UserDetailScreen = () => {
@@ -38,6 +38,29 @@ export const UserDetailScreen = () => {
             month: 'long',
             day: 'numeric'
         })
+    }
+
+    const handleEmailPress = () => {
+        if (selectedUser?.email) {
+            Linking.openURL(`mailto:${selectedUser.email}`)
+        }
+    }
+
+    const handlePhonePress = () => {
+        if (selectedUser?.phone) {
+            Linking.openURL(`tel:${selectedUser.phone}`)
+        }
+    }
+
+    const handleWebsitePress = () => {
+        if (selectedUser?.website) {
+            // Ensure the URL has a protocol
+            let url = selectedUser.website
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url
+            }
+            Linking.openURL(url)
+        }
     }
 
     if (!selectedUser) {
@@ -83,17 +106,38 @@ export const UserDetailScreen = () => {
                         {selectedUser.firstname} {selectedUser.lastname}
                     </ThemedText>
                     
-                    <ThemedText style={[styles.userEmail, { color: secondaryTextColor }]}>
-                        📧 {selectedUser.email}
-                    </ThemedText>
+                    <TouchableOpacity 
+                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]} 
+                        onPress={handleEmailPress}
+                        activeOpacity={0.7}
+                    >
+                        <IconSymbol name="envelope" size={20} color={tintColor} />
+                        <ThemedText style={[styles.contactText, { color: secondaryTextColor }]}>
+                            {selectedUser.email}
+                        </ThemedText>
+                    </TouchableOpacity>
 
-                    <ThemedText style={[styles.userPhone, { color: secondaryTextColor }]}>
-                        📞 {selectedUser.phone}
-                    </ThemedText>
+                    <TouchableOpacity 
+                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]} 
+                        onPress={handlePhonePress}
+                        activeOpacity={0.7}
+                    >
+                        <IconSymbol name="phone" size={20} color={tintColor} />
+                        <ThemedText style={[styles.contactText, { color: secondaryTextColor }]}>
+                            {selectedUser.phone}
+                        </ThemedText>
+                    </TouchableOpacity>
 
-                    <ThemedText style={[styles.userWebsite, { color: tintColor }]}>
-                        🌐 {selectedUser.website}
-                    </ThemedText>
+                    <TouchableOpacity 
+                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]} 
+                        onPress={handleWebsitePress}
+                        activeOpacity={0.7}
+                    >
+                        <IconSymbol name="link" size={20} color={tintColor} />
+                        <ThemedText style={[styles.contactText, { color: tintColor }]}>
+                            {selectedUser.website}
+                        </ThemedText>
+                    </TouchableOpacity>
 
                     <ThemedView style={[styles.section, { borderBottomColor: borderColor }]}>
                         <ThemedText type="subtitle" style={[styles.sectionTitle, { color: textColor }]}>
@@ -189,20 +233,19 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         textAlign: 'center',
     },
-    userEmail: {
-        fontSize: 16,
-        marginBottom: 8,
-        textAlign: 'center',
+    contactItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 12,
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        marginHorizontal: 20,
     },
-    userPhone: {
+    contactText: {
         fontSize: 16,
-        marginBottom: 8,
-        textAlign: 'center',
-    },
-    userWebsite: {
-        fontSize: 16,
-        marginBottom: 24,
-        textAlign: 'center',
+        marginLeft: 12,
+        flex: 1,
     },
     section: {
         marginBottom: 24,
