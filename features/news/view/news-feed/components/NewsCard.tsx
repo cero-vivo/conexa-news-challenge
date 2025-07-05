@@ -1,5 +1,8 @@
 import { ThemedText } from '@/components/ThemedText';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 import { News } from '@/features/news/model/entities/News';
+import { toggleSaveNews } from '@/features/news/model/store/savedNewsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -17,6 +20,14 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
     onPress(news);
   };
 
+  const dispatch = useAppDispatch();
+  const savedNews = useAppSelector((state) => state.savedNews.savedNews);
+  const isSaved = savedNews.some((item) => item.id === news.id);
+
+  const handleToggleSave = () => {
+    dispatch(toggleSaveNews(news));
+  };
+
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress} activeOpacity={0.7}>
       <View style={styles.card}>
@@ -26,6 +37,19 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
           style={styles.image}
           resizeMode="cover"
         />
+        
+        {/* Bookmark icon */}
+        <TouchableOpacity
+          style={styles.bookmarkButton}
+          onPress={handleToggleSave}
+          activeOpacity={0.7}
+        >
+          <IconSymbol
+            name={isSaved ? 'bookmark.fill' : 'bookmark'}
+            size={24}
+            color={isSaved ? '#FFD700' : '#FFFFFF'}
+          />
+        </TouchableOpacity>
         
         <View style={styles.content}>
           <View style={styles.categoryContainer}>
@@ -72,6 +96,14 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
+  },
+  bookmarkButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 16,
+    padding: 6,
   },
   content: {
     padding: 16,

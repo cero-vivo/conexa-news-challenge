@@ -1,3 +1,4 @@
+import { persistor } from '@/store';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -5,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { store } from '@/store';
@@ -23,27 +25,29 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen 
-              name="news-detail" 
-              options={{ 
-                headerShown: false,
-                presentation: 'modal'
-              }} 
-            />
-            <Stack.Screen 
-              name="user-detail" 
-              options={{ 
-                headerShown: false,
-                presentation: 'modal'
-              }} 
-            />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
-        </ThemeProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen 
+                name="news-detail" 
+                options={{ 
+                  headerShown: false,
+                  presentation: 'modal'
+                }} 
+              />
+              <Stack.Screen 
+                name="user-detail" 
+                options={{ 
+                  headerShown: false,
+                  presentation: 'modal'
+                }} 
+              />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     </SafeAreaProvider>
   );

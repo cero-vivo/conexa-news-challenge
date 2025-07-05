@@ -3,6 +3,7 @@ import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { News } from '@/features/news/model/entities/News'
 import { clearSelectedNews } from '@/features/news/model/store/newsSlice'
+import { toggleSaveNews } from '@/features/news/model/store/savedNewsSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
@@ -14,6 +15,8 @@ export const NewsDetailScreen = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
     const selectedNews: News | null = useAppSelector(state => state.news.selectedNews) || null
+    const savedNews = useAppSelector(state => state.savedNews.savedNews)
+    const isSaved = selectedNews ? savedNews.some(item => item.id === selectedNews.id) : false
     const insets = useSafeAreaInsets()
 
     // Theme colors
@@ -30,6 +33,13 @@ export const NewsDetailScreen = () => {
         dispatch(clearSelectedNews())
         router.back()
     }
+
+    const handleToggleSave = () => {
+        if (selectedNews) {
+            dispatch(toggleSaveNews(selectedNews))
+        }
+    }
+
     useEffect(() => {
         return () => {
             dispatch(clearSelectedNews())
@@ -50,6 +60,15 @@ export const NewsDetailScreen = () => {
                 <ThemedText type="subtitle" style={[styles.headerTitle, { color: textColor }]}>
                     {"Volver"}
                 </ThemedText>
+
+                {/* Bookmark toggle */}
+                <TouchableOpacity
+                    onPress={handleToggleSave}
+                    style={styles.saveButton}
+                    activeOpacity={0.7}
+                >
+                    <IconSymbol name={isSaved ? 'bookmark.fill' : 'bookmark'} size={24} color={tintColor} />
+                </TouchableOpacity>
             </ThemedView>
 
             {/* Content */}
@@ -199,5 +218,8 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: '600',
+    },
+    saveButton: {
+        padding: 8,
     },
 }) 
