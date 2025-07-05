@@ -23,6 +23,15 @@ const MAPPING = {
   'newspaper.fill': 'article',
   'person.2.fill': 'people',
   'line.3.horizontal': 'menu',
+  'star.fill': 'star',
+  'gear': 'settings',
+  'wrench.and.screwdriver.fill': 'build',
+  'checkmark.circle.fill': 'check-circle',
+  'arrow.right.circle.fill': 'arrow-forward',
+  'heart.fill': 'favorite',
+  'bolt.fill': 'flash-on',
+  'shield.fill': 'security',
+  'rocket.fill': 'rocket-launch',
 } as IconMapping;
 
 /**
