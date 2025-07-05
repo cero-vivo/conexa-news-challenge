@@ -19,10 +19,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 export default function Index() {
 	const { showOnboarding } = useAppSelector((state) => state.configUI)
 	const { isAuthenticated, user } = useAppSelector((state) => state.auth)
-	const { login, logout } = useAuth()
+	const { login } = useAuth()
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 	const { i18n } = useTranslation()
+	const insets = useSafeAreaInsets()
 
 	// Theme colors
 	const backgroundColor = useThemeColor({}, 'background')
@@ -145,17 +146,10 @@ export default function Index() {
 	}
 
 	return (
-		<ScrollView style={{ flexGrow: 1, paddingTop: useSafeAreaInsets().top, backgroundColor }}>
+		<ScrollView style={{ flexGrow: 1, paddingTop: insets.top, paddingBottom: insets.bottom, backgroundColor }} showsVerticalScrollIndicator={false}>
 			<ThemedView style={[styles.container, { backgroundColor }]}>
 				<View style={styles.content}>
 					<ThemedText type='title'>DEV MODE</ThemedText>
-					
-					<ThemedText style={[styles.infoText, { color: textColor }]}>
-						Para desactivar el debug mode, actualiza las variables de entorno en tu archivo .env:
-					</ThemedText>
-					<ThemedText style={[styles.codeText, { color: tintColor }]}>
-						EXPO_PUBLIC_DEV_OPEN_IN_DEBUG_MODE=false
-					</ThemedText>
 
 					{/* Debug Info */}
 					<View style={styles.debugContainer}>
@@ -216,7 +210,12 @@ export default function Index() {
 					>
 						Clear Storage
 					</Button>
+
+					<ThemedText style={[styles.infoText, { color: textColor, paddingTop: 20 }]}>
+						Para desactivar el debug mode, actualiza las variables de entorno en tu archivo .env:
+					</ThemedText>
 				</View>
+
 			</ThemedView>
 		</ScrollView>
 	)
