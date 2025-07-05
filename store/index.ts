@@ -1,5 +1,5 @@
-import newsReducer from '@/feature/news/model/store/newsSlice'
-import usersReducer from '@/feature/users/model/store/usersSlice'
+import newsReducer from '@/features/news/model/store/newsSlice'
+import usersReducer from '@/features/users/model/store/usersSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({

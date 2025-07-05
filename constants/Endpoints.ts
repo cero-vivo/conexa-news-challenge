@@ -8,8 +8,10 @@ const composeURL = (url: string) => {
 
 export const Endpoints = {
   newsFeed: {
-    getAll: composeURL('/posts'),
-    getById: (id: string) => composeURL(`/posts/${id}`),
+    getAll: composeURL('/posts')
+  },
+  usersFeed: {
+    getAll: composeURL('/users')
   }
 } as const; 
 

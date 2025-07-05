@@ -1,6 +1,6 @@
 # React Native Challenge - App de Lectura de Noticias
 
-El objetivo es conseguir una aplicación de lectura de noticias, donde sea posible explorar e interactuar con el contenido navegando entre noticias, autores, y permitiendo guardar artículos o marcar autores como favoritos. (Opcionalmente, se podrían implementar consultas basadas en esas preferencias).
+El objetivo es conseguir una aplicación de lectura de noticias, donde sea posible explorar e interactuar con el contenido navegando entre noticias, usuarios, y permitiendo guardar artículos o marcar usuarios como favoritos. (Opcionalmente, se podrían implementar consultas basadas en esas preferencias).
 
 ## Arquitectura
 
@@ -29,13 +29,13 @@ Utilizo una **Clean Architecture** adaptada a React Native, esto lo hago manteni
 La aplicación permite al usuario:
 
 - Navegar por un listado de noticias actualizadas en formato de tarjetas.
-- Consultar un listado de autores de artículos.
+- Consultar un listado de usuarios de artículos.
 - Guardar noticias como favoritas y acceder a ellas posteriormente desde una pantalla dedicada.
 
 ## Pantallas principales
 
 1. **Noticias**: Muestra un feed de noticias. Cada noticia se presenta en una tarjeta. Al presionar una tarjeta, se accede al detalle de la noticia.
-2. **Usuarios**: Lista de autores relacionados a los artículos mostrados. Puede incluir información adicional sobre cada autor.
+2. **Usuarios**: Lista de usuarios relacionados a los artículos mostrados. Puede incluir información adicional sobre cada autor.
 3. **Noticias guardadas**: Muestra todas las noticias que el usuario haya marcado como favoritas.
 
 ## Tecnologías utilizadas
