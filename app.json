@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Noticias App",
-    "slug": "noticias-app",
+    "name": "CX News",
+    "slug": "CX News",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "noticias-app",
+    "scheme": "CX News",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -29,9 +29,9 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
+          "imageWidth": 300,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#1E202D"
         }
       ]
     ],
