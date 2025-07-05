@@ -115,6 +115,12 @@
     },
     "onboarding": {
       "button": "View Onboarding"
+    },
+    "required": {
+      "title": "Access Restricted",
+      "message": "You must sign in with an account to save news. Anonymous users cannot save content.",
+      "cancel": "Cancel",
+      "login": "Sign In"
     }
   },
   "profile": {

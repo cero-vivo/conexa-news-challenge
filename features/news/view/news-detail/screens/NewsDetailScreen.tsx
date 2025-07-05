@@ -18,7 +18,7 @@ export const NewsDetailScreen = () => {
     const dispatch = useAppDispatch()
     const selectedNews: News | null = useAppSelector(state => state.news.selectedNews) || null
     const savedNews = useAppSelector(state => state.savedNews.savedNews)
-    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
+    const { isAuthenticated, user } = useAppSelector((state) => state.auth)
     const isSaved = selectedNews ? savedNews.some(item => item.id === selectedNews.id) : false
     const insets = useSafeAreaInsets()
     const { t } = useTranslation()
@@ -33,6 +33,9 @@ export const NewsDetailScreen = () => {
     const secondaryTextColor = useThemeColor({ light: '#666666', dark: '#B0B7C3' }, 'icon')
     const contentTextColor = useThemeColor({ light: '#333333', dark: '#ECEDEE' }, 'text')
 
+    // Check if user can save news (authenticated and not anonymous)
+    const canSaveNews = isAuthenticated && user && !user.isAnonymous;
+
     const handleBackPress = () => {
         console.log('Back button pressed in NewsDetailScreen')
         dispatch(clearSelectedNews())
@@ -40,13 +43,19 @@ export const NewsDetailScreen = () => {
     }
 
     const handleToggleSave = () => {
-        if (!isAuthenticated) {
+        console.log("🔐 handleToggleSave called - isAuthenticated:", isAuthenticated, "user:", user?.name, "isAnonymous:", user?.isAnonymous);
+        
+        if (!canSaveNews) {
+            console.log("🚫 User cannot save news (not authenticated or anonymous)");
             Alert.alert(
-                'Acceso Restringido',
-                'Debes iniciar sesión para guardar noticias',
+                t('auth.required.title'),
+                t('auth.required.message'),
                 [
-                    { text: 'Cancelar', style: 'cancel' },
-                    { text: 'Iniciar Sesión', onPress: () => router.push(Routes.AUTH) }
+                    { text: t('auth.required.cancel'), style: 'cancel' },
+                    { text: t('auth.required.login'), onPress: () => {
+                        router.dismissAll()
+                        router.replace(Routes.AUTH);
+                    }}
                 ]
             );
             return;

@@ -12,14 +12,14 @@ import { useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  ActivityIndicator,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity
+    ActivityIndicator,
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -86,8 +86,15 @@ export default function AuthScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView 
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { 
+            paddingBottom: insets.bottom + 20,
+            minHeight: '100%'
+          }
+        ]}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         {/* Language Selector */}
         <ThemedView style={[styles.languageContainer, { paddingTop: insets.top + 20 }]}>
@@ -211,28 +218,35 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
+    justifyContent: 'center',
   },
   languageContainer: {
     alignItems: 'flex-end',
     paddingHorizontal: 10,
+    marginBottom: 20,
   },
   header: {
     alignItems: 'center',
     marginBottom: 40,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginTop: 20,
     marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
     opacity: 0.7,
+    paddingHorizontal: 20,
   },
   form: {
     flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
   },
   input: {
     height: 50,
@@ -252,6 +266,7 @@ const styles = StyleSheet.create({
   toggleButton: {
     alignItems: 'center',
     marginBottom: 30,
+    paddingVertical: 8,
   },
   toggleText: {
     fontSize: 16,
@@ -261,6 +276,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop: 10,
   },
   dividerLine: {
     flex: 1,

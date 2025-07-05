@@ -19,6 +19,9 @@ export const useAuth = () => {
   const router = useRouter()
   const { user, isAuthenticated, loading, error } = useAppSelector((state) => state.auth)
 
+  // Debug log for authentication state
+  console.log("🔐 useAuth hook - isAuthenticated:", isAuthenticated, "user:", user?.name || 'null');
+
   const login = useCallback(async (email: string, password: string) => {
     dispatch(loginStart())
     

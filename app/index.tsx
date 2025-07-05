@@ -61,6 +61,19 @@ export default function Index() {
     logout()
   }
 
+  const handleClearStorage = async () => {
+    console.log("🗑️ Clearing all storage...")
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage');
+      await AsyncStorage.clear();
+      console.log("✅ Storage cleared successfully");
+      // Force reload by updating state
+      dispatch(setShowOnboarding(true));
+    } catch (error) {
+      console.error("❌ Error clearing storage:", error);
+    }
+  }
+
   return (
     <ThemedView style={[styles.container, { backgroundColor }]}>
       <View style={styles.content}>
@@ -76,6 +89,9 @@ export default function Index() {
           </ThemedText>
           <ThemedText style={[styles.debugText, { color: textColor }]}>
             isAuthenticated: {isAuthenticated ? 'true' : 'false'}
+          </ThemedText>
+          <ThemedText style={[styles.debugText, { color: textColor }]}>
+            Auth State: {JSON.stringify({ showOnboarding, isAuthenticated })}
           </ThemedText>
         </View>
         
@@ -106,6 +122,15 @@ export default function Index() {
             style={styles.button}
           >
             Test Logout
+          </Button>
+
+          <Button 
+            variant="outline"
+            size="small"
+            onPress={handleClearStorage}
+            style={styles.button}
+          >
+            Clear Storage
           </Button>
         </View>
       </View>

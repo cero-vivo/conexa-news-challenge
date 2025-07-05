@@ -8,6 +8,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 // Props interface for NewsCard component
@@ -26,28 +27,39 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
 
   const dispatch = useAppDispatch();
   const savedNews = useAppSelector((state) => state.savedNews.savedNews);
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const isSaved = savedNews.some((item) => item.id === news.id);
   const router = useRouter();
+  const { t } = useTranslation();
 
   // Theme colors
   const backgroundColor = useThemeColor({}, 'background');
   const textColor = useThemeColor({}, 'text');
   const tintColor = useThemeColor({}, 'tint');
 
+  // Check if user can save news (authenticated and not anonymous)
+  const canSaveNews = isAuthenticated && user && !user.isAnonymous;
+
   const handleToggleSave = () => {
-    if (!isAuthenticated) {
+    console.log("🔐 handleToggleSave called - isAuthenticated:", isAuthenticated, "user:", user?.name, "isAnonymous:", user?.isAnonymous);
+    
+    if (!canSaveNews) {
+      console.log("🚫 User cannot save news (not authenticated or anonymous)");
       Alert.alert(
-        'Acceso Restringido',
-        'Debes iniciar sesión para guardar noticias',
+        t('auth.required.title'),
+        t('auth.required.message'),
         [
-          { text: 'Cancelar', style: 'cancel' },
-          { text: 'Iniciar Sesión', onPress: () => router.push(Routes.AUTH) }
+          { text: t('auth.required.cancel'), style: 'cancel' },
+          { text: t('auth.required.login'), onPress: () => {
+            console.log("🚀 Navigating to auth screen");
+            router.push(Routes.AUTH);
+          }}
         ]
       );
       return;
     }
     
+    console.log("✅ User can save news, saving...");
     dispatch(toggleSaveNews(news));
   };
 

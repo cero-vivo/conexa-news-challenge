@@ -115,6 +115,12 @@
     },
     "onboarding": {
       "button": "Ver Onboarding"
+    },
+    "required": {
+      "title": "Acceso Restringido",
+      "message": "Debes iniciar sesión con una cuenta para guardar noticias. Los usuarios anónimos no pueden guardar contenido.",
+      "cancel": "Cancelar",
+      "login": "Iniciar Sesión"
     }
   },
   "profile": {

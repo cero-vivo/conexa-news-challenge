@@ -8,13 +8,14 @@ import { NewsCard } from '@/features/news/view/news-feed/components/NewsCard'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function SavedNewsScreen() {
     const savedNews: News[] = useAppSelector((state) => state.savedNews.savedNews);
+    const { isAuthenticated, user } = useAppSelector((state) => state.auth);
     const flatListRef = useRef<FlatList>(null);
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -24,6 +25,17 @@ export default function SavedNewsScreen() {
     // Theme colors
     const tintColor = useThemeColor({}, 'tint');
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
+
+    // Check if user can access saved news (authenticated and not anonymous)
+    const canAccessSavedNews = isAuthenticated && user && !user.isAnonymous;
+
+    // Check authentication on mount
+    useEffect(() => {
+        if (!canAccessSavedNews) {
+            console.log("🚫 User cannot access saved news (not authenticated or anonymous), redirecting to auth");
+            router.replace(Routes.AUTH);
+        }
+    }, [canAccessSavedNews, router]);
 
     const handleNewsPress = (newsItem: News) => {
         dispatch(setSelectedNews(newsItem));
@@ -47,6 +59,11 @@ export default function SavedNewsScreen() {
             </ThemedText>
         </ThemedView>
     );
+
+    // Don't render if not authenticated
+    if (!canAccessSavedNews) {
+        return null;
+    }
 
     return (
         <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
