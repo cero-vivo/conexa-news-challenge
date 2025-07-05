@@ -34,16 +34,23 @@ export const SavedNewsScreen = () => {
 
   return (
     <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
-      <ThemedText type="title" style={styles(insets).title}>Saved News</ThemedText>
+      {/* Header */}
+      <ThemedView style={styles(insets).header}>
+        <ThemedText type="title">Saved News</ThemedText>
+        <ThemedText type="subtitle">Your bookmarked articles</ThemedText>
+      </ThemedView>
 
-      <FlatList
-        data={savedNews}
-        renderItem={renderNewsItem}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles(insets).listContainer}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={renderEmptyState}
-      />
+      {/* Content */}
+      <ThemedView style={styles(insets).content}>
+        <FlatList
+          data={savedNews}
+          renderItem={renderNewsItem}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles(insets).listContainer}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={renderEmptyState}
+        />
+      </ThemedView> 
     </ThemedView>
   )
 }
@@ -52,13 +59,17 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop: insets.top,
   },
-  title: {
-    marginBottom: 12,
+  header: {
+    marginTop: insets.top,
+    marginBottom: 15,
+    gap: 8,
+  },
+  content: {
+    flex: 1,
   },
   listContainer: {
-    paddingBottom: 20,
+    paddingBottom: insets.bottom + 20,
   },
   emptyContainer: {
     flex: 1,

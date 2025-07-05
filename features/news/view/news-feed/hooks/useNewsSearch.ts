@@ -8,11 +8,20 @@ export const useNewsSearch = (news: News[]) => {
     if (!query.trim()) return news
     const q = query.toLowerCase().trim()
 
-    return news.filter(n => {
-      const titleWords = n.title.toLowerCase().split(/\s+/)
-      return titleWords.some(w => q.includes(w))
+    return news.filter((n) => {
+      const title = n.title.toLowerCase()
+      const queryWords = q.split(/\s+/).filter(word => word.length > 0)
+
+      if (queryWords.length === 0) return true
+
+      return queryWords.every(queryWord => {
+        const titleWords = title.split(/\s+/)
+        return titleWords.some(titleWord =>
+          titleWord.includes(queryWord) || queryWord.includes(titleWord)
+        )
+      })
     })
   }, [news, query])
 
   return { filteredNews: filtered, handleSearch: setQuery, handleClear: () => setQuery('') }
-} 
+}  
