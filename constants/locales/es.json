@@ -63,6 +63,7 @@
     "error": "Error al cargar usuarios",
     "loading": "Cargando usuarios...",
     "back": "Volver",
+    "community": "Somos {{count}} miembros de la comunidad CX News",
     "detail": {
       "title": "Perfil de Usuario",
       "email": "Email",
@@ -85,7 +86,8 @@
     "subtitle": "Tus noticias favoritas",
     "empty": "No tienes noticias guardadas",
     "description": "Las noticias que guardes aparecerán aquí",
-    "back": "Volver"
+    "back": "Volver",
+    "count": "{{count}} guardadas"
   },
   "common": {
     "loading": "Cargando...",

@@ -1,4 +1,6 @@
 import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
+import { IconSymbol } from '@/components/ui/IconSymbol'
 import { User } from '@/features/users/model/entities/User'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import React from 'react'
@@ -13,44 +15,67 @@ export const UserCard = ({ user, onPress }: UserCardProps) => {
     const handlePress = () => {
         onPress(user)
     }
+    
     // Theme colors
-    const backgroundColor = useThemeColor({ light: '#E3F2FD', dark: '#2C2C2E' }, 'background')
+    const backgroundColor = useThemeColor({}, 'background')
     const textColor = useThemeColor({}, 'text')
     const secondaryTextColor = useThemeColor({ light: '#666666', dark: '#9BA1A6' }, 'icon')
-    const accentColor = useThemeColor({ light: '#007AFF', dark: '#4DA6FF' }, 'tint')
+    const tintColor = useThemeColor({}, 'tint')
+    const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text')
 
     return (
         <TouchableOpacity 
             style={styles.container} 
             onPress={handlePress}
-            activeOpacity={0.7}
+            activeOpacity={0.8}
         >
-            <View style={[styles.card, { backgroundColor }]}>
-                {/* User Avatar */}
-                <Image 
-                    source={{ uri: `https://picsum.photos/100/100?random=${user.id}` }} 
-                    style={styles.avatar}
-                />
+            <ThemedView style={[styles.card, { backgroundColor, borderColor }]}>
+                {/* User Avatar with border */}
+                <View style={styles.avatarContainer}>
+                    <Image 
+                        source={{ uri: `https://picsum.photos/100/100?random=${user.id}` }} 
+                        style={styles.avatar}
+                    />
+                </View>
                 
                 {/* User Info */}
                 <View style={styles.userInfo}>
-                    <ThemedText type="defaultSemiBold" style={[styles.name, { color: textColor }]}>
-                        {user.firstname} {user.lastname}
-                    </ThemedText>
+                    <View style={styles.nameContainer}>
+                        <ThemedText type="defaultSemiBold" style={[styles.name, { color: textColor }]}>
+                            {user.firstname} {user.lastname}
+                        </ThemedText>
+                        <View style={styles.verifiedBadge}>
+                            <IconSymbol name="checkmark.circle.fill" size={14} color={tintColor} />
+                        </View>
+                    </View>
                     
-                    <ThemedText style={[styles.email, { color: secondaryTextColor }]}>
-                        {user.email}
-                    </ThemedText>
+                    <View style={styles.emailContainer}>
+                        <IconSymbol name="paperplane.fill" size={12} color={secondaryTextColor} />
+                        <ThemedText style={[styles.email, { color: secondaryTextColor }]}>
+                            {user.email}
+                        </ThemedText>
+                    </View>
                     
-                    <ThemedText style={[styles.company, { color: accentColor }]}>
-                        {user.company.name}
-                    </ThemedText>
+                    <View style={styles.companyContainer}>
+                        <IconSymbol name="star.fill" size={12} color="#FFD700" />
+                        <ThemedText style={[styles.company, { color: tintColor }]}>
+                            {user.company.name}
+                        </ThemedText>
+                    </View>
                     
-                    <ThemedText style={[styles.location, { color: secondaryTextColor }]}>
-                        📍 {user.address.street}
-                    </ThemedText>
+                    <View style={styles.locationContainer}>
+                        <IconSymbol name="house.fill" size={12} color={secondaryTextColor} />
+                        <ThemedText style={[styles.location, { color: secondaryTextColor }]}>
+                            {user.address.street}, {user.address.city}
+                        </ThemedText>
+                    </View>
                 </View>
-            </View>
+                
+                {/* Arrow indicator */}
+                <View style={styles.arrowContainer}>
+                    <IconSymbol name="chevron.right" size={16} color={secondaryTextColor} />
+                </View>
+            </ThemedView>
         </TouchableOpacity>
     )
 }
@@ -62,43 +87,69 @@ const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
         padding: 16,
-        borderRadius: 12,
+        borderRadius: 16,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
         },
         shadowOpacity: 0.1,
-        shadowRadius: 3.84,
-        elevation: 5,
+        shadowRadius: 6,
+        elevation: 4,
+        borderWidth: 1,
+    },
+    avatarContainer: {
+        position: 'relative',
+        marginRight: 16,
     },
     avatar: {
         width: 60,
         height: 60,
         borderRadius: 30,
-        marginRight: 16,
     },
     userInfo: {
         flex: 1,
         justifyContent: 'center',
+        gap: 6,
+    },
+    nameContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     name: {
         fontSize: 18,
-        marginBottom: 4,
+        fontWeight: '600',
+    },
+    verifiedBadge: {
+        marginLeft: 6,
+    },
+    emailContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     email: {
         fontSize: 14,
-        marginBottom: 4,
+        marginLeft: 6,
+    },
+    companyContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     company: {
         fontSize: 14,
-        marginBottom: 4,
+        fontWeight: '500',
+        marginLeft: 6,
+    },
+    locationContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     location: {
         fontSize: 12,
-        marginBottom: 2,
+        marginLeft: 6,
     },
-    birthDate: {
-        fontSize: 12,
+    arrowContainer: {
+        justifyContent: 'center',
+        marginLeft: 8,
     },
 }) 

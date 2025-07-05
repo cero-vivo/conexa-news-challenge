@@ -1,7 +1,9 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
+import { IconSymbol } from '@/components/ui/IconSymbol'
 import { User } from '@/features/users/model/entities/User'
 import { setSelectedUser } from '@/features/users/model/store/usersSlice'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
@@ -18,6 +20,10 @@ export const UsersFeedScreen = () => {
     const dispatch = useAppDispatch();
     const insets = useSafeAreaInsets();
     const { t } = useTranslation();
+
+    // Theme colors
+    const tintColor = useThemeColor({}, 'tint');
+    const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
 
     const handleUserPress = (user: User) => {
         dispatch(setSelectedUser(user));
@@ -37,6 +43,7 @@ export const UsersFeedScreen = () => {
 
     const renderEmptyState = () => (
         <ThemedView style={styles(insets).emptyContainer}>
+            <IconSymbol name="person.2.fill" size={64} color={tintColor} style={styles(insets).emptyIcon} />
             <ThemedText style={styles(insets).emptyText}>
                 {t('users.empty')}
             </ThemedText>
@@ -45,7 +52,7 @@ export const UsersFeedScreen = () => {
 
     const renderLoadingState = () => (
         <ThemedView style={styles(insets).loadingContainer}>
-            <ActivityIndicator size="large" color="#007AFF" />
+            <ActivityIndicator size="large" color={tintColor} />
             <ThemedText style={styles(insets).loadingText}>
                 {t('users.loading')}
             </ThemedText>
@@ -54,6 +61,7 @@ export const UsersFeedScreen = () => {
 
     const renderErrorState = () => (
         <ThemedView style={styles(insets).errorContainer}>
+            <IconSymbol name="shield.fill" size={48} color="#FF3B30" style={styles(insets).errorIcon} />
             <ThemedText style={styles(insets).errorText}>
                 {t('users.error')}: {error}
             </ThemedText>
@@ -63,15 +71,32 @@ export const UsersFeedScreen = () => {
     return (
         <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
             {/* Header section */}
-            <ThemedView style={styles(insets).header}>
+            <ThemedView style={[styles(insets).header, { borderBottomColor: borderColor }]}>
                 <TouchableOpacity 
                     onPress={handleDoubleTapUsers}
                     activeOpacity={0.7}
                     style={styles(insets).titleContainer}
                 >
-                    <ThemedText type="title">{t('users.title')}</ThemedText>
+                    <ThemedView style={styles(insets).headerContent}>
+                        <ThemedView style={styles(insets).iconContainer}>
+                            <IconSymbol name="person.2.fill" size={32} color={tintColor} />
+                        </ThemedView>
+                        <ThemedView style={styles(insets).titleSection}>
+                            <ThemedText type="title" style={styles(insets).title}>{t('users.title')}</ThemedText>
+                            <ThemedView style={styles(insets).statsContainer}>
+                                <IconSymbol name="star.fill" size={12} color="#FFD700" />
+                                <ThemedText style={styles(insets).statsText}>
+                                    {t('users.community', { count: users?.length || 0 })}
+                                </ThemedText>
+                            </ThemedView>
+                        </ThemedView>
+                    </ThemedView>
                 </TouchableOpacity>
-                <ThemedText type="subtitle">{t('users.subtitle')}</ThemedText>
+                
+                <ThemedView style={styles(insets).subtitleContainer}>
+                    <IconSymbol name="heart.fill" size={16} color={tintColor} />
+                    <ThemedText type="subtitle" style={styles(insets).subtitle}>{t('users.subtitle')}</ThemedText>
+                </ThemedView>
             </ThemedView>
 
             {/* Content section */}
@@ -136,15 +161,51 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
         color: '#FF3B30',
         textAlign: 'center',
     },
+    errorIcon: {
+        marginBottom: 10,
+    },
     emptyContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
     },
+    emptyIcon: {
+        marginBottom: 16,
+    },
     emptyText: {
         fontSize: 16,
         color: '#666666',
         textAlign: 'center',
+    },
+    headerContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    iconContainer: {
+        marginRight: 16,
+    },
+    titleSection: {
+        flexDirection: 'column',
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    statsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    statsText: {
+        fontSize: 12,
+        color: '#666666',
+    },
+    subtitleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    subtitle: {
+        fontSize: 16,
+        color: '#666666',
     },
 }); 

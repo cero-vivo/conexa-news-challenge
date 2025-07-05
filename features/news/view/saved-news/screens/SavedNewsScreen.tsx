@@ -1,13 +1,15 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
+import { IconSymbol } from '@/components/ui/IconSymbol'
 import { News } from '@/features/news/model/entities/News'
 import { setSelectedNews } from '@/features/news/model/store/newsSlice'
 import { NewsCard } from '@/features/news/view/news-feed/components/NewsCard'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const SavedNewsScreen = () => {
@@ -16,6 +18,10 @@ export const SavedNewsScreen = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const { t } = useTranslation()
+
+  // Theme colors
+  const tintColor = useThemeColor({}, 'tint');
+  const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
 
   const handleNewsPress = (newsItem: News) => {
     dispatch(setSelectedNews(newsItem))
@@ -30,16 +36,42 @@ export const SavedNewsScreen = () => {
 
   const renderEmptyState = () => (
     <ThemedView style={styles(insets).emptyContainer}>
+      <IconSymbol name="bookmark.fill" size={64} color={tintColor} style={styles(insets).emptyIcon} />
       <ThemedText style={styles(insets).emptyText}>{t('saved.empty')}</ThemedText>
+      <ThemedText style={styles(insets).emptySubtext}>
+        Guarda noticias que te interesen para leerlas más tarde
+      </ThemedText>
     </ThemedView>
   )
 
   return (
     <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
       {/* Header */}
-      <ThemedView style={styles(insets).header}>
-        <ThemedText type="title">{t('saved.title')}</ThemedText>
-        <ThemedText type="subtitle">{t('saved.subtitle')}</ThemedText>
+      <ThemedView style={[styles(insets).header, { borderBottomColor: borderColor }]}>
+        <TouchableOpacity 
+          activeOpacity={0.7}
+          style={styles(insets).titleContainer}
+        >
+          <ThemedView style={styles(insets).headerContent}>
+            <ThemedView style={styles(insets).iconContainer}>
+              <IconSymbol name="bookmark.fill" size={32} color={tintColor} />
+            </ThemedView>
+            <ThemedView style={styles(insets).titleSection}>
+              <ThemedText type="title" style={styles(insets).title}>{t('saved.title')}</ThemedText>
+              <ThemedView style={styles(insets).statsContainer}>
+                <IconSymbol name="heart.fill" size={12} color="#FF6B6B" />
+                <ThemedText style={styles(insets).statsText}>
+                  {t('saved.count', { count: savedNews.length })}
+                </ThemedText>
+              </ThemedView>
+            </ThemedView>
+          </ThemedView>
+        </TouchableOpacity>
+        
+        <ThemedView style={styles(insets).subtitleContainer}>
+          <IconSymbol name="star.fill" size={16} color={tintColor} />
+          <ThemedText type="subtitle" style={styles(insets).subtitle}>{t('saved.subtitle')}</ThemedText>
+        </ThemedView>
       </ThemedView>
 
       {/* Content */}
@@ -66,6 +98,8 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     marginTop: insets.top,
     marginBottom: 15,
     gap: 8,
+    borderBottomWidth: 1,
+    paddingBottom: 15,
   },
   content: {
     flex: 1,
@@ -78,9 +112,54 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  emptyIcon: {
+    marginBottom: 16,
+  },
   emptyText: {
     fontSize: 16,
     color: '#666666',
+    marginBottom: 8,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#666666',
+    textAlign: 'center',
+  },
+  titleContainer: {
+    alignSelf: 'flex-start',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconContainer: {
+    marginRight: 16,
+  },
+  titleSection: {
+    flexDirection: 'column',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  statsText: {
+    fontSize: 12,
+    color: '#666666',
+    marginLeft: 4,
+  },
+  subtitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 5,
   },
 })
 
