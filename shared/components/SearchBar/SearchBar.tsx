@@ -3,6 +3,7 @@ import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, TouchableOpacity, ViewStyle } from 'react-native'
 import { useSearchBar } from './useSearchBar'
 
@@ -16,6 +17,7 @@ interface SearchBarProps {
 
 export const SearchBar = ({ placeholder = 'Buscar...', onSearch, onClear, debounceMs = 300, style }: SearchBarProps) => {
     const { searchQuery, handleSearchChange, handleClear, isSearching } = useSearchBar({ onSearch, onClear, debounceMs })
+    const { t } = useTranslation()
 
     const bg = useThemeColor({ light: '#F2F2F7', dark: '#1C1C1E' }, 'background')
     const text = useThemeColor({}, 'text')
@@ -35,7 +37,7 @@ export const SearchBar = ({ placeholder = 'Buscar...', onSearch, onClear, deboun
             />
             {searchQuery.length > 0 && (
                 <TouchableOpacity onPress={handleClear} style={styles.clearBtn}>
-                    <ThemedText style={{ color: tint, fontSize: 14 }}>Limpiar</ThemedText>
+                    <ThemedText style={{ color: tint, fontSize: 14 }}>{t('common.clear')}</ThemedText>
                 </TouchableOpacity>
             )}
             {isSearching && <IconSymbol name="clock" size={18} color={tint} style={styles.icon} />}

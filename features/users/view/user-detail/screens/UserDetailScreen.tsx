@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, Linking, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { Image, Linking, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const UserDetailScreen = () => {
@@ -75,9 +75,9 @@ export const UserDetailScreen = () => {
 
     return (
         <ThemedView style={styles.container}>
-            <ThemedView style={[styles.header, { borderBottomColor: borderColor, paddingTop: insets.top + 20 }]}>
-                <TouchableOpacity 
-                    style={[styles.backButton, { backgroundColor: backgroundColor }]} 
+            <ThemedView style={[styles.header, { borderBottomColor: borderColor, paddingTop:  Platform.OS === "ios" ? 20 : insets.top+10 }]}>
+                <TouchableOpacity
+                    style={[styles.backButton, { backgroundColor: backgroundColor }]}
                     onPress={handleBackPress}
                     activeOpacity={0.7}
                 >
@@ -88,14 +88,14 @@ export const UserDetailScreen = () => {
                 </ThemedText>
             </ThemedView>
 
-            <ScrollView 
+            <ScrollView
                 style={styles.scrollView}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
             >
                 <ThemedView style={styles.avatarContainer}>
-                    <Image 
-                        source={{ uri: `https://picsum.photos/200/200?random=${selectedUser.id}` }} 
+                    <Image
+                        source={{ uri: `https://picsum.photos/200/200?random=${selectedUser.id}` }}
                         style={styles.avatar}
                         resizeMode="cover"
                     />
@@ -105,9 +105,9 @@ export const UserDetailScreen = () => {
                     <ThemedText type="title" style={[styles.userName, { color: textColor }]}>
                         {selectedUser.firstname} {selectedUser.lastname}
                     </ThemedText>
-                    
-                    <TouchableOpacity 
-                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]} 
+
+                    <TouchableOpacity
+                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]}
                         onPress={handleEmailPress}
                         activeOpacity={0.7}
                     >
@@ -117,8 +117,8 @@ export const UserDetailScreen = () => {
                         </ThemedText>
                     </TouchableOpacity>
 
-                    <TouchableOpacity 
-                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]} 
+                    <TouchableOpacity
+                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]}
                         onPress={handlePhonePress}
                         activeOpacity={0.7}
                     >
@@ -128,8 +128,8 @@ export const UserDetailScreen = () => {
                         </ThemedText>
                     </TouchableOpacity>
 
-                    <TouchableOpacity 
-                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]} 
+                    <TouchableOpacity
+                        style={[styles.contactItem, { backgroundColor: 'rgba(0, 122, 255, 0.05)' }]}
                         onPress={handleWebsitePress}
                         activeOpacity={0.7}
                     >
@@ -191,7 +191,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 20,
-        paddingTop: 60,
         paddingBottom: 20,
         borderBottomWidth: 1,
     },

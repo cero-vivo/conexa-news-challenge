@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { Alert, Image, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const NewsDetailScreen = () => {
@@ -75,7 +75,7 @@ export const NewsDetailScreen = () => {
     return (
         <ThemedView style={styles.container}>
             {/* Header */}
-            <ThemedView style={[styles.header, { borderBottomColor: borderColor, paddingTop: insets.top + 20 }]}>
+            <ThemedView style={[styles.header, { borderBottomColor: borderColor, paddingTop:  Platform.OS === "ios" ? 20 : insets.top+10 }]}>
                 <TouchableOpacity 
                     style={[styles.backButton, { backgroundColor: backgroundColor }]} 
                     onPress={handleBackPress}
