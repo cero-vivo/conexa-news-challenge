@@ -10,7 +10,7 @@ import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Image, StyleSheet, useColorScheme } from 'react-native'
+import { Dimensions, Image, StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Swiper from 'react-native-swiper'
 
@@ -26,11 +26,6 @@ function OnboardingScreen() {
     const textColor = useThemeColor({}, 'text')
     const tintColor = useThemeColor({}, 'tint')
     const backgroundColor = useThemeColor({}, 'background')
-    const colorScheme = useColorScheme()
-    const isDark = colorScheme === 'dark'
-    
-    // Use the opposite of textColor for button text to ensure contrast
-    const buttonTextColor = textColor === '#000000' ? '#FFFFFF' : '#000000'
 
     const handleEnter = () => {
         dispatch(setShowOnboarding(false))
@@ -46,49 +41,6 @@ function OnboardingScreen() {
         dispatch(setShowOnboarding(false))
         router.replace(Routes.AUTH)
     }
-
-    const slides = [
-        {
-            id: 1,
-            title: '¡Bienvenido a Cx News!',
-            subtitle: 'Tu fuente de información confiable',
-            content: 'Descubre las últimas noticias y mantente informado con nuestra aplicación de noticias moderna y fácil de usar.',
-            image: require('../assets/images/conexa_tech_logo.jpg'),
-            showLogo: true,
-            showProfile: false,
-            icon: 'newspaper.fill'
-        },
-        {
-            id: 2,
-            title: 'Funcionalidades Principales',
-            subtitle: 'Experiencia de usuario premium',
-            content: '• Feed de noticias con búsqueda inteligente\n• Sistema de guardado con persistencia\n• Navegación fluida por tabs y modales\n• UI/UX moderna y responsive\n• Búsqueda por título con coincidencias parciales',
-            image: null,
-            showLogo: false,
-            showProfile: false,
-            icon: 'star.fill'
-        },
-        {
-            id: 3,
-            title: 'Tecnologías y Arquitectura',
-            subtitle: 'Código mantenible y escalable',
-            content: '• React Native con Expo Router\n• Redux Toolkit para gestión de estado\n• Redux Persist para persistencia de datos\n• Arquitectura modular por features\n• TypeScript para type safety\n• Navegación con expo-router',
-            image: null,
-            showLogo: false,
-            showProfile: false,
-            icon: 'wrench.and.screwdriver.fill'
-        },
-        {
-            id: 4,
-            title: '¡Hola! Soy Luis Espinoza',
-            subtitle: 'React Native Developer',
-            content: 'Estoy emocionado por la oportunidad de unirme al equipo de Conexa y contribuir con mi experiencia en desarrollo móvil nativo.',
-            image: null,
-            showLogo: false,
-            showProfile: true,
-            icon: 'heart.fill'
-        }
-    ]
 
     return (
         <ThemedView style={[styles.container, { backgroundColor }]}>
@@ -222,7 +174,7 @@ function OnboardingScreen() {
                             <Button
                                 variant="primary"
                                 size="large"
-                                onPress={handleEnter}
+                                onPress={handleLogin}
                             >
                                 {t('onboarding.buttons.enter')}
                             </Button>
@@ -233,14 +185,6 @@ function OnboardingScreen() {
                                 onPress={handleDontShowAgain}
                             >
                                 {t('onboarding.buttons.dontShowAgain')}
-                            </Button>
-
-                            <Button
-                                variant="outline"
-                                size="medium"
-                                onPress={handleLogin}
-                            >
-                                {t('onboarding.buttons.login')}
                             </Button>
                         </ThemedView>
                     </ThemedView>
@@ -260,7 +204,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     slide: {
-        flex: 1,
+        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },

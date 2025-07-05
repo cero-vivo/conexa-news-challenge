@@ -29,7 +29,7 @@ export default function AuthScreen() {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   
-  const { login, register, loginAnonymous, loading, error, clearError, isAuthenticated, user } = useAuth()
+  const { login, register, loginAnonymous, loading, error, clearError } = useAuth()
   const router = useRouter()
   const dispatch = useAppDispatch()
   const insets = useSafeAreaInsets()
