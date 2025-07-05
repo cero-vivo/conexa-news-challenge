@@ -5,21 +5,21 @@ import { Button } from '@/components/ui/Button'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { Routes } from '@/constants/Routes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
-import { setShowOnboarding } from '@/store/configUiSlice'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-    ActivityIndicator,
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 

@@ -1,116 +1,95 @@
-import { Routes } from '@/constants/Routes'
+import { Routes } from "@/constants/Routes";
+import { AuthGateway } from "@/features/auth/infrastructure/gateways/AuthGateway";
+import { AuthPresenter } from "@/features/auth/infrastructure/presenters/AuthPresenter";
+import { IAuthScreen } from "@/features/auth/model/presenter/IAuthPresenter";
 import {
 	clearError,
 	loginFailure,
 	loginStart,
 	loginSuccess,
-	logout,
+	logout as logoutAction,
 	registerFailure,
 	registerStart,
 	registerSuccess,
-	User
-} from '@/features/auth/model/store/authSlice'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { useRouter } from 'expo-router'
-import { useCallback } from 'react'
+} from "@/features/auth/model/store/authSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useRouter } from "expo-router";
+import { useCallback, useMemo } from "react";
 
 export const useAuth = () => {
-	const dispatch = useAppDispatch()
-	const router = useRouter()
-	const { user, isAuthenticated, loading, error } = useAppSelector((state) => state.auth)
+	const dispatch = useAppDispatch();
+	const router = useRouter();
+
+	const { user, isAuthenticated, loading, error } = useAppSelector(
+		(state) => state.auth
+	);
 
 	// Debug log for authentication state
 	console.log("🔐 useAuth hook - isAuthenticated:", isAuthenticated, "user:", user?.name || 'null');
 
-	const login = useCallback(async (email: string, password: string) => {
-		dispatch(loginStart())
+	/* Screen callbacks -> actual UI reactions (Redux dispatch) */
+	const screenHandler: IAuthScreen = {
+		loginSuccess: (usr) => {
+			dispatch(loginSuccess(usr));
+		},
+		loginError: (err) => {
+			dispatch(loginFailure(err?.message || "Login error"));
+		},
+		registerSuccess: (usr) => {
+			dispatch(registerSuccess(usr));
+		},
+		registerError: (err) => {
+			dispatch(registerFailure(err?.message || "Register error"));
+		},
+		anonymousLoginSuccess: (usr) => {
+			dispatch(loginSuccess(usr));
+		},
+		anonymousLoginError: (err) => {
+			dispatch(loginFailure(err?.message || "Anonymous login error"));
+		},
+		logoutSuccess: () => {
+			dispatch(logoutAction());
+		},
+		logoutError: (err) => {
+			// we can set error state but optional
+			dispatch(loginFailure(err?.message || "Logout error"));
+		},
+	};
 
-		try {
-			// Simulate API call
-			await new Promise(resolve => setTimeout(resolve, 1000))
+	const presenter = useMemo(() => {
+		return AuthPresenter(AuthGateway(), screenHandler);
+	}, []);
 
-			// Mock user data
-			const mockUser: User = {
-				id: '1',
-				email,
-				name: email.split('@')[0], // Use email prefix as name
-				isAnonymous: false,
-				createdAt: new Date().toISOString(),
-				avatar: require('@/assets/images/me.jpeg')
-			}
+	const login = useCallback(
+		async (email: string, password: string) => {
+			dispatch(loginStart());
+			return presenter.login(email, password);
+		},
+		[dispatch, presenter]
+	);
 
-			dispatch(loginSuccess(mockUser))
-			return { success: true }
-		} catch (err) {
-			dispatch(loginFailure('Error al iniciar sesión'))
-			return { success: false, error: 'Error al iniciar sesión' }
-		}
-	}, [dispatch])
-
-	const register = useCallback(async (email: string, password: string, name: string) => {
-		dispatch(registerStart())
-
-		try {
-			// Simulate API call
-			await new Promise(resolve => setTimeout(resolve, 1000))
-
-			// Mock user data
-			const mockUser: User = {
-				id: Date.now().toString(),
-				email,
-				name,
-				isAnonymous: false,
-				createdAt: new Date().toISOString(),
-				avatar: require('@/assets/images/me.jpeg')
-			}
-
-			dispatch(registerSuccess(mockUser))
-			return { success: true }
-		} catch (err) {
-			dispatch(registerFailure('Error al registrarse'))
-			return { success: false, error: 'Error al registrarse' }
-		}
-	}, [dispatch])
+	const register = useCallback(
+		async (email: string, password: string, name: string) => {
+			dispatch(registerStart());
+			return presenter.register(email, password, name);
+		},
+		[dispatch, presenter]
+	);
 
 	const loginAnonymous = useCallback(async () => {
-		dispatch(loginStart())
+		dispatch(loginStart());
+		return presenter.loginAnonymous();
+	}, [dispatch, presenter]);
 
-		try {
-			// Simulate API call
-			await new Promise(resolve => setTimeout(resolve, 500))
-
-			// Mock anonymous user
-			const anonymousUser: User = {
-				id: 'anonymous_' + Date.now(),
-				email: 'anonymous@user.com',
-				name: 'Usuario Anónimo',
-				isAnonymous: true,
-				createdAt: new Date().toISOString()
-			}
-
-			dispatch(loginSuccess(anonymousUser))
-			return { success: true }
-		} catch (err) {
-			dispatch(loginFailure('Error al entrar como anónimo'))
-			return { success: false, error: 'Error al entrar como anónimo' }
-		}
-	}, [dispatch])
-
-	const logoutUser = useCallback(() => {
-		console.log("🚪 Logging out user...")
-		dispatch(logout())
-		console.log("✅ Logout action dispatched")
-
-		// Force navigation to auth screen after logout
-		setTimeout(() => {
-			console.log("🔄 Force navigating to auth after logout")
-			router.replace(Routes.AUTH)
-		}, 100)
-	}, [dispatch, router])
+	const logout = useCallback(async () => {
+		await presenter.logout();
+		// redirigir a login
+		router.replace(Routes.AUTH);
+	}, [presenter, router]);
 
 	const clearAuthError = useCallback(() => {
-		dispatch(clearError())
-	}, [dispatch])
+		dispatch(clearError());
+	}, [dispatch]);
 
 	return {
 		user,
@@ -120,7 +99,7 @@ export const useAuth = () => {
 		login,
 		register,
 		loginAnonymous,
-		logout: logoutUser,
-		clearError: clearAuthError
-	}
-} 
+		logout,
+		clearError: clearAuthError,
+	};
+}; 

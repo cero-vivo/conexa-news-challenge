@@ -5,9 +5,9 @@ import { DEBUG_MODE } from '@/constants/Config'
 import { Routes } from '@/constants/Routes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { logout as logoutAction } from '@/features/auth/model/store/authSlice'
+import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
 import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
-import { setShowOnboarding } from '@/store/configUiSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
@@ -17,7 +17,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function Index() {
-	const { showOnboarding } = useAppSelector((state) => state.configUI)
+	const { showOnboarding } = useAppSelector((state) => state.onboarding)
 	const { isAuthenticated, user } = useAppSelector((state) => state.auth)
 	const { login } = useAuth()
 	const dispatch = useAppDispatch()
