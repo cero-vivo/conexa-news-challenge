@@ -62,4 +62,3 @@ La aplicación permite al usuario:
    ```bash
    npx expo start
    ```
-# conexa-news-challenge
