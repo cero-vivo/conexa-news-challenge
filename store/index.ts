@@ -1,9 +1,11 @@
 import newsReducer from '@/feature/news/model/store/newsSlice'
+import usersReducer from '@/feature/users/model/store/usersSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
     reducer: {
         news: newsReducer,
+        users: usersReducer,
     },
 })
 

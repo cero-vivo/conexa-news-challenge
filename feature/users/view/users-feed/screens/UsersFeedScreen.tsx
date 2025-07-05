@@ -1,61 +1,59 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
-import { News } from '@/feature/news/model/entities/News'
-import { setSelectedNews } from '@/feature/news/model/store/newsSlice'
+import { User } from '@/feature/users/model/entities/User'
+import { setSelectedUser } from '@/feature/users/model/store/usersSlice'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
 import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { NewsCard } from '../components/NewsCard'
-import { useNewsFeedScreen } from '../hooks/useNewsFeedScreen'
+import { UserCard } from '../components/UserCard'
+import { useUsersFeedScreen } from '../hooks/useUsersFeedScreen'
 
-export const NewsFeedScreen = () => {
-    const { news, loading, error } = useNewsFeedScreen();
+export const UsersFeedScreen = () => {
+    const { users, loading, error } = useUsersFeedScreen();
     const flatListRef = useRef<FlatList>(null);
     const router = useRouter();
     const dispatch = useAppDispatch();
     const insets = useSafeAreaInsets();
 
-    const handleNewsPress = (newsItem: News) => {
-        dispatch(setSelectedNews(newsItem));
-        router.push(`/news-detail`);
+    const handleUserPress = (user: User) => {
+        dispatch(setSelectedUser(user));
+        router.push(`/user-detail`);
     };
 
-    const handleDoubleTapNews = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
+    const handleDoubleTapUsers = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
 
-    const renderNewsItem = useMemo(() => {
-        return ({ item }: { item: News }) => (
-            <NewsCard 
-                news={item} 
-                onPress={handleNewsPress}
+    const renderUserItem = useMemo(() => {
+        return ({ item }: { item: User }) => (
+            <UserCard 
+                user={item} 
+                onPress={handleUserPress}
             />
         );
-    }, [handleNewsPress, news?.length]);
+    }, [handleUserPress, users?.length]);
 
     const renderEmptyState = () => (
         <ThemedView style={styles.emptyContainer}>
             <ThemedText style={styles.emptyText}>
-                No news available at the moment
+                No users available at the moment
             </ThemedText>
         </ThemedView>
     );
 
-    // Render loading state
     const renderLoadingState = () => (
         <ThemedView style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#007AFF" />
             <ThemedText style={styles.loadingText}>
-                Loading news...
+                Loading users...
             </ThemedText>
         </ThemedView>
     );
 
-    // Render error state
     const renderErrorState = () => (
         <ThemedView style={styles.errorContainer}>
             <ThemedText style={styles.errorText}>
-                Error loading news: {error}
+                Error loading users: {error}
             </ThemedText>
         </ThemedView>
     );
@@ -65,13 +63,13 @@ export const NewsFeedScreen = () => {
             {/* Header section */}
             <ThemedView style={styles.header}>
                 <TouchableOpacity 
-                    onPress={handleDoubleTapNews}
+                    onPress={handleDoubleTapUsers}
                     activeOpacity={0.7}
                     style={styles.titleContainer}
                 >
-                    <ThemedText type="title">Cx News</ThemedText>
+                    <ThemedText type="title">Cx Users</ThemedText>
                 </TouchableOpacity>
-                <ThemedText type="subtitle">Stay informed with the latest news</ThemedText>
+                <ThemedText type="subtitle">Discover our community members</ThemedText>
             </ThemedView>
 
             {/* Content section */}
@@ -83,8 +81,8 @@ export const NewsFeedScreen = () => {
                 ) : (
                     <FlatList
                         ref={flatListRef}
-                        data={news}
-                        renderItem={renderNewsItem}
+                        data={users}
+                        renderItem={renderUserItem}
                         keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={[styles.listContainer, { paddingBottom: insets.bottom + 20 }]}
@@ -147,4 +145,4 @@ const styles = StyleSheet.create({
         color: '#666666',
         textAlign: 'center',
     },
-});
+}); 

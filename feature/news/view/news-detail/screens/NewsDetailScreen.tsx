@@ -8,12 +8,13 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const NewsDetailScreen = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
     const selectedNews: News | null = useAppSelector(state => state.news.selectedNews) || null
-
+    const insets = useSafeAreaInsets()
 
     // Theme colors
     const textColor = useThemeColor({}, 'text')
@@ -33,7 +34,7 @@ export const NewsDetailScreen = () => {
     return (
         <ThemedView style={styles.container}>
             {/* Header */}
-            <ThemedView style={[styles.header, { borderBottomColor: borderColor }]}>
+            <ThemedView style={[styles.header, { borderBottomColor: borderColor, paddingTop: insets.top + 20 }]}>
                 <TouchableOpacity 
                     style={styles.backButton} 
                     onPress={handleBackPress}
@@ -50,7 +51,7 @@ export const NewsDetailScreen = () => {
             <ScrollView 
                 style={styles.scrollView}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContent}
+                contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
             >
                 {/* Image */}
                 <Image 
