@@ -8,6 +8,7 @@ import { logout as logoutAction } from '@/features/auth/model/store/authSlice'
 import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
 import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import { setLanguage } from '@/store/configUiSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
@@ -116,9 +117,10 @@ export default function Index() {
 
 			console.log("✅ Storage cleared successfully");
 
-			// Reset language to Spanish
+			// Reset language to Spanish and store state
 			await i18n.changeLanguage('es')
-			console.log("🌍 Idioma reseteado a español")
+			dispatch(setLanguage('es'))
+			console.log("🌍 Idioma reseteado a español y estado actualizado")
 
 			// Reset auth state explicitly
 			dispatch(logoutAction())

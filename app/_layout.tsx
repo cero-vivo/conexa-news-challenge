@@ -11,10 +11,14 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import '@/constants/i18n'
 import { useColorScheme } from '@/hooks/useColorScheme'
+import { useLanguageSync } from '@/hooks/useLanguageSync'
 
 function AppContent() {
 	const colorScheme = useColorScheme()
 	const [loaded] = useFonts({SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),})
+
+	// Sincronizar idioma globalmente
+	useLanguageSync()
 
 	if (!loaded) {
 		return null
