@@ -11,7 +11,7 @@ import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Image, Keyboard, KeyboardEvent, StyleSheet, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, FlatList, Keyboard, KeyboardEvent, StyleSheet, TouchableOpacity } from 'react-native'
 import Animated, {
     interpolate,
     useAnimatedStyle,
@@ -36,11 +36,22 @@ export const NewsFeedScreen = () => {
     const backgroundColor = useThemeColor({}, 'background');
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
 
-    // Animation values
+    // Animation values (reused for both keyboard and scroll)
     const headerHeight = useSharedValue(1);
     const searchBarTranslateY = useSharedValue(.5);
     const headerOpacity = useSharedValue(1);
     const searchBarScale = useSharedValue(1);
+
+    // Logo animation values
+    const logoScale = useSharedValue(1);
+    const logoTranslateX = useSharedValue(0);
+    const logoTranslateY = useSharedValue(0);
+    const logoOpacity = useSharedValue(1);
+
+    // Scroll tracking
+    const scrollY = useSharedValue(0);
+    const isScrolling = useSharedValue(false);
+    const scrollDirection = useSharedValue(0); // 0: none, 1: down, -1: up
 
     const { filteredNews, handleSearch, handleClear } = useNewsSearch(news);
 
@@ -50,6 +61,80 @@ export const NewsFeedScreen = () => {
     };
 
     const handleDoubleTapNews = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
+
+    // Scroll event handlers
+    const handleScroll = (event: any) => {
+        const currentOffset = event.nativeEvent.contentOffset.y;
+        const previousOffset = scrollY.value;
+        
+        scrollY.value = currentOffset;
+        
+        // Determine scroll direction
+        if (currentOffset > previousOffset) {
+            scrollDirection.value = 1; // Scrolling down
+        } else if (currentOffset < previousOffset) {
+            scrollDirection.value = -1; // Scrolling up
+        }
+        
+        isScrolling.value = true;
+
+        // Use existing animation values for scroll
+        if (currentOffset > 10 && scrollDirection.value === 1 && isScrolling.value) {
+            // Hide header when scrolling down
+            headerHeight.value = withTiming(0, { duration: 300 });
+            headerOpacity.value = withTiming(0, { duration: 300 });
+            
+            // Animate logo to center above search bar
+            logoScale.value = withTiming(0.8, { duration: 300 });
+            logoTranslateX.value = withTiming(0, { duration: 300 }); // Center horizontally
+            logoTranslateY.value = withTiming(-30, { duration: 300 }); // Move up but not too much
+            logoOpacity.value = withTiming(1, { duration: 300 });
+        } else if (scrollDirection.value === -1 || currentOffset < 10) {
+            // Show header when scrolling up or near top
+            headerHeight.value = withTiming(1, { duration: 300 });
+            headerOpacity.value = withTiming(1, { duration: 300 });
+            
+            // Animate logo back to original position
+            logoScale.value = withTiming(1, { duration: 300 });
+            logoTranslateX.value = withTiming(0, { duration: 300 });
+            logoTranslateY.value = withTiming(0, { duration: 300 });
+            logoOpacity.value = withTiming(1, { duration: 300 });
+        }
+    };
+
+    const handleScrollBeginDrag = () => {
+        isScrolling.value = true;
+    };
+
+    const handleScrollEndDrag = () => {
+        isScrolling.value = false;
+        // Show header when scroll stops near top
+        if (scrollY.value < 50) {
+            headerHeight.value = withTiming(1, { duration: 300 });
+            headerOpacity.value = withTiming(1, { duration: 300 });
+            
+            // Animate logo back to original position
+            logoScale.value = withTiming(1, { duration: 300 });
+            logoTranslateX.value = withTiming(0, { duration: 300 });
+            logoTranslateY.value = withTiming(0, { duration: 300 });
+            logoOpacity.value = withTiming(1, { duration: 300 });
+        }
+    };
+
+    const handleMomentumScrollEnd = () => {
+        isScrolling.value = false;
+        // Show header when momentum scroll ends near top
+        if (scrollY.value < 50) {
+            headerHeight.value = withTiming(1, { duration: 300 });
+            headerOpacity.value = withTiming(1, { duration: 300 });
+            
+            // Animate logo back to original position
+            logoScale.value = withTiming(1, { duration: 300 });
+            logoTranslateX.value = withTiming(0, { duration: 300 });
+            logoTranslateY.value = withTiming(0, { duration: 300 });
+            logoOpacity.value = withTiming(1, { duration: 300 });
+        }
+    };
 
     // Keyboard event handlers
     const onKeyboardShow = (event: KeyboardEvent) => {
@@ -63,6 +148,12 @@ export const NewsFeedScreen = () => {
         // Keep search bar visible but add a subtle effect
         searchBarTranslateY.value = withTiming(-5, { duration: animationDuration });
         searchBarScale.value = withTiming(1.01, { duration: animationDuration });
+        
+        // Animate logo to center above search bar
+        logoScale.value = withTiming(0.8, { duration: animationDuration });
+        logoTranslateX.value = withTiming(0, { duration: animationDuration });
+        logoTranslateY.value = withTiming(-30, { duration: animationDuration });
+        logoOpacity.value = withTiming(1, { duration: animationDuration });
     };
 
     const onKeyboardHide = () => {
@@ -75,6 +166,12 @@ export const NewsFeedScreen = () => {
         // Move search bar back to original position
         searchBarTranslateY.value = withTiming(0, { duration: animationDuration });
         searchBarScale.value = withTiming(1, { duration: animationDuration });
+        
+        // Animate logo back to original position
+        logoScale.value = withTiming(1, { duration: animationDuration });
+        logoTranslateX.value = withTiming(0, { duration: animationDuration });
+        logoTranslateY.value = withTiming(0, { duration: animationDuration });
+        logoOpacity.value = withTiming(1, { duration: animationDuration });
     };
 
     useEffect(() => {
@@ -87,7 +184,7 @@ export const NewsFeedScreen = () => {
         };
     }, []);
 
-    // Animated styles
+    // Animated styles (reused for both keyboard and scroll)
     const headerAnimatedStyle = useAnimatedStyle(() => {
         return {
             height: interpolate(headerHeight.value, [0, 1], [0, 120]), // Reduced height for more compact layout
@@ -109,6 +206,18 @@ export const NewsFeedScreen = () => {
             shadowOpacity: interpolate(searchBarScale.value, [1, 1.01], [0, 0.08]),
             shadowRadius: interpolate(searchBarScale.value, [1, 1.01], [0, 6]),
             elevation: interpolate(searchBarScale.value, [1, 1.01], [0, 3]),
+        };
+    });
+
+    // Logo animated style
+    const logoAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                { scale: logoScale.value },
+                { translateX: logoTranslateX.value },
+                { translateY: logoTranslateY.value }
+            ],
+            opacity: logoOpacity.value,
         };
     });
 
@@ -143,7 +252,7 @@ export const NewsFeedScreen = () => {
     // Render error state
     const renderErrorState = () => (
         <ThemedView style={styles(insets).errorContainer}>
-            <IconSymbol name="bolt.fill" size={48} color="#FF3B30" style={styles(insets).errorIcon} />
+            <IconSymbol name="bolt.fill" size={48} color="#FF3B30" />
             <ThemedText style={styles(insets).errorText}>
                 {t('news.error')}: {error}
             </ThemedText>
@@ -161,9 +270,9 @@ export const NewsFeedScreen = () => {
                         style={styles(insets).titleContainer}
                     >
                         <ThemedView style={styles(insets).logoContainer}>
-                            <Image 
+                            <Animated.Image 
                                 source={require('@/assets/images/conexa_tech_logo.jpg')} 
-                                style={styles(insets).logo}
+                                style={[styles(insets).logo, logoAnimatedStyle]}
                                 resizeMode="contain"
                             />
                             <ThemedView style={styles(insets).titleSection}>
@@ -209,6 +318,11 @@ export const NewsFeedScreen = () => {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={[styles(insets).listContainer, { paddingBottom: insets.bottom + 20  }]}
                         ListEmptyComponent={renderEmptyState}
+                        onScroll={handleScroll}
+                        onScrollBeginDrag={handleScrollBeginDrag}
+                        onScrollEndDrag={handleScrollEndDrag}
+                        onMomentumScrollEnd={handleMomentumScrollEnd}
+                        scrollEventThrottle={16}
                     />
                 )}
             </ThemedView>
