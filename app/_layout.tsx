@@ -3,6 +3,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Platform } from 'react-native';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
@@ -52,14 +53,20 @@ export default function RootLayout() {
                 name="news-detail" 
                 options={{ 
                   headerShown: false,
-                  presentation: 'modal'
+                  presentation: Platform.OS === 'ios' ? 'modal' : 'card',
+                  animation: Platform.OS === 'ios' ? 'slide_from_bottom' : 'slide_from_right',
+                  gestureEnabled: true,
+                  gestureDirection: Platform.OS === 'ios' ? 'vertical' : 'horizontal',
                 }} 
               />
               <Stack.Screen 
                 name="user-detail" 
                 options={{ 
                   headerShown: false,
-                  presentation: 'modal'
+                  presentation: Platform.OS === 'ios' ? 'modal' : 'card',
+                  animation: Platform.OS === 'ios' ? 'slide_from_bottom' : 'slide_from_right',
+                  gestureEnabled: true,
+                  gestureDirection: Platform.OS === 'ios' ? 'vertical' : 'horizontal',
                 }} 
               />
               <Stack.Screen name="+not-found" />

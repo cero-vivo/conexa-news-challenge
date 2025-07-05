@@ -24,8 +24,10 @@ export const UserDetailScreen = () => {
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text')
     const secondaryTextColor = useThemeColor({ light: '#666666', dark: '#9BA1A6' }, 'icon')
     const contentTextColor = useThemeColor({ light: '#333333', dark: '#ECEDEE' }, 'text')
+    const backgroundColor = useThemeColor({}, 'background')
 
     const handleBackPress = () => {
+        console.log('Back button pressed in UserDetailScreen')
         dispatch(clearSelectedUser())
         router.back()
     }
@@ -52,7 +54,7 @@ export const UserDetailScreen = () => {
         <ThemedView style={styles.container}>
             <ThemedView style={[styles.header, { borderBottomColor: borderColor, paddingTop: insets.top + 20 }]}>
                 <TouchableOpacity 
-                    style={styles.backButton} 
+                    style={[styles.backButton, { backgroundColor: backgroundColor }]} 
                     onPress={handleBackPress}
                     activeOpacity={0.7}
                 >
@@ -150,8 +152,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     backButton: {
-        padding: 8,
+        padding: 12,
         marginRight: 12,
+        borderRadius: 8,
+        minWidth: 44,
+        minHeight: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     headerTitle: {
         flex: 1,

@@ -24,7 +24,7 @@ export const SearchBar = ({ placeholder = 'Buscar...', onSearch, onClear, deboun
 
     return (
         <ThemedView style={[styles.container, { backgroundColor: bg }, style]}>
-            <IconSymbol name="magnifyingglass" size={18} color={placeholderColor} style={styles.icon} />
+            <IconSymbol name="magnifyingglass" size={20} color={placeholderColor} style={styles.icon} />
             <TextInput
                 style={[styles.input, { color: text }]}
                 placeholderTextColor={placeholderColor}
@@ -38,7 +38,7 @@ export const SearchBar = ({ placeholder = 'Buscar...', onSearch, onClear, deboun
                     <ThemedText style={{ color: tint, fontSize: 14 }}>Limpiar</ThemedText>
                 </TouchableOpacity>
             )}
-            {isSearching && <IconSymbol name="clock" size={16} color={tint} style={styles.icon} />}
+            {isSearching && <IconSymbol name="clock" size={18} color={tint} style={styles.icon} />}
         </ThemedView>
     )
 }
@@ -48,10 +48,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 12,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        minHeight: 48,
     },
-    icon: { marginHorizontal: 4 },
-    input: { flex: 1, fontSize: 16, paddingVertical: 4 },
-    clearBtn: { paddingHorizontal: 6, paddingVertical: 2 },
+    icon: { 
+        marginHorizontal: 8,
+        minWidth: 20,
+        textAlign: 'center',
+    },
+    input: { 
+        flex: 1, 
+        fontSize: 16, 
+        paddingVertical: 8,
+        paddingHorizontal: 8,
+    },
+    clearBtn: { 
+        paddingHorizontal: 12, 
+        paddingVertical: 8,
+        minHeight: 32,
+        justifyContent: 'center',
+    },
 }) 

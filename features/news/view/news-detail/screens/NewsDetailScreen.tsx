@@ -32,6 +32,7 @@ export const NewsDetailScreen = () => {
     const contentTextColor = useThemeColor({ light: '#333333', dark: '#ECEDEE' }, 'text')
 
     const handleBackPress = () => {
+        console.log('Back button pressed in NewsDetailScreen')
         dispatch(clearSelectedNews())
         router.back()
     }
@@ -53,7 +54,7 @@ export const NewsDetailScreen = () => {
             {/* Header */}
             <ThemedView style={[styles.header, { borderBottomColor: borderColor, paddingTop: insets.top + 20 }]}>
                 <TouchableOpacity 
-                    style={styles.backButton} 
+                    style={[styles.backButton, { backgroundColor: backgroundColor }]} 
                     onPress={handleBackPress}
                     activeOpacity={0.7}
                 >
@@ -66,7 +67,7 @@ export const NewsDetailScreen = () => {
                 {/* Bookmark toggle */}
                 <TouchableOpacity
                     onPress={handleToggleSave}
-                    style={styles.saveButton}
+                    style={[styles.saveButton, { backgroundColor: backgroundColor }]}
                     activeOpacity={0.7}
                 >
                     <IconSymbol name={isSaved ? 'bookmark.fill' : 'bookmark'} size={24} color={tintColor} />
@@ -136,8 +137,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     backButton: {
-        padding: 8,
+        padding: 12,
         marginRight: 12,
+        borderRadius: 8,
+        minWidth: 44,
+        minHeight: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     headerTitle: {
         flex: 1,
@@ -222,6 +228,11 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     saveButton: {
-        padding: 8,
+        padding: 12,
+        borderRadius: 8,
+        minWidth: 44,
+        minHeight: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 }) 
