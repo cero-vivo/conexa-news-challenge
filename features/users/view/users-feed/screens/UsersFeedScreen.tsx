@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
 import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { UserCard } from '../components/UserCard'
 import { useUsersFeedScreen } from '../hooks/useUsersFeedScreen'
 
@@ -34,38 +34,38 @@ export const UsersFeedScreen = () => {
     }, [handleUserPress, users?.length]);
 
     const renderEmptyState = () => (
-        <ThemedView style={styles.emptyContainer}>
-            <ThemedText style={styles.emptyText}>
+        <ThemedView style={styles(insets).emptyContainer}>
+            <ThemedText style={styles(insets).emptyText}>
                 No users available at the moment
             </ThemedText>
         </ThemedView>
     );
 
     const renderLoadingState = () => (
-        <ThemedView style={styles.loadingContainer}>
+        <ThemedView style={styles(insets).loadingContainer}>
             <ActivityIndicator size="large" color="#007AFF" />
-            <ThemedText style={styles.loadingText}>
+            <ThemedText style={styles(insets).loadingText}>
                 Loading users...
             </ThemedText>
         </ThemedView>
     );
 
     const renderErrorState = () => (
-        <ThemedView style={styles.errorContainer}>
-            <ThemedText style={styles.errorText}>
+        <ThemedView style={styles(insets).errorContainer}>
+            <ThemedText style={styles(insets).errorText}>
                 Error loading users: {error}
             </ThemedText>
         </ThemedView>
     );
 
     return (
-        <ThemedView style={[styles.container, { paddingBottom: insets.bottom }]}>
+        <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
             {/* Header section */}
-            <ThemedView style={styles.header}>
+            <ThemedView style={styles(insets).header}>
                 <TouchableOpacity 
                     onPress={handleDoubleTapUsers}
                     activeOpacity={0.7}
-                    style={styles.titleContainer}
+                    style={styles(insets).titleContainer}
                 >
                     <ThemedText type="title">Cx Users</ThemedText>
                 </TouchableOpacity>
@@ -73,7 +73,7 @@ export const UsersFeedScreen = () => {
             </ThemedView>
 
             {/* Content section */}
-            <ThemedView style={styles.content}>
+            <ThemedView style={styles(insets).content}>
                 {loading === 'loading' ? (
                     renderLoadingState()
                 ) : loading === 'error' ? (
@@ -85,7 +85,7 @@ export const UsersFeedScreen = () => {
                         renderItem={renderUserItem}
                         keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
-                        contentContainerStyle={[styles.listContainer, { paddingBottom: insets.bottom + 20 }]}
+                        contentContainerStyle={[styles(insets).listContainer, { paddingBottom: insets.bottom + 20 }]}
                         ListEmptyComponent={renderEmptyState}
                     />
                 )}
@@ -94,13 +94,13 @@ export const UsersFeedScreen = () => {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = (insets: EdgeInsets) => StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
     },
     header: {
-        marginTop: 60,
+        marginTop: insets.top,
         marginBottom: 30,
         gap: 8,
     },

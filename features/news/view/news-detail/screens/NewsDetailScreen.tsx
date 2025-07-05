@@ -6,7 +6,7 @@ import { clearSelectedNews } from '@/features/news/model/store/newsSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -30,6 +30,11 @@ export const NewsDetailScreen = () => {
         dispatch(clearSelectedNews())
         router.back()
     }
+    useEffect(() => {
+        return () => {
+            dispatch(clearSelectedNews())
+        }
+    }, [])
 
     return (
         <ThemedView style={styles.container}>
@@ -55,7 +60,7 @@ export const NewsDetailScreen = () => {
             >
                 {/* Image */}
                 <Image 
-                    source={{ uri: selectedNews?.image }} 
+                    source={{ uri: `https://picsum.photos/200/300?random=${selectedNews?.id}` }} 
                     style={styles.newsImage}
                     resizeMode="cover"
                 />

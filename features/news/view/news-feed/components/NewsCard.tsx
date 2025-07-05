@@ -22,7 +22,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
       <View style={styles.card}>
         
         <Image 
-          source={{ uri: news.image || news.thumbnail }} 
+          source={{ uri: `https://picsum.photos/200/300?random=${news.id}` }} 
           style={styles.image}
           resizeMode="cover"
         />
