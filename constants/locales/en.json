@@ -1,0 +1,67 @@
+{
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to Cx News!",
+      "subtitle": "Your reliable source of information",
+      "description": "Discover the latest news and stay informed with our modern and easy-to-use news application."
+    },
+    "features": {
+      "title": "Main Features",
+      "subtitle": "Premium user experience",
+      "description": "• News feed with intelligent search\n• Save system with persistence\n• Smooth navigation with tabs and modals\n• Modern and responsive UI/UX\n• Title search with partial matches"
+    },
+    "technologies": {
+      "title": "Technologies and Architecture",
+      "subtitle": "Maintainable and scalable code",
+      "description": "• React Native with Expo Router\n• Redux Toolkit for state management\n• Redux Persist for data persistence\n• Modular architecture by features\n• TypeScript for type safety\n• Navigation with expo-router"
+    },
+    "profile": {
+      "title": "Hello! I'm Luis Espinoza",
+      "subtitle": "React Native Developer",
+      "description": "I'm excited about the opportunity to join the Conexa team and contribute with my experience in native mobile development."
+    },
+    "buttons": {
+      "enter": "Enter",
+      "dontShowAgain": "Don't show again"
+    },
+    "language": {
+      "title": "Selecciona tu idioma",
+      "subtitle": "Choose your language",
+      "spanish": "Español",
+      "english": "English"
+    }
+  },
+  "tabs": {
+    "news": "News",
+    "users": "Users",
+    "saved": "Saved"
+  },
+  "news": {
+    "search": "Search news...",
+    "empty": "No news found",
+    "error": "Error loading news",
+    "loading": "Loading news...",
+    "save": "Save",
+    "saved": "Saved",
+    "unsave": "Remove from saved"
+  },
+  "users": {
+    "search": "Search users...",
+    "empty": "No users found",
+    "error": "Error loading users",
+    "loading": "Loading users..."
+  },
+  "saved": {
+    "title": "Saved News",
+    "empty": "You don't have saved news",
+    "description": "News you save will appear here"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete"
+  }
+} 

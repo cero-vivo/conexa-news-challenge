@@ -8,13 +8,16 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import '@/constants/i18n';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useLanguageSync } from '@/hooks/useLanguageSync';
 import { store } from '@/store';
 import { useAppSelector } from '@/store/hooks';
 import { Redirect } from 'expo-router';
 
 function AppContent() {
   const { showOnboarding } = useAppSelector((state) => state.configUI);
+  useLanguageSync(); // Sync language with i18n
   
   // If onboarding should be shown, redirect to onboarding
   if (showOnboarding) {

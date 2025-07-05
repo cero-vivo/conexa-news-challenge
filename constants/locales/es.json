@@ -1,0 +1,67 @@
+{
+  "onboarding": {
+    "welcome": {
+      "title": "¡Bienvenido a Cx News!",
+      "subtitle": "Tu fuente de información confiable",
+      "description": "Descubre las últimas noticias y mantente informado con nuestra aplicación de noticias moderna y fácil de usar."
+    },
+    "features": {
+      "title": "Funcionalidades Principales",
+      "subtitle": "Experiencia de usuario premium",
+      "description": "• Feed de noticias con búsqueda inteligente\n• Sistema de guardado con persistencia\n• Navegación fluida por tabs y modales\n• UI/UX moderna y responsive\n• Búsqueda por título con coincidencias parciales"
+    },
+    "technologies": {
+      "title": "Tecnologías y Arquitectura",
+      "subtitle": "Código mantenible y escalable",
+      "description": "• React Native con Expo Router\n• Redux Toolkit para gestión de estado\n• Redux Persist para persistencia de datos\n• Arquitectura modular por features\n• TypeScript para type safety\n• Navegación con expo-router"
+    },
+    "profile": {
+      "title": "¡Hola! Soy Luis Espinoza",
+      "subtitle": "React Native Developer",
+      "description": "Estoy emocionado por la oportunidad de unirme al equipo de Conexa y contribuir con mi experiencia en desarrollo móvil."
+    },
+    "buttons": {
+      "enter": "Entrar",
+      "dontShowAgain": "No mostrar más"
+    },
+    "language": {
+      "title": "Selecciona tu idioma",
+      "subtitle": "Choose your language",
+      "spanish": "Español",
+      "english": "English"
+    }
+  },
+  "tabs": {
+    "news": "Noticias",
+    "users": "Usuarios",
+    "saved": "Guardadas"
+  },
+  "news": {
+    "search": "Buscar noticias...",
+    "empty": "No se encontraron noticias",
+    "error": "Error al cargar las noticias",
+    "loading": "Cargando noticias...",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "unsave": "Quitar de guardadas"
+  },
+  "users": {
+    "search": "Buscar usuarios...",
+    "empty": "No se encontraron usuarios",
+    "error": "Error al cargar usuarios",
+    "loading": "Cargando usuarios..."
+  },
+  "saved": {
+    "title": "Noticias Guardadas",
+    "empty": "No tienes noticias guardadas",
+    "description": "Las noticias que guardes aparecerán aquí"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar"
+  }
+} 

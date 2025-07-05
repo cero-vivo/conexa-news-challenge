@@ -1,12 +1,15 @@
+import { LanguageSelector } from '@/components/LanguageSelector'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
+import { Button } from '@/components/ui/Button'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { setShowOnboarding } from '@/store/configUiSlice'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { Dimensions, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { Dimensions, Image, StyleSheet, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Swiper from 'react-native-swiper'
 
@@ -17,14 +20,19 @@ function OnboardingScreen() {
     const insets = useSafeAreaInsets()
     const [currentIndex, setCurrentIndex] = useState(0)
     const dispatch = useAppDispatch()
+    const { t } = useTranslation()
 
     const textColor = useThemeColor({}, 'text')
     const tintColor = useThemeColor({}, 'tint')
     const backgroundColor = useThemeColor({}, 'background')
-    const isDark = useColorScheme() === 'dark'
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === 'dark'
+    
+    // Use the opposite of textColor for button text to ensure contrast
+    const buttonTextColor = textColor === '#000000' ? '#FFFFFF' : '#000000'
 
     const handleEnter = () => {
-        dispatch(setShowOnboarding(true))
+        dispatch(setShowOnboarding(false))
         router.replace('/(tabs)')
     }
 
@@ -96,27 +104,36 @@ function OnboardingScreen() {
                 showsVerticalScrollIndicator={false}
                 scrollEventThrottle={16}
             >
+                {/* Slide 0: Language Selection */}
+                <ThemedView style={[styles.slide, { backgroundColor }]}>
+                    <ThemedView style={[styles.slideContent, { 
+                        paddingTop: insets.top + 40,
+                        paddingBottom: insets.bottom + 40
+                    }]}>
+                        <LanguageSelector />
+                    </ThemedView>
+                </ThemedView>
+
                 {/* Slide 1: Bienvenida */}
                 <ThemedView style={[styles.slide, { backgroundColor }]}>
                     <ThemedView style={[styles.slideContent, { 
                         paddingTop: insets.top + 40,
                         paddingBottom: insets.bottom + 40
                     }]}>
-
                         <ThemedView style={styles.contentSection}>
                             <ThemedView style={styles.logoSection}>
                                 <Image source={require('../assets/images/conexa_tech_logo.jpg')} style={styles.logoImage} />
                             </ThemedView>
                             <ThemedText type="title" style={[styles.slideTitle, { color: textColor }]}>
-                                ¡Bienvenido a Cx News!
+                                {t('onboarding.welcome.title')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideSubtitle, { color: textColor }]}>
-                                Tu fuente de información confiable
+                                {t('onboarding.welcome.subtitle')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideDescription, { color: textColor }]}>
-                                Descubre las últimas noticias y mantente informado con nuestra aplicación de noticias moderna y fácil de usar.
+                                {t('onboarding.welcome.description')}
                             </ThemedText>
                         </ThemedView>
                     </ThemedView>
@@ -134,19 +151,15 @@ function OnboardingScreen() {
                             </ThemedView>
 
                             <ThemedText type="title" style={[styles.slideTitle, { color: textColor }]}>
-                                Funcionalidades Principales
+                                {t('onboarding.features.title')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideSubtitle, { color: textColor }]}>
-                                Experiencia de usuario premium
+                                {t('onboarding.features.subtitle')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideDescription, { color: textColor }]}>
-                                • Feed de noticias con búsqueda inteligente{'\n'}
-                                • Sistema de guardado con persistencia{'\n'}
-                                • Navegación fluida por tabs y modales{'\n'}
-                                • UI/UX moderna y responsive{'\n'}
-                                • Búsqueda por título con coincidencias parciales
+                                {t('onboarding.features.description')}
                             </ThemedText>
                         </ThemedView>
                     </ThemedView>
@@ -164,20 +177,15 @@ function OnboardingScreen() {
                             </ThemedView>
 
                             <ThemedText type="title" style={[styles.slideTitle, { color: textColor }]}>
-                                Tecnologías y Arquitectura
+                                {t('onboarding.technologies.title')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideSubtitle, { color: textColor }]}>
-                                Código mantenible y escalable
+                                {t('onboarding.technologies.subtitle')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideDescription, { color: textColor }]}>
-                                • React Native con Expo Router{'\n'}
-                                • Redux Toolkit para gestión de estado{'\n'}
-                                • Redux Persist para persistencia de datos{'\n'}
-                                • Arquitectura modular por features{'\n'}
-                                • TypeScript para type safety{'\n'}
-                                • Navegación con expo-router
+                                {t('onboarding.technologies.description')}
                             </ThemedText>
                         </ThemedView>
                     </ThemedView>
@@ -187,47 +195,39 @@ function OnboardingScreen() {
                 <ThemedView style={[styles.slide, { backgroundColor }]}>
                     <ThemedView style={[styles.slideContent, { 
                         paddingTop: insets.top + 40,
-                        paddingBottom: insets.bottom + 20
+                        paddingBottom: insets.bottom + 40
                     }]}>
                         <ThemedView style={styles.profileSection}>
                             <Image source={require('../assets/images/me.jpeg')} style={styles.profileImage} />
                             <ThemedText type="title" style={[styles.slideTitle, { color: textColor }]}>
-                                ¡Hola! Soy Luis Espinoza
+                                {t('onboarding.profile.title')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideSubtitle, { color: textColor }]}>
-                                React Native Developer
+                                {t('onboarding.profile.subtitle')}
                             </ThemedText>
 
                             <ThemedText style={[styles.slideDescription, { color: textColor }]}>
-                                Estoy emocionado por la oportunidad de unirme al equipo de Conexa y contribuir con mi experiencia en desarrollo móvil.
+                                {t('onboarding.profile.description')}
                             </ThemedText>
                         </ThemedView>
 
                         <ThemedView style={styles.buttonSection}>
-                            <TouchableOpacity
-                                style={[styles.primaryButton, { 
-                                    backgroundColor: isDark ? '#FFFFFF' : tintColor,
-                                }]}
+                            <Button
+                                variant="primary"
+                                size="large"
                                 onPress={handleEnter}
-                                activeOpacity={0.8}
                             >
-                                <ThemedText style={[styles.primaryButtonText, { 
-                                    color: isDark ? '#000000' : '#FFFFFF' 
-                                }]}>
-                                    Entrar
-                                </ThemedText>
-                            </TouchableOpacity>
+                                {t('onboarding.buttons.enter')}
+                            </Button>
 
-                            <TouchableOpacity
-                                style={styles.secondaryButton}
+                            <Button
+                                variant="secondary"
+                                size="medium"
                                 onPress={handleDontShowAgain}
-                                activeOpacity={0.8}
                             >
-                                <ThemedText style={[styles.secondaryButtonText, { color: textColor }]}>
-                                    No mostrar más
-                                </ThemedText>
-                            </TouchableOpacity>
+                                {t('onboarding.buttons.dontShowAgain')}
+                            </Button>
                         </ThemedView>
                     </ThemedView>
                 </ThemedView>
@@ -315,26 +315,6 @@ const styles = StyleSheet.create({
     buttonSection: {
         gap: 16,
         marginTop: 20,
-    },
-    primaryButton: {
-        paddingVertical: 16,
-        paddingHorizontal: 32,
-        borderRadius: 12,
-        alignItems: 'center',
-    },
-    primaryButtonText: {
-        color: '#FFFFFF',
-        fontSize: 18,
-        fontWeight: '600',
-    },
-    secondaryButton: {
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        alignItems: 'center',
-    },
-    secondaryButtonText: {
-        fontSize: 16,
-        opacity: 0.7,
     },
     dot: {
         width: 24,

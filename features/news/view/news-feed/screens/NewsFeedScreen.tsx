@@ -1,3 +1,4 @@
+import { LanguageSelector } from '@/components/LanguageSelector'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { News } from '@/features/news/model/entities/News'
@@ -6,6 +7,7 @@ import { SearchBar } from '@/shared/components/SearchBar/SearchBar'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NewsCard } from '../components/NewsCard'
@@ -18,6 +20,7 @@ export const NewsFeedScreen = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const insets = useSafeAreaInsets();
+    const { t } = useTranslation();
 
     const { filteredNews, handleSearch, handleClear } = useNewsSearch(news);
 
@@ -40,7 +43,7 @@ export const NewsFeedScreen = () => {
     const renderEmptyState = () => (
         <ThemedView style={styles(insets).emptyContainer}>
             <ThemedText style={styles(insets).emptyText}>
-                No news available at the moment
+                {t('news.empty')}
             </ThemedText>
         </ThemedView>
     );
@@ -50,7 +53,7 @@ export const NewsFeedScreen = () => {
         <ThemedView style={styles(insets).loadingContainer}>
             <ActivityIndicator size="large" color="#007AFF" />
             <ThemedText style={styles(insets).loadingText}>
-                Loading news...
+                {t('news.loading')}
             </ThemedText>
         </ThemedView>
     );
@@ -59,7 +62,7 @@ export const NewsFeedScreen = () => {
     const renderErrorState = () => (
         <ThemedView style={styles(insets).errorContainer}>
             <ThemedText style={styles(insets).errorText}>
-                Error loading news: {error}
+                {t('news.error')}: {error}
             </ThemedText>
         </ThemedView>
     );
@@ -68,19 +71,22 @@ export const NewsFeedScreen = () => {
         <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
             {/* Header section */}
             <ThemedView style={styles(insets).header}>
-                <TouchableOpacity 
-                    onPress={handleDoubleTapNews}
-                    activeOpacity={0.7}
-                    style={styles(insets).titleContainer}
-                >
-                    <ThemedText type="title">Cx News</ThemedText>
-                </TouchableOpacity>
+                <ThemedView style={styles(insets).headerTop}>
+                    <TouchableOpacity 
+                        onPress={handleDoubleTapNews}
+                        activeOpacity={0.7}
+                        style={styles(insets).titleContainer}
+                    >
+                        <ThemedText type="title">Cx News</ThemedText>
+                    </TouchableOpacity>
+                    <LanguageSelector compact />
+                </ThemedView>
                 <ThemedText type="subtitle">Stay informed with the latest news</ThemedText>
 
                 <SearchBar
                     onSearch={handleSearch}
                     onClear={handleClear}
-                    placeholder="Buscar noticias..."
+                    placeholder={t('news.search')}
                     debounceMs={300}
                     style={{marginTop: 10}}
                 />
@@ -117,6 +123,11 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
         marginTop: insets.top,
         gap: 8,
         marginBottom: 15,
+    },
+    headerTop: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     titleContainer: {
         alignSelf: 'flex-start',
