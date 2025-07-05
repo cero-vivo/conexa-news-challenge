@@ -1,16 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-export interface User {
-  id: string
-  email: string
-  name: string
-  avatar?: string
-  isAnonymous: boolean
-  createdAt: string
-}
+import { AuthUser } from '../entities/AuthUser'
 
 interface AuthState {
-  user: User | null
+  user: AuthUser | null
   isAuthenticated: boolean
   loading: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null
@@ -27,7 +19,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<AuthUser>) => {
       state.user = action.payload
       state.isAuthenticated = true
       state.loading = 'succeeded'
@@ -37,7 +29,7 @@ const authSlice = createSlice({
       state.loading = 'loading'
       state.error = null
     },
-    loginSuccess: (state, action: PayloadAction<User>) => {
+    loginSuccess: (state, action: PayloadAction<AuthUser>) => {
       state.user = action.payload
       state.isAuthenticated = true
       state.loading = 'succeeded'
@@ -51,7 +43,7 @@ const authSlice = createSlice({
       state.loading = 'loading'
       state.error = null
     },
-    registerSuccess: (state, action: PayloadAction<User>) => {
+    registerSuccess: (state, action: PayloadAction<AuthUser>) => {
       state.user = action.payload
       state.isAuthenticated = true
       state.loading = 'succeeded'
