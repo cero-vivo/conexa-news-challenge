@@ -6,8 +6,12 @@ export const useNewsSearch = (news: News[]) => {
 
   const filtered = useMemo(() => {
     if (!query.trim()) return news
-    const q = query.toLowerCase()
-    return news.filter(n => n.title.toLowerCase().includes(q)/*  || n.content.toLowerCase().includes(q) */)
+    const q = query.toLowerCase().trim()
+
+    return news.filter(n => {
+      const titleWords = n.title.toLowerCase().split(/\s+/)
+      return titleWords.some(w => q.includes(w))
+    })
   }, [news, query])
 
   return { filteredNews: filtered, handleSearch: setQuery, handleClear: () => setQuery('') }
