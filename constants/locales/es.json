@@ -37,24 +37,55 @@
     "saved": "Guardadas"
   },
   "news": {
+    "title": "Cx News",
+    "subtitle": "Mantente informado con las últimas noticias",
     "search": "Buscar noticias...",
     "empty": "No se encontraron noticias",
     "error": "Error al cargar las noticias",
     "loading": "Cargando noticias...",
     "save": "Guardar",
     "saved": "Guardado",
-    "unsave": "Quitar de guardadas"
+    "unsave": "Quitar de guardadas",
+    "back": "Volver",
+    "detail": {
+      "title": "Detalle de Noticia",
+      "published": "Publicado",
+      "author": "Autor",
+      "source": "Fuente",
+      "readMore": "Leer más"
+    }
   },
   "users": {
+    "title": "Usuarios",
+    "subtitle": "Explora perfiles de usuarios",
     "search": "Buscar usuarios...",
     "empty": "No se encontraron usuarios",
     "error": "Error al cargar usuarios",
-    "loading": "Cargando usuarios..."
+    "loading": "Cargando usuarios...",
+    "back": "Volver",
+    "detail": {
+      "title": "Perfil de Usuario",
+      "email": "Email",
+      "phone": "Teléfono",
+      "website": "Sitio web",
+      "company": "Empresa",
+      "address": "Dirección",
+      "personalInfo": "Información Personal",
+      "companyInfo": "Información de la Empresa",
+      "accountInfo": "Información de Cuenta",
+      "zipcode": "Código postal",
+      "catchPhrase": "Eslogan",
+      "bs": "Negocio",
+      "username": "Usuario",
+      "registered": "Registrado"
+    }
   },
   "saved": {
     "title": "Noticias Guardadas",
+    "subtitle": "Tus noticias favoritas",
     "empty": "No tienes noticias guardadas",
-    "description": "Las noticias que guardes aparecerán aquí"
+    "description": "Las noticias que guardes aparecerán aquí",
+    "back": "Volver"
   },
   "common": {
     "loading": "Cargando...",
@@ -62,6 +93,11 @@
     "retry": "Reintentar",
     "cancel": "Cancelar",
     "save": "Guardar",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "back": "Volver",
+    "close": "Cerrar",
+    "ok": "OK",
+    "yes": "Sí",
+    "no": "No"
   }
 } 

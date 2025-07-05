@@ -8,6 +8,7 @@ import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -18,6 +19,7 @@ export const NewsDetailScreen = () => {
     const savedNews = useAppSelector(state => state.savedNews.savedNews)
     const isSaved = selectedNews ? savedNews.some(item => item.id === selectedNews.id) : false
     const insets = useSafeAreaInsets()
+    const { t } = useTranslation()
 
     // Theme colors
     const textColor = useThemeColor({}, 'text')
@@ -58,7 +60,7 @@ export const NewsDetailScreen = () => {
                     <IconSymbol name="chevron.left" size={24} color={tintColor} />
                 </TouchableOpacity>
                 <ThemedText type="subtitle" style={[styles.headerTitle, { color: textColor }]}>
-                    {"Volver"}
+                    {t('news.back')}
                 </ThemedText>
 
                 {/* Bookmark toggle */}

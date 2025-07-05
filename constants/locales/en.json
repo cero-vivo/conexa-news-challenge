@@ -37,24 +37,55 @@
     "saved": "Saved"
   },
   "news": {
+    "title": "Cx News",
+    "subtitle": "Stay informed with the latest news",
     "search": "Search news...",
     "empty": "No news found",
     "error": "Error loading news",
     "loading": "Loading news...",
     "save": "Save",
     "saved": "Saved",
-    "unsave": "Remove from saved"
+    "unsave": "Remove from saved",
+    "back": "Back",
+    "detail": {
+      "title": "News Detail",
+      "published": "Published",
+      "author": "Author",
+      "source": "Source",
+      "readMore": "Read more"
+    }
   },
   "users": {
+    "title": "Users",
+    "subtitle": "Explore user profiles",
     "search": "Search users...",
     "empty": "No users found",
     "error": "Error loading users",
-    "loading": "Loading users..."
+    "loading": "Loading users...",
+    "back": "Back",
+    "detail": {
+      "title": "User Profile",
+      "email": "Email",
+      "phone": "Phone",
+      "website": "Website",
+      "company": "Company",
+      "address": "Address",
+      "personalInfo": "Personal Information",
+      "companyInfo": "Company Information",
+      "accountInfo": "Account Information",
+      "zipcode": "Zip code",
+      "catchPhrase": "Catch phrase",
+      "bs": "Business",
+      "username": "Username",
+      "registered": "Registered"
+    }
   },
   "saved": {
     "title": "Saved News",
+    "subtitle": "Your favorite news",
     "empty": "You don't have saved news",
-    "description": "News you save will appear here"
+    "description": "News you save will appear here",
+    "back": "Back"
   },
   "common": {
     "loading": "Loading...",
@@ -62,6 +93,11 @@
     "retry": "Retry",
     "cancel": "Cancel",
     "save": "Save",
-    "delete": "Delete"
+    "delete": "Delete",
+    "back": "Back",
+    "close": "Close",
+    "ok": "OK",
+    "yes": "Yes",
+    "no": "No"
   }
 } 

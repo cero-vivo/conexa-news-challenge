@@ -6,6 +6,7 @@ import { NewsCard } from '@/features/news/view/news-feed/components/NewsCard'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet } from 'react-native'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -14,6 +15,7 @@ export const SavedNewsScreen = () => {
   const insets = useSafeAreaInsets()
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const { t } = useTranslation()
 
   const handleNewsPress = (newsItem: News) => {
     dispatch(setSelectedNews(newsItem))
@@ -28,7 +30,7 @@ export const SavedNewsScreen = () => {
 
   const renderEmptyState = () => (
     <ThemedView style={styles(insets).emptyContainer}>
-      <ThemedText style={styles(insets).emptyText}>No saved news yet</ThemedText>
+      <ThemedText style={styles(insets).emptyText}>{t('saved.empty')}</ThemedText>
     </ThemedView>
   )
 
@@ -36,8 +38,8 @@ export const SavedNewsScreen = () => {
     <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
       {/* Header */}
       <ThemedView style={styles(insets).header}>
-        <ThemedText type="title">Saved News</ThemedText>
-        <ThemedText type="subtitle">Your bookmarked articles</ThemedText>
+        <ThemedText type="title">{t('saved.title')}</ThemedText>
+        <ThemedText type="subtitle">{t('saved.subtitle')}</ThemedText>
       </ThemedView>
 
       {/* Content */}

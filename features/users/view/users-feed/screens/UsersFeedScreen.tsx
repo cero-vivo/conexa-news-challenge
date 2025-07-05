@@ -5,6 +5,7 @@ import { setSelectedUser } from '@/features/users/model/store/usersSlice'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { UserCard } from '../components/UserCard'
@@ -16,6 +17,7 @@ export const UsersFeedScreen = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const insets = useSafeAreaInsets();
+    const { t } = useTranslation();
 
     const handleUserPress = (user: User) => {
         dispatch(setSelectedUser(user));
@@ -36,7 +38,7 @@ export const UsersFeedScreen = () => {
     const renderEmptyState = () => (
         <ThemedView style={styles(insets).emptyContainer}>
             <ThemedText style={styles(insets).emptyText}>
-                No users available at the moment
+                {t('users.empty')}
             </ThemedText>
         </ThemedView>
     );
@@ -45,7 +47,7 @@ export const UsersFeedScreen = () => {
         <ThemedView style={styles(insets).loadingContainer}>
             <ActivityIndicator size="large" color="#007AFF" />
             <ThemedText style={styles(insets).loadingText}>
-                Loading users...
+                {t('users.loading')}
             </ThemedText>
         </ThemedView>
     );
@@ -53,7 +55,7 @@ export const UsersFeedScreen = () => {
     const renderErrorState = () => (
         <ThemedView style={styles(insets).errorContainer}>
             <ThemedText style={styles(insets).errorText}>
-                Error loading users: {error}
+                {t('users.error')}: {error}
             </ThemedText>
         </ThemedView>
     );
@@ -67,9 +69,9 @@ export const UsersFeedScreen = () => {
                     activeOpacity={0.7}
                     style={styles(insets).titleContainer}
                 >
-                    <ThemedText type="title">Cx Users</ThemedText>
+                    <ThemedText type="title">{t('users.title')}</ThemedText>
                 </TouchableOpacity>
-                <ThemedText type="subtitle">Discover our community members</ThemedText>
+                <ThemedText type="subtitle">{t('users.subtitle')}</ThemedText>
             </ThemedView>
 
             {/* Content section */}

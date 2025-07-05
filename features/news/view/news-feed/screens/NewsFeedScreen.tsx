@@ -77,11 +77,11 @@ export const NewsFeedScreen = () => {
                         activeOpacity={0.7}
                         style={styles(insets).titleContainer}
                     >
-                        <ThemedText type="title">Cx News</ThemedText>
+                        <ThemedText type="title">{t('news.title')}</ThemedText>
                     </TouchableOpacity>
                     <LanguageSelector compact />
                 </ThemedView>
-                <ThemedText type="subtitle">Stay informed with the latest news</ThemedText>
+                <ThemedText type="subtitle">{t('news.subtitle')}</ThemedText>
 
                 <SearchBar
                     onSearch={handleSearch}

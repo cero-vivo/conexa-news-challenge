@@ -7,6 +7,7 @@ import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -15,6 +16,7 @@ export const UserDetailScreen = () => {
     const dispatch = useAppDispatch()
     const selectedUser: User | null = useAppSelector(state => state.users.selectedUser) || null
     const insets = useSafeAreaInsets()
+    const { t } = useTranslation()
 
     // Theme colors
     const textColor = useThemeColor({}, 'text')
@@ -40,7 +42,7 @@ export const UserDetailScreen = () => {
         return (
             <ThemedView style={styles.errorContainer}>
                 <ThemedText style={[styles.errorText, { color: '#FF3B30' }]}>
-                    Usuario no encontrado
+                    {t('users.error')}
                 </ThemedText>
             </ThemedView>
         )
@@ -57,7 +59,7 @@ export const UserDetailScreen = () => {
                     <IconSymbol name="chevron.left" size={24} color={tintColor} />
                 </TouchableOpacity>
                 <ThemedText type="subtitle" style={[styles.headerTitle, { color: textColor }]}>
-                    {"Volver"}
+                    {t('users.back')}
                 </ThemedText>
             </ThemedView>
 
@@ -93,40 +95,40 @@ export const UserDetailScreen = () => {
 
                     <ThemedView style={[styles.section, { borderBottomColor: borderColor }]}>
                         <ThemedText type="subtitle" style={[styles.sectionTitle, { color: textColor }]}>
-                            Información Personal
+                            {t('users.detail.personalInfo')}
                         </ThemedText>
                         <ThemedText style={[styles.sectionContent, { color: contentTextColor }]}>
-                            🏠 Dirección: {selectedUser.address.street}, {selectedUser.address.suite}
+                            🏠 {t('users.detail.address')}: {selectedUser.address.street}, {selectedUser.address.suite}
                         </ThemedText>
                         <ThemedText style={[styles.sectionContent, { color: contentTextColor }]}>
-                            📮 Código postal: {selectedUser.address.zipcode}
+                            📮 {t('users.detail.zipcode')}: {selectedUser.address.zipcode}
                         </ThemedText>
                     </ThemedView>
 
                     <ThemedView style={[styles.section, { borderBottomColor: borderColor }]}>
                         <ThemedText type="subtitle" style={[styles.sectionTitle, { color: textColor }]}>
-                            Información de la Empresa
+                            {t('users.detail.companyInfo')}
                         </ThemedText>
                         <ThemedText style={[styles.sectionContent, { color: contentTextColor }]}>
-                            🏢 Empresa: {selectedUser.company.name}
+                            🏢 {t('users.detail.company')}: {selectedUser.company.name}
                         </ThemedText>
                         <ThemedText style={[styles.sectionContent, { color: contentTextColor }]}>
-                            💼 Eslogan: {selectedUser.company.catchPhrase}
+                            💼 {t('users.detail.catchPhrase')}: {selectedUser.company.catchPhrase}
                         </ThemedText>
                         <ThemedText style={[styles.sectionContent, { color: contentTextColor }]}>
-                            🎯 Negocio: {selectedUser.company.bs}
+                            🎯 {t('users.detail.bs')}: {selectedUser.company.bs}
                         </ThemedText>
                     </ThemedView>
 
                     <ThemedView style={styles.section}>
                         <ThemedText type="subtitle" style={[styles.sectionTitle, { color: textColor }]}>
-                            Información de Cuenta
+                            {t('users.detail.accountInfo')}
                         </ThemedText>
                         <ThemedText style={[styles.sectionContent, { color: contentTextColor }]}>
-                            👤 Usuario: {selectedUser.login.username}
+                            👤 {t('users.detail.username')}: {selectedUser.login.username}
                         </ThemedText>
                         <ThemedText style={[styles.sectionContent, { color: contentTextColor }]}>
-                            📅 Registrado: {formatDate(selectedUser.login.registered)}
+                            📅 {t('users.detail.registered')}: {formatDate(selectedUser.login.registered)}
                         </ThemedText>
                     </ThemedView>
                 </ThemedView>
