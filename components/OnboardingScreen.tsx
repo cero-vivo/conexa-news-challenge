@@ -1,6 +1,6 @@
 import { Routes } from '@/constants/Routes'
+import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
-import { setShowOnboarding } from '@/store/configUiSlice'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import { useState } from 'react'

@@ -1,6 +1,7 @@
 import authReducer from '@/features/auth/model/store/authSlice'
 import newsReducer from '@/features/news/model/store/newsSlice'
 import savedNewsReducer from '@/features/news/model/store/savedNewsSlice'
+import onboardingReducer from '@/features/onboarding/model/store/onboardingSlice'
 import usersReducer from '@/features/users/model/store/usersSlice'
 import configUIReducer from './configUiSlice'
 
@@ -19,13 +20,14 @@ const rootReducer = combineReducers({
     savedNews: savedNewsReducer,
     configUI: configUIReducer,
     auth: authReducer,
+    onboarding: onboardingReducer,
 })
 
 // Persist configuration - persist auth and configUI slices
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['savedNews', 'configUI', 'auth'],
+    whitelist: ['savedNews', 'configUI', 'auth', 'onboarding'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
