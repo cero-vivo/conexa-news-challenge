@@ -1,6 +1,8 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { News } from '@/feature/news/model/entities/News'
+import { setSelectedNews } from '@/feature/news/model/store/newsSlice'
+import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
 import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
@@ -9,12 +11,17 @@ import { useNewsFeedScreen } from '../hooks/useNewsFeedScreen'
 
 export const NewsFeedScreen = () => {
     const { news, loading, error } = useNewsFeedScreen();
+    console.log("🚀 ~ NewsFeedScreen ~ loading:", loading)
+    console.log("🚀 ~ NewsFeedScreen ~ news:", news)
     const flatListRef = useRef<FlatList>(null);
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
-    // Handle news card press - navigate to news detail
+    // Handle news card press - select news in store and navigate to detail
     const handleNewsPress = (newsItem: News) => {
         console.log('🎯 Navigate to news detail:', newsItem.id);
+        // Seleccionar la noticia en el store antes de navegar
+        dispatch(setSelectedNews(newsItem));
         router.push(`/news-detail?newsId=${newsItem.id}`);
     };
 
@@ -80,7 +87,7 @@ export const NewsFeedScreen = () => {
             <ThemedView style={styles.content}>
                 {loading === 'loading' ? (
                     renderLoadingState()
-                ) : error ? (
+                ) : loading === 'error' ? (
                     renderErrorState()
                 ) : (
                     <FlatList
