@@ -22,7 +22,8 @@
     },
     "buttons": {
       "enter": "Entrar",
-      "dontShowAgain": "No mostrar más"
+      "dontShowAgain": "No mostrar más",
+      "login": "Iniciar Sesión"
     },
     "language": {
       "title": "Selecciona tu idioma",
@@ -34,7 +35,8 @@
   "tabs": {
     "news": "Noticias",
     "users": "Usuarios",
-    "saved": "Guardadas"
+    "saved": "Guardadas",
+    "profile": "Perfil"
   },
   "news": {
     "title": "Cx News",
@@ -90,6 +92,50 @@
     "description": "Las noticias que guardes aparecerán aquí",
     "back": "Volver",
     "count": "{{count}} guardadas"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "subtitle": "Accede a tu cuenta",
+      "button": "Iniciar Sesión",
+      "link": "¿Ya tienes cuenta? Inicia sesión"
+    },
+    "register": {
+      "title": "Crear Cuenta",
+      "subtitle": "Únete a nuestra comunidad",
+      "button": "Registrarse",
+      "name": "Nombre completo",
+      "link": "¿No tienes cuenta? Regístrate"
+    },
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "or": "o",
+    "anonymous": {
+      "button": "Continuar como anónimo"
+    },
+    "onboarding": {
+      "button": "Ver Onboarding"
+    }
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "subtitle": "Información de tu cuenta",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "memberSince": "Miembro desde",
+    "logout": "Cerrar Sesión",
+    "anonymous": "Usuario Anónimo",
+    "about": {
+      "title": "Sobre mí",
+      "description": "React Native Developer apasionado por crear experiencias móviles excepcionales. Especializado en desarrollo nativo con React Native, TypeScript y arquitecturas escalables.",
+      "skills": "Habilidades",
+      "skillsList": "React Native, TypeScript, Redux, Expo, Node.js, Firebase",
+      "experience": "Experiencia",
+      "experienceText": "Más de 3 años desarrollando aplicaciones móviles nativas y multiplataforma.",
+      "contact": "Contacto",
+      "email": "luis.espinoza@example.com",
+      "linkedin": "linkedin.com/in/luisespinoza"
+    }
   },
   "common": {
     "loading": "Cargando...",

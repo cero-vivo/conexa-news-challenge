@@ -34,12 +34,17 @@ function OnboardingScreen() {
 
     const handleEnter = () => {
         dispatch(setShowOnboarding(false))
-        router.replace(Routes.TABS)
+        router.replace(Routes.AUTH)
     }
 
     const handleDontShowAgain = () => {
         dispatch(setShowOnboarding(false))
-        router.replace(Routes.TABS)
+        router.replace(Routes.AUTH)
+    }
+
+    const handleLogin = () => {
+        dispatch(setShowOnboarding(false))
+        router.replace(Routes.AUTH)
     }
 
     const slides = [
@@ -228,6 +233,14 @@ function OnboardingScreen() {
                                 onPress={handleDontShowAgain}
                             >
                                 {t('onboarding.buttons.dontShowAgain')}
+                            </Button>
+
+                            <Button
+                                variant="outline"
+                                size="medium"
+                                onPress={handleLogin}
+                            >
+                                {t('onboarding.buttons.login')}
                             </Button>
                         </ThemedView>
                     </ThemedView>

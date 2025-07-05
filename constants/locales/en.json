@@ -22,7 +22,8 @@
     },
     "buttons": {
       "enter": "Enter",
-      "dontShowAgain": "Don't show again"
+      "dontShowAgain": "Don't show again",
+      "login": "Sign In"
     },
     "language": {
       "title": "Selecciona tu idioma",
@@ -34,7 +35,8 @@
   "tabs": {
     "news": "News",
     "users": "Users",
-    "saved": "Saved"
+    "saved": "Saved",
+    "profile": "Profile"
   },
   "news": {
     "title": "Cx News",
@@ -90,6 +92,50 @@
     "description": "News you save will appear here",
     "back": "Back",
     "count": "{{count}} saved"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Access your account",
+      "button": "Sign In",
+      "link": "Already have an account? Sign in"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join our community",
+      "button": "Sign Up",
+      "name": "Full name",
+      "link": "Don't have an account? Sign up"
+    },
+    "email": "Email",
+    "password": "Password",
+    "or": "or",
+    "anonymous": {
+      "button": "Continue as anonymous"
+    },
+    "onboarding": {
+      "button": "View Onboarding"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Your account information",
+    "name": "Name",
+    "email": "Email",
+    "memberSince": "Member since",
+    "logout": "Sign Out",
+    "anonymous": "Anonymous User",
+    "about": {
+      "title": "About me",
+      "description": "React Native Developer passionate about creating exceptional mobile experiences. Specialized in native development with React Native, TypeScript and scalable architectures.",
+      "skills": "Skills",
+      "skillsList": "React Native, TypeScript, Redux, Expo, Node.js, Firebase",
+      "experience": "Experience",
+      "experienceText": "More than 3 years developing native and cross-platform mobile applications.",
+      "contact": "Contact",
+      "email": "luis.espinoza@example.com",
+      "linkedin": "linkedin.com/in/luisespinoza"
+    }
   },
   "common": {
     "loading": "Loading...",

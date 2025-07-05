@@ -131,6 +131,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   compactButton: {
-    minWidth: 60,
+    minWidth: 40
   },
 }) 

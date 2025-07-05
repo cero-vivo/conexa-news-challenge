@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { Routes } from '@/constants/Routes'
 import { News } from '@/features/news/model/entities/News'
 import { clearSelectedNews } from '@/features/news/model/store/newsSlice'
 import { toggleSaveNews } from '@/features/news/model/store/savedNewsSlice'
@@ -9,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { Alert, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const NewsDetailScreen = () => {
@@ -17,6 +18,7 @@ export const NewsDetailScreen = () => {
     const dispatch = useAppDispatch()
     const selectedNews: News | null = useAppSelector(state => state.news.selectedNews) || null
     const savedNews = useAppSelector(state => state.savedNews.savedNews)
+    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
     const isSaved = selectedNews ? savedNews.some(item => item.id === selectedNews.id) : false
     const insets = useSafeAreaInsets()
     const { t } = useTranslation()
@@ -38,8 +40,20 @@ export const NewsDetailScreen = () => {
     }
 
     const handleToggleSave = () => {
+        if (!isAuthenticated) {
+            Alert.alert(
+                'Acceso Restringido',
+                'Debes iniciar sesión para guardar noticias',
+                [
+                    { text: 'Cancelar', style: 'cancel' },
+                    { text: 'Iniciar Sesión', onPress: () => router.push(Routes.AUTH) }
+                ]
+            );
+            return;
+        }
+        
         if (selectedNews) {
-            dispatch(toggleSaveNews(selectedNews))
+            dispatch(toggleSaveNews(selectedNews));
         }
     }
 

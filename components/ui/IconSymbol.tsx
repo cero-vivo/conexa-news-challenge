@@ -25,6 +25,9 @@ const MAPPING = {
   'newspaper.fill': 'article',
   'person.2': 'people',
   'person.2.fill': 'people',
+  'person.circle': 'account-circle',
+  'person.circle.fill': 'account-circle',
+  'person.fill': 'person',
   'line.3.horizontal': 'menu',
   'star.fill': 'star',
   'gear': 'settings',
@@ -37,6 +40,9 @@ const MAPPING = {
   'rocket.fill': 'rocket-launch',
   'magnifyingglass': 'search',
   'clock': 'schedule',
+  'envelope': 'email',
+  'link': 'link',
+  'rectangle.portrait.and.arrow.right': 'logout',
 } as IconMapping;
 
 /**

@@ -1,12 +1,14 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Routes } from '@/constants/Routes';
 import { News } from '@/features/news/model/entities/News';
 import { toggleSaveNews } from '@/features/news/model/store/savedNewsSlice';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 // Props interface for NewsCard component
 interface NewsCardProps {
@@ -24,7 +26,9 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
 
   const dispatch = useAppDispatch();
   const savedNews = useAppSelector((state) => state.savedNews.savedNews);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const isSaved = savedNews.some((item) => item.id === news.id);
+  const router = useRouter();
 
   // Theme colors
   const backgroundColor = useThemeColor({}, 'background');
@@ -32,6 +36,18 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
   const tintColor = useThemeColor({}, 'tint');
 
   const handleToggleSave = () => {
+    if (!isAuthenticated) {
+      Alert.alert(
+        'Acceso Restringido',
+        'Debes iniciar sesión para guardar noticias',
+        [
+          { text: 'Cancelar', style: 'cancel' },
+          { text: 'Iniciar Sesión', onPress: () => router.push(Routes.AUTH) }
+        ]
+      );
+      return;
+    }
+    
     dispatch(toggleSaveNews(news));
   };
 

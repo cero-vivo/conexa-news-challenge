@@ -7,12 +7,14 @@ export const Routes = {
   // Main navigation
   INDEX: '/',
   ONBOARDING: '/onboarding',
+  AUTH: '/auth',
   TABS: '/(tabs)',
   
   // Tab screens - these should match the actual file names
   NEWS_FEED: '/(tabs)',
   USERS_FEED: '/(tabs)/explore',
   SAVED_NEWS: '/(tabs)/saved-news',
+  PROFILE: '/(tabs)/profile',
   
   // Modal screens
   NEWS_DETAIL: '/news-detail',
