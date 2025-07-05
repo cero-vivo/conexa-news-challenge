@@ -10,6 +10,20 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { store } from '@/store';
+import { useAppSelector } from '@/store/hooks';
+import { Redirect } from 'expo-router';
+
+function AppContent() {
+  const { showOnboarding } = useAppSelector((state) => state.configUI);
+  
+  // If onboarding should be shown, redirect to onboarding
+  if (showOnboarding) {
+    return <Redirect href="/onboarding" />;
+  }
+  
+  // Otherwise, redirect to tabs
+  return <Redirect href="/(tabs)" />;
+}
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -28,6 +42,7 @@ export default function RootLayout() {
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="onboarding" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen 

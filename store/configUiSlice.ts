@@ -14,12 +14,9 @@ const configUISlice = createSlice({
   reducers: {
     setShowOnboarding: (state, action: PayloadAction<boolean>) => {
       state.showOnboarding = action.payload
-    },
-    resetOnboarding: (state) => {
-      state.showOnboarding = true
-    },
+    }
   },
 })
 
-export const { setShowOnboarding, resetOnboarding } = configUISlice.actions
+export const { setShowOnboarding } = configUISlice.actions
 export default configUISlice.reducer 
