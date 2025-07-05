@@ -117,12 +117,12 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: '#666666',
+    color: '#9BA1A6',
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#666666',
+    color: '#9BA1A6',
     textAlign: 'center',
   },
   titleContainer: {
@@ -149,7 +149,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
   },
   statsText: {
     fontSize: 12,
-    color: '#666666',
+    color: '#9BA1A6',
     marginLeft: 4,
   },
   subtitleContainer: {

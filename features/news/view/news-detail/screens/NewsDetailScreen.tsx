@@ -28,7 +28,7 @@ export const NewsDetailScreen = () => {
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text')
     const categoryBgColor = useThemeColor({ light: '#E3F2FD', dark: '#1A3A5F' }, 'background')
     const categoryTextColor = useThemeColor({ light: '#007AFF', dark: '#4DA6FF' }, 'tint')
-    const secondaryTextColor = useThemeColor({ light: '#666666', dark: '#9BA1A6' }, 'icon')
+    const secondaryTextColor = useThemeColor({ light: '#666666', dark: '#B0B7C3' }, 'icon')
     const contentTextColor = useThemeColor({ light: '#333333', dark: '#ECEDEE' }, 'text')
 
     const handleBackPress = () => {

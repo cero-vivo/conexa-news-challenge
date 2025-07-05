@@ -148,7 +148,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     loadingText: {
         fontSize: 16,
-        color: '#666666',
+        color: '#9BA1A6',
     },
     errorContainer: {
         flex: 1,
@@ -175,7 +175,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     emptyText: {
         fontSize: 16,
-        color: '#666666',
+        color: '#9BA1A6',
         textAlign: 'center',
     },
     headerContent: {
@@ -198,7 +198,8 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     statsText: {
         fontSize: 12,
-        color: '#666666',
+        color: '#9BA1A6',
+        marginLeft: 4,
     },
     subtitleContainer: {
         flexDirection: 'row',
@@ -206,6 +207,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     subtitle: {
         fontSize: 16,
-        color: '#666666',
+        color: '#9BA1A6',
+        marginLeft: 4,
     },
 }); 

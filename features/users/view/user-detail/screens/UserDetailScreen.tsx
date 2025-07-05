@@ -22,7 +22,7 @@ export const UserDetailScreen = () => {
     const textColor = useThemeColor({}, 'text')
     const tintColor = useThemeColor({}, 'tint')
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text')
-    const secondaryTextColor = useThemeColor({ light: '#666666', dark: '#9BA1A6' }, 'icon')
+    const secondaryTextColor = useThemeColor({ light: '#666666', dark: '#B0B7C3' }, 'icon')
     const contentTextColor = useThemeColor({ light: '#333333', dark: '#ECEDEE' }, 'text')
     const backgroundColor = useThemeColor({}, 'background')
 
