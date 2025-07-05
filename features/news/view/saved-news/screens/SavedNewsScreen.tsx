@@ -92,7 +92,6 @@ export const SavedNewsScreen = () => {
 const styles = (insets: EdgeInsets) => StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   header: {
     marginTop: insets.top,
@@ -102,13 +101,13 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     paddingBottom: 15,
   },
   content: {
-    flex: 1,
+    flexGrow: 1,
   },
   listContainer: {
     paddingBottom: insets.bottom + 20,
   },
   emptyContainer: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

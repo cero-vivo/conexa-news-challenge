@@ -84,7 +84,9 @@
   "saved": {
     "title": "Noticias Guardadas",
     "subtitle": "Tus noticias favoritas",
-    "empty": "No tienes noticias guardadas",
+    "empty": {
+      "title": "No tienes noticias guardadas"
+    },
     "description": "Las noticias que guardes aparecerán aquí",
     "back": "Volver",
     "count": "{{count}} guardadas"

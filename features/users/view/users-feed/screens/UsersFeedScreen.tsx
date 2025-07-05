@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { Routes } from '@/constants/Routes'
 import { User } from '@/features/users/model/entities/User'
 import { setSelectedUser } from '@/features/users/model/store/usersSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
@@ -27,7 +28,7 @@ export const UsersFeedScreen = () => {
 
     const handleUserPress = (user: User) => {
         dispatch(setSelectedUser(user));
-        router.push(`/user-detail`);
+        router.push(Routes.USER_DETAIL);
     };
 
     const handleDoubleTapUsers = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
@@ -135,7 +136,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
         alignSelf: 'flex-start',
     },
     content: {
-        flex: 1,
+        flexGrow: 1,
     },
     listContainer: {
         paddingBottom: 20,

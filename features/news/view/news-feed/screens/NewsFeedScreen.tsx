@@ -2,15 +2,22 @@ import { LanguageSelector } from '@/components/LanguageSelector'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { Routes } from '@/constants/Routes'
 import { News } from '@/features/news/model/entities/News'
 import { setSelectedNews } from '@/features/news/model/store/newsSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { SearchBar } from '@/shared/components/SearchBar/SearchBar'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, FlatList, Image, Keyboard, KeyboardEvent, StyleSheet, TouchableOpacity } from 'react-native'
+import Animated, {
+    interpolate,
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming
+} from 'react-native-reanimated'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NewsCard } from '../components/NewsCard'
 import { useNewsFeedScreen } from '../hooks/useNewsFeedScreen'
@@ -29,14 +36,81 @@ export const NewsFeedScreen = () => {
     const backgroundColor = useThemeColor({}, 'background');
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
 
+    // Animation values
+    const headerHeight = useSharedValue(1);
+    const searchBarTranslateY = useSharedValue(.5);
+    const headerOpacity = useSharedValue(1);
+    const searchBarScale = useSharedValue(1);
+
     const { filteredNews, handleSearch, handleClear } = useNewsSearch(news);
 
     const handleNewsPress = (newsItem: News) => {
         dispatch(setSelectedNews(newsItem));
-        router.push(`/news-detail`);
+        router.push(Routes.NEWS_DETAIL);
     };
 
     const handleDoubleTapNews = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
+
+    // Keyboard event handlers
+    const onKeyboardShow = (event: KeyboardEvent) => {
+        const keyboardHeight = event.endCoordinates.height;
+        const animationDuration = 250;
+        
+        // Animate header out (only the title and subtitle sections)
+        headerHeight.value = withTiming(0, { duration: animationDuration });
+        headerOpacity.value = withTiming(0, { duration: animationDuration });
+        
+        // Keep search bar visible but add a subtle effect
+        searchBarTranslateY.value = withTiming(-5, { duration: animationDuration });
+        searchBarScale.value = withTiming(1.01, { duration: animationDuration });
+    };
+
+    const onKeyboardHide = () => {
+        const animationDuration = 250;
+        
+        // Animate header back in
+        headerHeight.value = withTiming(1, { duration: animationDuration });
+        headerOpacity.value = withTiming(1, { duration: animationDuration });
+        
+        // Move search bar back to original position
+        searchBarTranslateY.value = withTiming(0, { duration: animationDuration });
+        searchBarScale.value = withTiming(1, { duration: animationDuration });
+    };
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', onKeyboardShow);
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', onKeyboardHide);
+
+        return () => {
+            keyboardDidShowListener?.remove();
+            keyboardDidHideListener?.remove();
+        };
+    }, []);
+
+    // Animated styles
+    const headerAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            height: interpolate(headerHeight.value, [0, 1], [0, 120]), // Reduced height for more compact layout
+            opacity: headerOpacity.value,
+            transform: [
+                {
+                    translateY: interpolate(headerHeight.value, [0, 1], [-10, 0])
+                }
+            ]
+        };
+    });
+
+    const searchBarAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                { translateY: searchBarTranslateY.value },
+                { scale: searchBarScale.value }
+            ],
+            shadowOpacity: interpolate(searchBarScale.value, [1, 1.01], [0, 0.08]),
+            shadowRadius: interpolate(searchBarScale.value, [1, 1.01], [0, 6]),
+            elevation: interpolate(searchBarScale.value, [1, 1.01], [0, 3]),
+        };
+    });
 
     const renderNewsItem = useMemo(() => {
         return ({ item }: { item: News }) => (
@@ -78,8 +152,8 @@ export const NewsFeedScreen = () => {
 
     return (
         <ThemedView style={[styles(insets).container, { paddingBottom: insets.bottom }]}>
-            {/* Header section */}
-            <ThemedView style={[styles(insets).header, { borderBottomColor: borderColor }]}>
+            {/* Animated Header section (only title and subtitle) */}
+            <Animated.View style={[styles(insets).header, headerAnimatedStyle]}>
                 <ThemedView style={styles(insets).headerTop}>
                     <TouchableOpacity 
                         onPress={handleDoubleTapNews}
@@ -108,15 +182,17 @@ export const NewsFeedScreen = () => {
                     <IconSymbol name="star.fill" size={16} color={tintColor} />
                     <ThemedText type="subtitle" style={styles(insets).subtitle}>{t('news.subtitle')}</ThemedText>
                 </ThemedView>
+            </Animated.View>
 
+            {/* Search Bar - Always visible */}
+            <Animated.View style={[styles(insets).searchBarContainer, searchBarAnimatedStyle]}>
                 <SearchBar
                     onSearch={handleSearch}
                     onClear={handleClear}
                     placeholder={t('news.search')}
                     debounceMs={300}
-                    style={styles(insets).searchBar}
                 />
-            </ThemedView>
+            </Animated.View>
 
             {/* Content section */}
             <ThemedView style={styles(insets).content}>
@@ -147,10 +223,8 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     header: {
         marginTop: insets.top,
-        gap: 8,
-        marginBottom: 15,
-        borderBottomWidth: 1,
-        paddingBottom: 15,
+        gap: 20,
+        overflow: 'hidden',
     },
     headerTop: {
         flexDirection: 'row',
@@ -246,7 +320,13 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 5,
     },
-    searchBar: {
+    searchBarContainer: {
+        marginBottom: 15,
         marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
     },
 });

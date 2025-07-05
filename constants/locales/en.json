@@ -84,7 +84,9 @@
   "saved": {
     "title": "Saved News",
     "subtitle": "Your favorite news",
-    "empty": "You don't have saved news",
+    "empty": {
+      "title": "You don't have saved news"
+    },
     "description": "News you save will appear here",
     "back": "Back",
     "count": "{{count}} saved"

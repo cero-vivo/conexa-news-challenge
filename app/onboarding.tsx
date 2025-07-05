@@ -3,6 +3,7 @@ import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Button } from '@/components/ui/Button'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { Routes } from '@/constants/Routes'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { setShowOnboarding } from '@/store/configUiSlice'
 import { useAppDispatch } from '@/store/hooks'
@@ -33,12 +34,12 @@ function OnboardingScreen() {
 
     const handleEnter = () => {
         dispatch(setShowOnboarding(false))
-        router.replace('/(tabs)')
+        router.replace(Routes.TABS)
     }
 
     const handleDontShowAgain = () => {
         dispatch(setShowOnboarding(false))
-        router.replace('/(tabs)')
+        router.replace(Routes.TABS)
     }
 
     const slides = [
