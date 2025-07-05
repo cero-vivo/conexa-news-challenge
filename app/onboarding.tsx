@@ -84,13 +84,12 @@ function OnboardingScreen() {
                 loop={false}
                 showsButtons={false}
                 showsPagination={true}
-
                 dotColor={textColor}
                 bounces={false}
                 onIndexChanged={(index: number) => setCurrentIndex(index)}
                 autoplay={false}
-                dotStyle={styles.dot}
-                activeDotStyle={styles.activeDot}
+                dotStyle={[styles.dot, {bottom: insets.bottom }]}
+                activeDotStyle={[styles.activeDot, {bottom: insets.bottom }]}
                 pagingEnabled={true}
                 scrollEnabled={true}
                 showsHorizontalScrollIndicator={false}
@@ -99,7 +98,10 @@ function OnboardingScreen() {
             >
                 {/* Slide 1: Bienvenida */}
                 <ThemedView style={[styles.slide, { backgroundColor }]}>
-                    <ThemedView style={[styles.slideContent, { paddingTop: insets.top + 40 }]}>
+                    <ThemedView style={[styles.slideContent, { 
+                        paddingTop: insets.top + 40,
+                        paddingBottom: insets.bottom + 40
+                    }]}>
 
                         <ThemedView style={styles.contentSection}>
                             <ThemedView style={styles.logoSection}>
@@ -122,7 +124,10 @@ function OnboardingScreen() {
 
                 {/* Slide 2: Funcionalidades */}
                 <ThemedView style={[styles.slide, { backgroundColor }]}>
-                    <ThemedView style={[styles.slideContent, { paddingTop: insets.top + 40 }]}>
+                    <ThemedView style={[styles.slideContent, { 
+                        paddingTop: insets.top + 40,
+                        paddingBottom: insets.bottom + 40
+                    }]}>
                         <ThemedView style={styles.contentSection}>
                             <ThemedView style={styles.iconSection}>
                                 <IconSymbol name="star.fill" size={80} color={tintColor} />
@@ -149,7 +154,10 @@ function OnboardingScreen() {
 
                 {/* Slide 3: Tecnologías */}
                 <ThemedView style={[styles.slide, { backgroundColor }]}>
-                    <ThemedView style={[styles.slideContent, { paddingTop: insets.top + 40 }]}>
+                    <ThemedView style={[styles.slideContent, { 
+                        paddingTop: insets.top + 40,
+                        paddingBottom: insets.bottom + 40
+                    }]}>
                         <ThemedView style={styles.contentSection}>
                             <ThemedView style={styles.iconSection}>
                                 <IconSymbol name="wrench.and.screwdriver.fill" size={80} color={tintColor} />
@@ -177,7 +185,10 @@ function OnboardingScreen() {
 
                 {/* Slide 4: Presentación Personal */}
                 <ThemedView style={[styles.slide, { backgroundColor }]}>
-                    <ThemedView style={[styles.slideContent, { paddingTop: insets.top  }]}>
+                    <ThemedView style={[styles.slideContent, { 
+                        paddingTop: insets.top + 40,
+                        paddingBottom: insets.bottom + 20
+                    }]}>
                         <ThemedView style={styles.profileSection}>
                             <Image source={require('../assets/images/me.jpeg')} style={styles.profileImage} />
                             <ThemedText type="title" style={[styles.slideTitle, { color: textColor }]}>
@@ -329,13 +340,11 @@ const styles = StyleSheet.create({
         width: 24,
         height: 6,
         borderRadius: 3,
-        bottom: -4,
     },
     activeDot: {
         width: 24,
         height: 6,
         borderRadius: 3,
-        bottom: -4,
     },
     iconSection: {
         marginBottom: 40,
