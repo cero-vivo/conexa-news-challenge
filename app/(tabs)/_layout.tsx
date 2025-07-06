@@ -2,6 +2,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const { t } = useTranslation();
@@ -10,6 +11,9 @@ export default function TabLayout() {
   const tintColor = useThemeColor({}, 'tint');
   const backgroundColor = useThemeColor({}, 'background');
   const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
+
+  // Safe area
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -20,8 +24,8 @@ export default function TabLayout() {
           backgroundColor,
           borderTopColor: borderColor,
           borderTopWidth: 1,
-          height: 88,
-          paddingBottom: 20,
+          height: 60 + insets.bottom,
+          paddingBottom: Math.max(insets.bottom, 12),
           paddingTop: 8,
         },
         headerShown: false,
