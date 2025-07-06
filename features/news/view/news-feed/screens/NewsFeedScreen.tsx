@@ -56,9 +56,20 @@ export const NewsFeedScreen = () => {
 
     const { filteredNews, handleSearch, handleClear } = useNewsSearch(news);
 
+    // Previene apertura duplicada por doble tap rápido خاصة en Android
+    const navigatingRef = useRef(false);
+
     const handleNewsPress = (newsItem: News) => {
-        dispatch(setSelectedNews(newsItem));
-        router.push(Routes.NEWS_DETAIL);
+        if (navigatingRef.current) return;
+        navigatingRef.current = true;
+
+        dispatch(setSelectedNews(newsItem))
+        router.navigate(Routes.NEWS_DETAIL)
+
+        // Restablecer bandera tras breve lapso
+        setTimeout(() => {
+            navigatingRef.current = false;
+        }, 600);
     };
 
     const handleDoubleTapNews = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })

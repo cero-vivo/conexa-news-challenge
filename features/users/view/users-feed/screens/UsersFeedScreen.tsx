@@ -26,9 +26,21 @@ export const UsersFeedScreen = () => {
     const tintColor = useThemeColor({}, 'tint');
     const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
 
+    // Evita doble apertura rápida
+    const navigatingRef = useRef(false);
+
     const handleUserPress = (user: User) => {
+        if (navigatingRef.current) return;
+        navigatingRef.current = true;
+
         dispatch(setSelectedUser(user));
-        router.push(Routes.USER_DETAIL);
+
+        // Usar navigate en todos los SO para evitar duplicar la pantalla
+        router.navigate(Routes.USER_DETAIL);
+
+        setTimeout(() => {
+            navigatingRef.current = false;
+        }, 600);
     };
 
     const handleDoubleTapUsers = () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
@@ -137,6 +149,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     content: {
         flexGrow: 1,
+        paddingBottom: insets.bottom + 20,
     },
     listContainer: {
         paddingBottom: 20,

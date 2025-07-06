@@ -1,13 +1,14 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { Routes } from '@/constants/Routes'
 import { News } from '@/features/news/model/entities/News'
 import { setSelectedNews } from '@/features/news/model/store/newsSlice'
 import { NewsCard } from '@/features/news/view/news-feed/components/NewsCard'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -23,9 +24,19 @@ export const SavedNewsScreen = () => {
   const tintColor = useThemeColor({}, 'tint');
   const borderColor = useThemeColor({ light: '#E5E5E7', dark: '#2C2C2E' }, 'text');
 
+  // Evita doble apertura rápida
+  const navigatingRef = useRef(false)
+
   const handleNewsPress = (newsItem: News) => {
+    if (navigatingRef.current) return
+    navigatingRef.current = true
+
     dispatch(setSelectedNews(newsItem))
-    router.push('/news-detail')
+    router.navigate(Routes.NEWS_DETAIL)
+
+    setTimeout(() => {
+      navigatingRef.current = false
+    }, 1000)
   }
 
   const renderNewsItem = useMemo(() => {
@@ -92,16 +103,16 @@ export const SavedNewsScreen = () => {
 const styles = (insets: EdgeInsets) => StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
   },
   header: {
     marginTop: insets.top,
-    marginBottom: 15,
+    marginBottom: 30,
     gap: 8,
-    borderBottomWidth: 1,
-    paddingBottom: 15,
   },
   content: {
     flexGrow: 1,
+    paddingBottom: insets.bottom + 20,
   },
   listContainer: {
     paddingBottom: insets.bottom + 20,
