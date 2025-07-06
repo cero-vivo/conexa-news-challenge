@@ -28,7 +28,6 @@ export const createNotificationsPresenter = (gateway: INotificationsGateway): IN
 		// Solicitar permisos primero
 		const granted = await gateway.requestPermissions()
 		if (!granted) {
-			console.warn('🔔 Permisos de notificación no concedidos; omitiendo programación')
 			return
 		}
 
