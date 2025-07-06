@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useThemeToggle } from '@/hooks/useThemeToggle'
 import React from 'react'
-import { StyleSheet, TouchableOpacity, TouchableOpacityProps, useColorScheme } from 'react-native'
+import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
 interface ButtonProps extends TouchableOpacityProps {
 	variant?: 'primary' | 'secondary' | 'outline'
@@ -19,8 +19,6 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
 	const textColor = useThemeColor({}, 'text')
 	const tintColor = useThemeColor({}, 'tint')
-	const backgroundColor = useThemeColor({}, 'background')
-	const colorScheme = useColorScheme()
 	const { isDark } = useThemeToggle()
 
 	const getTextColor = () => {

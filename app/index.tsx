@@ -159,8 +159,8 @@ export default function Index() {
 	}
 
 	return (
-		<ScrollView style={{ flexGrow: 1, paddingTop: insets.top, paddingBottom: insets.bottom, backgroundColor }} showsVerticalScrollIndicator={false}>
-			<ThemedView style={[styles.container, { backgroundColor }]}>
+		<ScrollView style={{ flexGrow: 1, paddingTop: insets.top, backgroundColor }} showsVerticalScrollIndicator={false}>
+			<ThemedView style={[styles.container, { backgroundColor, paddingBottom: insets.bottom + 20 }]}>
 				<View style={styles.content}>
 					<ThemedText type='title'>DEV MODE</ThemedText>
 
