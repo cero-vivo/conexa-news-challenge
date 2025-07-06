@@ -452,6 +452,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
+        lineHeight: 22,
     },
     badge: {
         flexDirection: 'row',
@@ -472,6 +473,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     subtitleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+
     },
     subtitle: {
         fontSize: 16,

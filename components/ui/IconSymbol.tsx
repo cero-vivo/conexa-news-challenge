@@ -42,6 +42,8 @@ const MAPPING = {
   'clock': 'schedule',
   'envelope': 'email',
   'link': 'link',
+  'phone': 'phone',
+  'phone.fill': 'phone',
   'rectangle.portrait.and.arrow.right': 'logout',
 } as IconMapping;
 

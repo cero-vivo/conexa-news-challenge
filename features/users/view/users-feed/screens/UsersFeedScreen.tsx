@@ -192,6 +192,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
+        lineHeight: 24,
     },
     statsContainer: {
         flexDirection: 'row',
@@ -201,6 +202,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
         fontSize: 12,
         color: '#9BA1A6',
         marginLeft: 4,
+        width: '85%',
     },
     subtitleContainer: {
         flexDirection: 'row',
@@ -210,5 +212,6 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
         fontSize: 16,
         color: '#9BA1A6',
         marginLeft: 4,
+        lineHeight: 20,
     },
 }); 

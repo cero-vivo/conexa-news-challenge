@@ -40,7 +40,7 @@
   },
   "news": {
     "title": "Cx News",
-    "subtitle": "Stay informed with the latest news",
+    "subtitle": "Stay informed",
     "search": "Search news...",
     "empty": "No news found",
     "error": "Error loading news",

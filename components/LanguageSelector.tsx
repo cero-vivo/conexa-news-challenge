@@ -71,7 +71,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ compact = fa
       <ThemedView style={styles.buttonContainer}>
         <Button
           variant={language === 'es' ? 'primary' : 'secondary'}
-          size="large"
+          size="medium"
           onPress={() => handleLanguageChange('es')}
           style={styles.languageButton}
         >
@@ -80,7 +80,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ compact = fa
 
         <Button
           variant={language === 'en' ? 'primary' : 'secondary'}
-          size="large"
+          size="medium"
           onPress={() => handleLanguageChange('en')}
           style={styles.languageButton}
         >

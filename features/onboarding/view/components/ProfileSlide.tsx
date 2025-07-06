@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, StyleSheet } from 'react-native';
+import { Image, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Props {
@@ -20,36 +20,38 @@ export const ProfileSlide: React.FC<Props> = ({ onLogin, onDontShowAgain }) => {
 	const tintColor = useThemeColor({}, 'tint');
 
 	return (
-		<ThemedView style={[styles.slide, { backgroundColor }]}>
-			<ThemedView
-				style={[styles.content, {
-					paddingTop: insets.top + 40,
-					paddingBottom: insets.bottom + 40,
-				}]}
-			>
-				<ThemedView style={styles.profileSection}>
-					<Image source={require('@/assets/images/me.jpeg')} style={[styles.profileImage, {backgroundColor: tintColor}]} />
-					<ThemedText type="title" style={[styles.title, { color: textColor }]}>
-						{t('onboarding.profile.title')}
-					</ThemedText>
-					<ThemedText style={[styles.subtitle, { color: textColor }]}>
-						{t('onboarding.profile.subtitle')}
-					</ThemedText>
-					<ThemedText style={[styles.description, { color: textColor }]}>
-						{t('onboarding.profile.description')}
-					</ThemedText>
-				</ThemedView>
+		<ScrollView>
+			<ThemedView style={[styles.slide, { backgroundColor }]}>
+				<ThemedView
+					style={[styles.content, {
+						paddingTop: insets.top + 40,
+						paddingBottom: insets.bottom + 40 
+					}]}
+				>
+					<ThemedView style={styles.profileSection}>
+						<Image source={require('@/assets/images/me.jpeg')} style={[styles.profileImage, { backgroundColor: tintColor }]} />
+						<ThemedText type="title" style={[styles.title, { color: textColor }]}>
+							{t('onboarding.profile.title')}
+						</ThemedText>
+						<ThemedText style={[styles.subtitle, { color: textColor }]}>
+							{t('onboarding.profile.subtitle')}
+						</ThemedText>
+						<ThemedText type='link' style={[styles.description, { color: textColor }]}>
+							{t('onboarding.profile.description')}
+						</ThemedText>
+					</ThemedView>
 
-				<ThemedView style={styles.buttonSection}>
-					<Button variant="primary" size="large" onPress={onLogin}>
-						{t('onboarding.buttons.enter')}
-					</Button>
-					<Button variant="secondary" size="medium" onPress={onDontShowAgain}>
-						{t('onboarding.buttons.dontShowAgain')}
-					</Button>
+					<ThemedView style={styles.buttonSection}>
+						<Button variant="primary" size="medium" onPress={onLogin}>
+							{t('onboarding.buttons.enter')}
+						</Button>
+						<Button variant="secondary" size="medium" onPress={onDontShowAgain}>
+							{t('onboarding.buttons.dontShowAgain')}
+						</Button>
+					</ThemedView>
 				</ThemedView>
 			</ThemedView>
-		</ThemedView>
+		</ScrollView>
 	);
 };
 
