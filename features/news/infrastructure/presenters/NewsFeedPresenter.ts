@@ -6,9 +6,9 @@ export const NewsFeedPresenter = (newsFeedAction: INewsFeedAction, screen: INews
     getNews: async (): Promise<void> => {
         try {
             const news = await newsFeedAction.getNews();
-            screen.getNewsSuccess(news);
+            screen?.getNewsSuccess?.(news);
         } catch (error) {
-            screen.getNewsError(error);
+            screen?.getNewsError?.(error);
         }
     },
   };

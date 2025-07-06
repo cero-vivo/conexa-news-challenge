@@ -5,6 +5,8 @@ import { DEBUG_MODE } from '@/constants/Config'
 import { Routes } from '@/constants/Routes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { logout as logoutAction } from '@/features/auth/model/store/authSlice'
+import { createNotificationsGateway } from '@/features/notifications/infrastructure/gateways/NotificationsGateway'
+import { createNotificationsPresenter } from '@/features/notifications/infrastructure/presenters/NotificationsPresenter'
 import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
 import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
@@ -33,6 +35,13 @@ export default function Index() {
 
 	// Sync language with i18n
 	useLanguageSync()
+
+	// Programar notificación de bienvenida al montar Index
+	useEffect(() => {
+		const gateway = createNotificationsGateway()
+		const presenter = createNotificationsPresenter(gateway)
+		presenter.scheduleWelcomeNotifications().catch(console.error)
+	}, [])
 
 	useEffect(() => {
 		console.log("🔄 useEffect ejecutándose - DEBUG_MODE:", DEBUG_MODE)
@@ -80,6 +89,7 @@ export default function Index() {
 			if (result.success) {
 				console.log("✅ DEV Login exitoso, navegando a Home")
 				dispatch(setShowOnboarding(false))
+
 				router.push(Routes.TABS)
 			} else {
 				console.error("❌ Error en login automático:", result.error)

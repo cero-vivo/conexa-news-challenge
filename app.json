@@ -9,14 +9,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cero.vivo.CXNews"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/conexa_tech_logo.jpg",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.cero.vivo.CXNews"
     },
     "web": {
       "bundler": "metro",
@@ -32,6 +34,13 @@
           "imageWidth": 300,
           "resizeMode": "contain",
           "backgroundColor": "#1E202D"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/conexa_tech_logo.jpg",
+          "color": "#ffffff"
         }
       ]
     ],
