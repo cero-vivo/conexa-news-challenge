@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/store/hooks';
 import { useEffect, useState } from 'react';
 import { useColorScheme as useRNColorScheme } from 'react-native';
 
@@ -11,10 +12,19 @@ export function useColorScheme() {
     setHasHydrated(true);
   }, []);
 
-  const colorScheme = useRNColorScheme();
+  const systemScheme = useRNColorScheme();
+  const themeOverride = useAppSelector((state) => state.configUI.theme);
+
+  let resolvedScheme: 'light' | 'dark' | null = null;
+
+  if (themeOverride && themeOverride !== 'system') {
+    resolvedScheme = themeOverride;
+  } else {
+    resolvedScheme = (systemScheme as 'light' | 'dark' | null);
+  }
 
   if (hasHydrated) {
-    return colorScheme;
+    return resolvedScheme ?? 'light';
   }
 
   return 'light';

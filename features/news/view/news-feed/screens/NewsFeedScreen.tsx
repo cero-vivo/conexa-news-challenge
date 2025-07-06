@@ -2,6 +2,7 @@ import { LanguageSelector } from '@/components/LanguageSelector'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import ThemeToggle from '@/components/ui/ThemeToggle'
 import { Routes } from '@/constants/Routes'
 import { News } from '@/features/news/model/entities/News'
 import { setSelectedNews } from '@/features/news/model/store/newsSlice'
@@ -337,6 +338,7 @@ export const NewsFeedScreen = () => {
                         </ThemedView>
                     </TouchableOpacity>
                     <LanguageSelector compact />
+                    <ThemeToggle />
                 </ThemedView>
                 
                 <ThemedView style={styles(insets).subtitleContainer}>
@@ -368,7 +370,7 @@ export const NewsFeedScreen = () => {
                         renderItem={renderNewsItem}
                         keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
-                        contentContainerStyle={[styles(insets).listContainer, { paddingBottom: insets.bottom + 20  }]}
+                        contentContainerStyle={[styles(insets).listContainer, { paddingBottom: insets.bottom + 120  }]}
                         ListEmptyComponent={renderEmptyState}
                         ListFooterComponent={renderFooter}
                         onScroll={handleScroll}
@@ -405,6 +407,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     content: {
         flexGrow: 1,
+        paddingBottom: insets.bottom + 20,
     },
     listContainer: {
         paddingBottom: 20,

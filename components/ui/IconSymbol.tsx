@@ -45,6 +45,8 @@ const MAPPING = {
   'phone': 'phone',
   'phone.fill': 'phone',
   'rectangle.portrait.and.arrow.right': 'logout',
+  'moon.fill': 'brightness-2',
+  'sun.max.fill': 'brightness-5',
 } as IconMapping;
 
 /**

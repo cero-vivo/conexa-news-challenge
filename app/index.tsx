@@ -10,6 +10,7 @@ import { createNotificationsPresenter } from '@/features/notifications/infrastru
 import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
 import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import { useThemeToggle } from '@/hooks/useThemeToggle'
 import { setLanguage } from '@/store/configUiSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -31,7 +32,7 @@ export default function Index() {
 	// Theme colors
 	const backgroundColor = useThemeColor({}, 'background')
 	const textColor = useThemeColor({}, 'text')
-	const tintColor = useThemeColor({}, 'tint')
+	const { isDark } = useThemeToggle()
 
 	// Sync language with i18n
 	useLanguageSync()
@@ -170,6 +171,9 @@ export default function Index() {
 						</ThemedText>
 						<ThemedText style={[styles.debugText, { color: textColor }]}>
 							Language: {i18n.language}
+						</ThemedText>
+						<ThemedText style={[styles.debugText, { color: textColor }]}>
+							Theme: {isDark ? "Dark" : "Light"}
 						</ThemedText>
 						<ThemedText style={[styles.debugText, { color: textColor }]}>
 							showOnboarding: {showOnboarding ? 'true' : 'false'}
