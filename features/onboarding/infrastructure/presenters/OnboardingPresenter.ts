@@ -1,10 +1,7 @@
-import { IOnboardingActions, OnboardingActions } from '../../model/actions/OnboardingActions'
-import { IOnboardingGateway } from '../../model/gateways/IOnboardingGateway'
+import { IOnboardingActions } from '../../model/actions/OnboardingActions'
 import { IOnboardingPresenter, IOnboardingScreen } from '../../model/presenter/IOnboardingPresenter'
 
-export const OnboardingPresenter = (gateway: IOnboardingGateway, screen: IOnboardingScreen): IOnboardingPresenter => {
-  const actions: IOnboardingActions = OnboardingActions(gateway)
-
+export const OnboardingPresenter = (actions: IOnboardingActions, screen: IOnboardingScreen): IOnboardingPresenter => {
   return {
     completeOnboarding: async () => {
       await actions.setShowOnboarding(false)

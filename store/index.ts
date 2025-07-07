@@ -2,7 +2,6 @@ import authReducer from '@/features/auth/store/authSlice'
 import newsReducer from '@/features/news/store/newsSlice'
 import savedNewsReducer from '@/features/news/store/savedNewsSlice'
 import notificationsReducer from '@/features/notifications/store/notificationsSlice'
-import onboardingReducer from '@/features/onboarding/store/onboardingSlice'
 import usersReducer from '@/features/users/store/usersSlice'
 import configUIReducer from './configUiSlice'
 
@@ -21,7 +20,6 @@ const rootReducer = combineReducers({
     savedNews: savedNewsReducer,
     configUI: configUIReducer,
     auth: authReducer,
-    onboarding: onboardingReducer,
     notifications: notificationsReducer,
 })
 
@@ -29,7 +27,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['savedNews', 'configUI', 'auth', 'onboarding', 'notifications'],
+    whitelist: ['savedNews', 'configUI', 'auth', 'notifications'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

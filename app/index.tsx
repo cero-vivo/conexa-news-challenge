@@ -7,21 +7,18 @@ import { logout } from '@/features/auth/store/authSlice'
 import { useAuth } from '@/features/auth/view/hooks/useAuth'
 import { createNotificationsGateway } from '@/features/notifications/infrastructure/gateways/NotificationsGateway'
 import { createNotificationsPresenter } from '@/features/notifications/infrastructure/presenters/NotificationsPresenter'
-import { setShowOnboarding } from '@/features/onboarding/store/onboardingSlice'
 import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useThemeToggle } from '@/hooks/useThemeToggle'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { setLanguage } from '@/store/configUiSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function Index() {
-	const { showOnboarding } = useAppSelector((state) => state.onboarding)
 	const { isAuthenticated, user } = useAppSelector((state) => state.auth)
 	const { login } = useAuth()
 	const dispatch = useAppDispatch()
@@ -44,27 +41,32 @@ export default function Index() {
 		presenter.scheduleWelcomeNotifications().catch(console.error)
 	}, [])
 
+	const [showOnboarding, setShowOnboarding] = useState(true)
+
 	useEffect(() => {
-		
+		const getShowOnboarding = async () => {
+			const value = await AsyncStorage.getItem('show_onboarding')
+			setShowOnboarding(value !== null ? JSON.parse(value) : true)
+		}
+		getShowOnboarding()
+
 		if (DEBUG_MODE) {
-			dispatch(setShowOnboarding(true))
-			console.log("🐛 Debug mode: Staying on loading screen for manual navigation")
-			return // Exit early, don't navigate automatically
+			console.log('🐛 Debug mode')
+			return
 		}
-
-		const handleNavigation = async () => {
-			if (showOnboarding) {
-				router.replace(Routes.ONBOARDING)
-			} else if (!isAuthenticated) {
-				router.replace(Routes.AUTH)
-			} else {
-				router.replace(Routes.TABS)
-			}
-		}
-
-		handleNavigation()
 
 	}, [])
+
+	useEffect(() => {
+		if (DEBUG_MODE) return
+		if (showOnboarding) {
+			router.replace(Routes.ONBOARDING)
+		} else if (!isAuthenticated) {
+			router.replace(Routes.AUTH)
+		} else {
+			router.replace(Routes.TABS)
+		}
+	}, [showOnboarding, isAuthenticated])
 
 	const handleShowOnboarding = () => {
 		router.push(Routes.ONBOARDING)
@@ -80,7 +82,7 @@ export default function Index() {
 
 			if (result.success) {
 				console.log("✅ DEV Login exitoso, navegando a Home")
-				dispatch(setShowOnboarding(false))
+				await AsyncStorage.setItem('show_onboarding', 'false')
 				router.push(Routes.TABS)
 			} else {
 				console.error("❌ Error en login automático:", result.error)
@@ -105,21 +107,19 @@ export default function Index() {
 
 			// Reset language to Spanish and store state
 			await i18n.changeLanguage('es')
-			dispatch(setLanguage('es'))
+			// Force reload by updating state
+			await AsyncStorage.setItem('show_onboarding', 'true')
 
 			// Reset auth state explicitly
 			dispatch(logout())
 
-			// Force reload by updating state
-			dispatch(setShowOnboarding(true));
-
 		} catch (error) {
-			console.error("❌ Error clearing storage:", error);
+			console.error("❌ Error clearing storage:", error)
 			// Even if there's an error, try to reset the app state
 			try {
-				dispatch(setShowOnboarding(true));
+				await AsyncStorage.setItem('show_onboarding', 'true')
 			} catch (resetError) {
-				console.error("❌ Error resetting app state:", resetError);
+				console.error("❌ Error resetting app state:", resetError)
 			}
 		}
 	}

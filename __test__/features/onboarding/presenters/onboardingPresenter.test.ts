@@ -1,8 +1,8 @@
 import { OnboardingPresenter } from '../../../../features/onboarding/infrastructure/presenters/OnboardingPresenter';
-import { IOnboardingGateway } from '../../../../features/onboarding/model/gateways/IOnboardingGateway';
+import { IOnboardingActions } from '../../../../features/onboarding/model/actions/OnboardingActions';
 
 describe('OnboardingPresenter', () => {
-  const createGatewayMock = (): jest.Mocked<IOnboardingGateway> => ({
+  const createActionsMock = (): jest.Mocked<IOnboardingActions> => ({
     getShowOnboarding: jest.fn(),
     setShowOnboarding: jest.fn(),
   });
@@ -12,34 +12,34 @@ describe('OnboardingPresenter', () => {
   });
 
   it('completeOnboarding debe guardar flag en false y notificar', async () => {
-    const gateway = createGatewayMock();
+    const actions = createActionsMock();
     const screen = createScreenMock();
 
-    const presenter = OnboardingPresenter(gateway, screen);
+    const presenter = OnboardingPresenter(actions, screen);
 
     await presenter.completeOnboarding();
 
-    expect(gateway.setShowOnboarding).toHaveBeenCalledWith(false);
+    expect(actions.setShowOnboarding).toHaveBeenCalledWith(false);
     expect(screen.setShowOnboardingComplete).toHaveBeenCalled();
   });
 
   it('loadFlag debe completar cuando flag es false', async () => {
-    const gateway = createGatewayMock();
-    gateway.getShowOnboarding.mockResolvedValue(false);
+    const actions = createActionsMock();
+    actions.getShowOnboarding.mockResolvedValue(false);
     const screen = createScreenMock();
-    const presenter = OnboardingPresenter(gateway, screen);
+    const presenter = OnboardingPresenter(actions, screen);
 
     await presenter.loadFlag();
 
-    expect(gateway.getShowOnboarding).toHaveBeenCalled();
+    expect(actions.getShowOnboarding).toHaveBeenCalled();
     expect(screen.setShowOnboardingComplete).toHaveBeenCalled();
   });
 
   it('loadFlag no debe llamar callback cuando flag es true', async () => {
-    const gateway = createGatewayMock();
-    gateway.getShowOnboarding.mockResolvedValue(true);
+    const actions = createActionsMock();
+    actions.getShowOnboarding.mockResolvedValue(true);
     const screen = createScreenMock();
-    const presenter = OnboardingPresenter(gateway, screen);
+    const presenter = OnboardingPresenter(actions, screen);
 
     await presenter.loadFlag();
 
