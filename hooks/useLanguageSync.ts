@@ -7,18 +7,14 @@ export const useLanguageSync = () => {
   const { i18n } = useTranslation()
 
   useEffect(() => {
-    // Sync language on mount and when language changes
     if (i18n.language !== language) {
-      console.log('Syncing language:', language)
       i18n.changeLanguage(language)
     }
   }, [language, i18n])
 
-  // Also sync on mount
   useEffect(() => {
-    console.log('Initial language sync:', language)
     i18n.changeLanguage(language)
-  }, []) // Empty dependency array means it runs only on mount
+  }, [])
 
   return { language }
 } 

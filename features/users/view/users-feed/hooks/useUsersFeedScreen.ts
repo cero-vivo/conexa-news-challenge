@@ -21,7 +21,7 @@ export const useUsersFeedScreen = () => {
         },
     }
 
-    const presenter = UsersPresenter(HttpUsersGateway())(screenHandler);
+    const presenter = UsersPresenter(HttpUsersGateway(), screenHandler);
 
     useEffect(() => {
         setLoading("loading");

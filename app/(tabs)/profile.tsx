@@ -1,7 +1,7 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
-import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useAuth } from '@/features/auth/view/hooks/useAuth'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -36,7 +36,6 @@ export default function ProfileScreen() {
           text: t('profile.logout.title'), 
           style: 'destructive',
           onPress: () => {
-            console.log("🚪 User confirmed logout")
             logout()
           }
         }

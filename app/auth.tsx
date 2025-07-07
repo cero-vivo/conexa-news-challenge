@@ -4,8 +4,7 @@ import { ThemedView } from '@/components/ThemedView'
 import { Button } from '@/components/ui/Button'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { Routes } from '@/constants/Routes'
-import { useAuth } from '@/features/auth/hooks/useAuth'
-import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
+import { useAuth } from '@/features/auth/view/hooks/useAuth'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
@@ -76,7 +75,6 @@ export default function AuthScreen() {
   }
 
   const handleShowOnboarding = () => {
-    dispatch(setShowOnboarding(true))
     router.replace(Routes.ONBOARDING)
   }
 

@@ -54,12 +54,10 @@ const authSlice = createSlice({
       state.error = action.payload
     },
     logout: (state) => {
-      console.log("🔄 Logout reducer called")
       state.user = null
       state.isAuthenticated = false
       state.loading = 'idle'
       state.error = null
-      console.log("✅ Logout state updated:", { user: state.user, isAuthenticated: state.isAuthenticated })
     },
     clearError: (state) => {
       state.error = null

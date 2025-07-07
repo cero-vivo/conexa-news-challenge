@@ -3,8 +3,8 @@ import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { Routes } from '@/constants/Routes'
 import { News } from '@/features/news/model/entities/News'
-import { clearSelectedNews } from '@/features/news/model/store/newsSlice'
-import { toggleSaveNews } from '@/features/news/model/store/savedNewsSlice'
+import { clearSelectedNews } from '@/features/news/store/newsSlice'
+import { toggleSaveNews } from '@/features/news/store/savedNewsSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
@@ -37,16 +37,12 @@ export const NewsDetailScreen = () => {
     const canSaveNews = isAuthenticated && user && !user.isAnonymous;
 
     const handleBackPress = () => {
-        console.log('Back button pressed in NewsDetailScreen')
         dispatch(clearSelectedNews())
         router.back()
     }
 
     const handleToggleSave = () => {
-        console.log("🔐 handleToggleSave called - isAuthenticated:", isAuthenticated, "user:", user?.name, "isAnonymous:", user?.isAnonymous);
-        
         if (!canSaveNews) {
-            console.log("🚫 User cannot save news (not authenticated or anonymous)");
             Alert.alert(
                 t('auth.required.title'),
                 t('auth.required.message'),

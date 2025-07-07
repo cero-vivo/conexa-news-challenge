@@ -11,7 +11,7 @@ import {
 	registerFailure,
 	registerStart,
 	registerSuccess,
-} from "@/features/auth/model/store/authSlice";
+} from "@/features/auth/store/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "expo-router";
 import { useCallback, useMemo } from "react";
@@ -24,10 +24,6 @@ export const useAuth = () => {
 		(state) => state.auth
 	);
 
-	// Debug log for authentication state
-	console.log("🔐 useAuth hook - isAuthenticated:", isAuthenticated, "user:", user?.name || 'null');
-
-	/* Screen callbacks -> actual UI reactions (Redux dispatch) */
 	const screenHandler: IAuthScreen = {
 		loginSuccess: (usr) => {
 			dispatch(loginSuccess(usr));

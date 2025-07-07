@@ -3,16 +3,15 @@ import { ThemedView } from '@/components/ThemedView'
 import { Button } from '@/components/ui/Button'
 import { DEBUG_MODE } from '@/constants/Config'
 import { Routes } from '@/constants/Routes'
-import { useAuth } from '@/features/auth/hooks/useAuth'
-import { logout as logoutAction } from '@/features/auth/model/store/authSlice'
+import { logout } from '@/features/auth/store/authSlice'
+import { useAuth } from '@/features/auth/view/hooks/useAuth'
 import { createNotificationsGateway } from '@/features/notifications/infrastructure/gateways/NotificationsGateway'
 import { createNotificationsPresenter } from '@/features/notifications/infrastructure/presenters/NotificationsPresenter'
-import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
 import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useThemeToggle } from '@/hooks/useThemeToggle'
-import { setLanguage } from '@/store/configUiSlice'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store'
+import { persistShowOnboarding } from '@/store/configUiSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
@@ -21,8 +20,9 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function Index() {
-	const { showOnboarding } = useAppSelector((state) => state.onboarding)
 	const { isAuthenticated, user } = useAppSelector((state) => state.auth)
+	const showOnboarding = useAppSelector(state=>state.configUI.showOnboarding)
+	console.log("🚀 ~ Index ~ showOnboarding:", showOnboarding)
 	const { login } = useAuth()
 	const dispatch = useAppDispatch()
 	const router = useRouter()
@@ -44,36 +44,24 @@ export default function Index() {
 		presenter.scheduleWelcomeNotifications().catch(console.error)
 	}, [])
 
+	useEffect(()=>{
+		const init=async()=>{
+			const value=await AsyncStorage.getItem('show_onboarding')
+			dispatch(persistShowOnboarding(value!==null?JSON.parse(value):true))
+		}
+		init()
+	}, [dispatch])
+
 	useEffect(() => {
-		console.log("🔄 useEffect ejecutándose - DEBUG_MODE:", DEBUG_MODE)
-
-		if (DEBUG_MODE) {
-			console.log("🐛 Debug mode activado")
-			dispatch(setShowOnboarding(true))
-			// logout() // Comentado para evitar navegación automática en debug
-			console.log("🐛 Debug mode: Staying on loading screen for manual navigation")
-			return // Exit early, don't navigate automatically
+		if (DEBUG_MODE) return
+		if (showOnboarding) {
+			router.replace(Routes.ONBOARDING)
+		} else if (!isAuthenticated) {
+			router.replace(Routes.AUTH)
+		} else {
+			router.replace(Routes.TABS)
 		}
-
-		const handleNavigation = async () => {
-			console.log("🚀 ~ handleNavigation ~ showOnboarding:", showOnboarding)
-			console.log("🔐 ~ handleNavigation ~ isAuthenticated:", isAuthenticated)
-
-			if (showOnboarding) {
-				console.log("📱 Navigating to ONBOARDING")
-				router.replace(Routes.ONBOARDING)
-			} else if (!isAuthenticated) {
-				console.log("🔐 Navigating to AUTH")
-				router.replace(Routes.AUTH)
-			} else {
-				console.log("📱 Navigating to TABS")
-				router.replace(Routes.TABS)
-			}
-		}
-
-		handleNavigation()
-
-	}, [])
+	}, [showOnboarding, isAuthenticated])
 
 	const handleShowOnboarding = () => {
 		router.push(Routes.ONBOARDING)
@@ -89,8 +77,6 @@ export default function Index() {
 
 			if (result.success) {
 				console.log("✅ DEV Login exitoso, navegando a Home")
-				dispatch(setShowOnboarding(false))
-
 				router.push(Routes.TABS)
 			} else {
 				console.error("❌ Error en login automático:", result.error)
@@ -101,59 +87,33 @@ export default function Index() {
 	}
 
 	const handleClearStorage = async () => {
-		console.log("🗑️ Resetting storage...")
-		console.log("📊 Estado ANTES de limpiar storage:")
-		console.log("  - showOnboarding:", showOnboarding)
-		console.log("  - isAuthenticated:", isAuthenticated)
-		console.log("  - user:", user?.name || 'null')
-		console.log("  - language:", i18n.language)
-
 		try {
 			const keys = await AsyncStorage.getAllKeys()
-			console.log("📋 Keys encontradas:", keys)
-
 			if (keys.length > 0) {
 				await AsyncStorage.multiRemove(keys)
-				console.log("✅ All async storage keys removed successfully")
-			} else {
-				console.log("ℹ️ No async storage keys found to reset")
 			}
 
 			try {
 				await AsyncStorage.clear()
-				console.log("✅ AsyncStorage.clear() completed successfully")
 			} catch (clearError) {
 				console.log("⚠️ AsyncStorage.clear() failed:", (clearError as Error).message)
 			}
 
-			console.log("✅ Storage cleared successfully");
-
 			// Reset language to Spanish and store state
 			await i18n.changeLanguage('es')
-			dispatch(setLanguage('es'))
-			console.log("🌍 Idioma reseteado a español y estado actualizado")
+			// Force reload by updating state
+			dispatch(persistShowOnboarding(true))
 
 			// Reset auth state explicitly
-			dispatch(logoutAction())
-			console.log("🔐 Estado de auth reseteado")
-
-			// Force reload by updating state
-			dispatch(setShowOnboarding(true));
-
-			console.log("📊 Estado DESPUÉS de limpiar storage:")
-			console.log("  - showOnboarding: true (reseteado)")
-			console.log("  - isAuthenticated: false (reseteado)")
-			console.log("  - user: null (reseteado)")
-			console.log("  - language: es (reseteado)")
+			dispatch(logout())
 
 		} catch (error) {
-			console.error("❌ Error clearing storage:", error);
+			console.error("❌ Error clearing storage:", error)
 			// Even if there's an error, try to reset the app state
 			try {
-				dispatch(setShowOnboarding(true));
-				console.log("🔄 App state reset attempted");
+				dispatch(persistShowOnboarding(true))
 			} catch (resetError) {
-				console.error("❌ Error resetting app state:", resetError);
+				console.error("❌ Error resetting app state:", resetError)
 			}
 		}
 	}
@@ -176,7 +136,7 @@ export default function Index() {
 							Theme: {isDark ? "Dark" : "Light"}
 						</ThemedText>
 						<ThemedText style={[styles.debugText, { color: textColor }]}>
-							showOnboarding: {showOnboarding ? 'true' : 'false'}
+							showOnboarding: {Boolean(showOnboarding).toString()}
 						</ThemedText>
 						<ThemedText style={[styles.debugText, { color: textColor }]}>
 							isAuthenticated: {isAuthenticated ? 'true' : 'false'}

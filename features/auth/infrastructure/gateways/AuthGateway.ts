@@ -52,11 +52,6 @@ export const AuthGateway = (): IAuthGateway => {
     logout: async (): Promise<void> => {
       await simulateDelay(100);
       await AsyncStorage.removeItem(USER_KEY);
-    },
-
-    getStoredUser: async (): Promise<AuthUser | null> => {
-      const json = await AsyncStorage.getItem(USER_KEY);
-      return json ? (JSON.parse(json) as AuthUser) : null;
-    },
+    }
   };
 }; 

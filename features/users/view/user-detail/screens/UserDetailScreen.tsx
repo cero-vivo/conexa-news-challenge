@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { User } from '@/features/users/model/entities/User'
-import { clearSelectedUser } from '@/features/users/model/store/usersSlice'
+import { clearSelectedUser } from '@/features/users/store/usersSlice'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'expo-router'
@@ -27,7 +27,6 @@ export const UserDetailScreen = () => {
     const backgroundColor = useThemeColor({}, 'background')
 
     const handleBackPress = () => {
-        console.log('Back button pressed in UserDetailScreen')
         dispatch(clearSelectedUser())
         router.back()
     }
