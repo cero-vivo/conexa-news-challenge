@@ -1,5 +1,5 @@
+import { INotificationsActions } from '@/features/notifications/model/actions/NotificationsActions'
 import { Notification } from '@/features/notifications/model/entities/Notification'
-import { INotificationsGateway } from '@/features/notifications/model/gateways/INotificationsGateway'
 
 export interface INotificationsPresenter {
 	requestPermissions(): Promise<boolean>
@@ -11,22 +11,22 @@ export interface INotificationsPresenter {
 	scheduleWelcomeNotifications(): Promise<void>
 }
 
-export const createNotificationsPresenter = (gateway: INotificationsGateway): INotificationsPresenter => {
-	const requestPermissions = async () => gateway.requestPermissions()
+export const createNotificationsPresenter = (actions: INotificationsActions): INotificationsPresenter => {
+	const requestPermissions = async () => actions.requestPermissions()
 
-	const getNotifications = async () => gateway.getNotifications()
+	const getNotifications = async () => actions.getNotifications()
 
-	const markAsRead = async (id: string) => gateway.markAsRead(id)
+	const markAsRead = async (id: string) => actions.markAsRead(id)
 
-	const markAllAsRead = async () => gateway.markAllAsRead()
+	const markAllAsRead = async () => actions.markAllAsRead()
 
-	const deleteNotification = async (id: string) => gateway.deleteNotification(id)
+	const deleteNotification = async (id: string) => actions.deleteNotification(id)
 
-	const clearAll = async () => gateway.clearAll()
+	const clearAll = async () => actions.clearAll()
 
 	const scheduleWelcomeNotifications = async () => {
 		// Solicitar permisos primero
-		const granted = await gateway.requestPermissions()
+		const granted = await actions.requestPermissions()
 		if (!granted) {
 			return
 		}
@@ -47,7 +47,7 @@ export const createNotificationsPresenter = (gateway: INotificationsGateway): IN
 		]
 
 		for (const n of notifications) {
-			await gateway.scheduleNotification(n.title, n.body, n.delay)
+			await actions.scheduleNotification(n.title, n.body, n.delay)
 		}
 	}
 

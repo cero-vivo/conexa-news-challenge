@@ -1,9 +1,9 @@
-import authReducer from '@/features/auth/model/store/authSlice'
-import newsReducer from '@/features/news/model/store/newsSlice'
-import savedNewsReducer from '@/features/news/model/store/savedNewsSlice'
-import notificationsReducer from '@/features/notifications/model/store/notificationsSlice'
-import onboardingReducer from '@/features/onboarding/model/store/onboardingSlice'
-import usersReducer from '@/features/users/model/store/usersSlice'
+import authReducer from '@/features/auth/store/authSlice'
+import newsReducer from '@/features/news/store/newsSlice'
+import savedNewsReducer from '@/features/news/store/savedNewsSlice'
+import notificationsReducer from '@/features/notifications/store/notificationsSlice'
+import onboardingReducer from '@/features/onboarding/store/onboardingSlice'
+import usersReducer from '@/features/users/store/usersSlice'
 import configUIReducer from './configUiSlice'
 
 import {

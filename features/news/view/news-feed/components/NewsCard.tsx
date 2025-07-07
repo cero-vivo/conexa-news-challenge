@@ -3,7 +3,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Routes } from '@/constants/Routes';
 import { News } from '@/features/news/model/entities/News';
-import { toggleSaveNews } from '@/features/news/model/store/savedNewsSlice';
+import { toggleSaveNews } from '@/features/news/store/savedNewsSlice';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useRouter } from 'expo-router';

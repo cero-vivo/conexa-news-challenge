@@ -4,7 +4,7 @@ export { User } from './model/entities/User'
 // Store
 export {
     clearError, clearSelectedUser, setError, setLoading, setSelectedUser, setUsers
-} from './model/store/usersSlice'
+} from './store/usersSlice'
 
 // Views
 export { UserDetailScreen } from './view/user-detail/screens/UserDetailScreen'

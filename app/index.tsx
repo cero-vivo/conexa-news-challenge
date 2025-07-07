@@ -4,15 +4,15 @@ import { Button } from '@/components/ui/Button'
 import { DEBUG_MODE } from '@/constants/Config'
 import { Routes } from '@/constants/Routes'
 import { useAuth } from '@/features/auth/hooks/useAuth'
-import { logout as logoutAction } from '@/features/auth/model/store/authSlice'
+import { logout } from '@/features/auth/store/authSlice'
 import { createNotificationsGateway } from '@/features/notifications/infrastructure/gateways/NotificationsGateway'
 import { createNotificationsPresenter } from '@/features/notifications/infrastructure/presenters/NotificationsPresenter'
-import { setShowOnboarding } from '@/features/onboarding/model/store/onboardingSlice'
+import { setShowOnboarding } from '@/features/onboarding/store/onboardingSlice'
 import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useThemeToggle } from '@/hooks/useThemeToggle'
+import { useAppDispatch, useAppSelector } from '@/store'
 import { setLanguage } from '@/store/configUiSlice'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
@@ -108,7 +108,7 @@ export default function Index() {
 			dispatch(setLanguage('es'))
 
 			// Reset auth state explicitly
-			dispatch(logoutAction())
+			dispatch(logout())
 
 			// Force reload by updating state
 			dispatch(setShowOnboarding(true));

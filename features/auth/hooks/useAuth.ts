@@ -11,7 +11,7 @@ import {
 	registerFailure,
 	registerStart,
 	registerSuccess,
-} from "@/features/auth/model/store/authSlice";
+} from "@/features/auth/store/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "expo-router";
 import { useCallback, useMemo } from "react";
