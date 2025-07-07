@@ -25,7 +25,7 @@ const getStoredLanguage = async () => {
       return configUI.language || 'es';
     }
   } catch (error) {
-    console.error('Error reading stored language:', error);
+    console.log('Error reading stored language:', error);
   }
   return 'es'; // Default to Spanish
 };
