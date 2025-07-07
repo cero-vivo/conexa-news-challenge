@@ -10,13 +10,7 @@ interface ButtonProps extends TouchableOpacityProps {
 	children: React.ReactNode
 }
 
-export const Button: React.FC<ButtonProps> = ({
-	variant = 'primary',
-	size = 'medium',
-	children,
-	style,
-	...props
-}) => {
+export const Button: React.FC<ButtonProps> = ({ variant = 'primary', size = 'medium', children, style, ...props }) => {
 	const textColor = useThemeColor({}, 'text')
 	const tintColor = useThemeColor({}, 'tint')
 	const { isDark } = useThemeToggle()
@@ -27,7 +21,6 @@ export const Button: React.FC<ButtonProps> = ({
 		}
 		return textColor
 	}
-	console.log("🚀 ~ getTextColor ~ getTextColor:", getTextColor(),children)
 
 	// Get button styles based on variant
 	const getButtonStyle = () => {

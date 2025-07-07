@@ -37,16 +37,12 @@ export const NewsDetailScreen = () => {
     const canSaveNews = isAuthenticated && user && !user.isAnonymous;
 
     const handleBackPress = () => {
-        console.log('Back button pressed in NewsDetailScreen')
         dispatch(clearSelectedNews())
         router.back()
     }
 
     const handleToggleSave = () => {
-        console.log("🔐 handleToggleSave called - isAuthenticated:", isAuthenticated, "user:", user?.name, "isAnonymous:", user?.isAnonymous);
-        
         if (!canSaveNews) {
-            console.log("🚫 User cannot save news (not authenticated or anonymous)");
             Alert.alert(
                 t('auth.required.title'),
                 t('auth.required.message'),

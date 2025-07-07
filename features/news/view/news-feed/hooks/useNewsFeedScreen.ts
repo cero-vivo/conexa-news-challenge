@@ -25,7 +25,6 @@ export const useNewsFeedScreen = () => {
             setHasMore(news.length > ITEMS_PER_PAGE);
             setLoading("success");
             setError(null);
-            console.log(`📰 Paginación: ${news.length} noticias totales, mostrando ${firstPage.length} en primera página`);
         },
         getNewsError: (error: any) => {
             setError(error?.message || "Failed to load news");
@@ -52,7 +51,6 @@ export const useNewsFeedScreen = () => {
                 setCurrentPage(nextPage);
                 setHasMore(endIndex < allNews.length);
                 setLoadingMore(false);
-                console.log(`📰 Paginación: Cargando página ${nextPage}, ${newItems.length} noticias más`);
             }, 320);
         } else {
             setHasMore(false);

@@ -45,28 +45,19 @@ export default function Index() {
 	}, [])
 
 	useEffect(() => {
-		console.log("🔄 useEffect ejecutándose - DEBUG_MODE:", DEBUG_MODE)
-
+		
 		if (DEBUG_MODE) {
-			console.log("🐛 Debug mode activado")
 			dispatch(setShowOnboarding(true))
-			// logout() // Comentado para evitar navegación automática en debug
 			console.log("🐛 Debug mode: Staying on loading screen for manual navigation")
 			return // Exit early, don't navigate automatically
 		}
 
 		const handleNavigation = async () => {
-			console.log("🚀 ~ handleNavigation ~ showOnboarding:", showOnboarding)
-			console.log("🔐 ~ handleNavigation ~ isAuthenticated:", isAuthenticated)
-
 			if (showOnboarding) {
-				console.log("📱 Navigating to ONBOARDING")
 				router.replace(Routes.ONBOARDING)
 			} else if (!isAuthenticated) {
-				console.log("🔐 Navigating to AUTH")
 				router.replace(Routes.AUTH)
 			} else {
-				console.log("📱 Navigating to TABS")
 				router.replace(Routes.TABS)
 			}
 		}
@@ -90,7 +81,6 @@ export default function Index() {
 			if (result.success) {
 				console.log("✅ DEV Login exitoso, navegando a Home")
 				dispatch(setShowOnboarding(false))
-
 				router.push(Routes.TABS)
 			} else {
 				console.error("❌ Error en login automático:", result.error)
@@ -101,57 +91,33 @@ export default function Index() {
 	}
 
 	const handleClearStorage = async () => {
-		console.log("🗑️ Resetting storage...")
-		console.log("📊 Estado ANTES de limpiar storage:")
-		console.log("  - showOnboarding:", showOnboarding)
-		console.log("  - isAuthenticated:", isAuthenticated)
-		console.log("  - user:", user?.name || 'null')
-		console.log("  - language:", i18n.language)
-
 		try {
 			const keys = await AsyncStorage.getAllKeys()
-			console.log("📋 Keys encontradas:", keys)
-
 			if (keys.length > 0) {
 				await AsyncStorage.multiRemove(keys)
-				console.log("✅ All async storage keys removed successfully")
-			} else {
-				console.log("ℹ️ No async storage keys found to reset")
 			}
 
 			try {
 				await AsyncStorage.clear()
-				console.log("✅ AsyncStorage.clear() completed successfully")
 			} catch (clearError) {
 				console.log("⚠️ AsyncStorage.clear() failed:", (clearError as Error).message)
 			}
 
-			console.log("✅ Storage cleared successfully");
-
 			// Reset language to Spanish and store state
 			await i18n.changeLanguage('es')
 			dispatch(setLanguage('es'))
-			console.log("🌍 Idioma reseteado a español y estado actualizado")
 
 			// Reset auth state explicitly
 			dispatch(logoutAction())
-			console.log("🔐 Estado de auth reseteado")
 
 			// Force reload by updating state
 			dispatch(setShowOnboarding(true));
-
-			console.log("📊 Estado DESPUÉS de limpiar storage:")
-			console.log("  - showOnboarding: true (reseteado)")
-			console.log("  - isAuthenticated: false (reseteado)")
-			console.log("  - user: null (reseteado)")
-			console.log("  - language: es (reseteado)")
 
 		} catch (error) {
 			console.error("❌ Error clearing storage:", error);
 			// Even if there's an error, try to reset the app state
 			try {
 				dispatch(setShowOnboarding(true));
-				console.log("🔄 App state reset attempted");
 			} catch (resetError) {
 				console.error("❌ Error resetting app state:", resetError);
 			}

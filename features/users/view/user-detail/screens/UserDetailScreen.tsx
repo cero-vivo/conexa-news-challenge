@@ -27,7 +27,6 @@ export const UserDetailScreen = () => {
     const backgroundColor = useThemeColor({}, 'background')
 
     const handleBackPress = () => {
-        console.log('Back button pressed in UserDetailScreen')
         dispatch(clearSelectedUser())
         router.back()
     }

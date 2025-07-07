@@ -21,7 +21,6 @@ interface NewsCardProps {
 export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
   // Handle card press
   const handlePress = () => {
-    console.log('📰 News card pressed:', news.title);
     onPress(news);
   };
 
@@ -41,25 +40,19 @@ export const NewsCard: React.FC<NewsCardProps> = ({ news, onPress }) => {
   const canSaveNews = isAuthenticated && user && !user.isAnonymous;
 
   const handleToggleSave = () => {
-    console.log("🔐 handleToggleSave called - isAuthenticated:", isAuthenticated, "user:", user?.name, "isAnonymous:", user?.isAnonymous);
-    
     if (!canSaveNews) {
-      console.log("🚫 User cannot save news (not authenticated or anonymous)");
       Alert.alert(
         t('auth.required.title'),
         t('auth.required.message'),
         [
           { text: t('auth.required.cancel'), style: 'cancel' },
           { text: t('auth.required.login'), onPress: () => {
-            console.log("🚀 Navigating to auth screen");
-            router.push(Routes.AUTH);
+            router.replace(Routes.AUTH);
           }}
         ]
       );
       return;
     }
-    
-    console.log("✅ User can save news, saving...");
     dispatch(toggleSaveNews(news));
   };
 

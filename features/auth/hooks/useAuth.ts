@@ -24,10 +24,6 @@ export const useAuth = () => {
 		(state) => state.auth
 	);
 
-	// Debug log for authentication state
-	console.log("🔐 useAuth hook - isAuthenticated:", isAuthenticated, "user:", user?.name || 'null');
-
-	/* Screen callbacks -> actual UI reactions (Redux dispatch) */
 	const screenHandler: IAuthScreen = {
 		loginSuccess: (usr) => {
 			dispatch(loginSuccess(usr));

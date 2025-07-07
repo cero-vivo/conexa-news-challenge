@@ -36,7 +36,6 @@ export default function ProfileScreen() {
           text: t('profile.logout.title'), 
           style: 'destructive',
           onPress: () => {
-            console.log("🚪 User confirmed logout")
             logout()
           }
         }

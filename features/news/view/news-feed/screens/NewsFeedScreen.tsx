@@ -150,31 +150,24 @@ export const NewsFeedScreen = () => {
     };
 
     const handleLoadMore = () => {
-        console.log('🔍 handleLoadMore llamado:', { loadingMore, hasMore, loading });
         if (hasMore && !loadingMore && loading !== "loading") {
-            console.log("📰 Cargando más noticias...");
             loadMoreNews();
-        } else {
-            console.log('🔍 No se puede cargar más:', { loadingMore, hasMore, loading });
         }
     };
 
     const renderFooter = () => {
-        console.log('🔍 renderFooter llamado:', { hasMore, loadingMore, displayedItems, totalItems });
-        
+
         if (!hasMore) {
-            console.log('🔍 Mostrando mensaje de fin de lista');
             return (
                 <ThemedView style={styles(insets).footerContainer}>
                     <ThemedText style={[styles(insets).footerText, { color: textColor }]}>
-                        {t('news.endOfList')} ({displayedItems}/{totalItems})
+                        {t('news.endOfList')}
                     </ThemedText>
                 </ThemedView>
             );
         }
         
         if (loadingMore) {
-            console.log('🔍 Mostrando spinner de carga');
             return (
                 <ThemedView style={styles(insets).footerContainer}>
                     <ActivityIndicator size="small" color={tintColor} />
@@ -184,8 +177,6 @@ export const NewsFeedScreen = () => {
                 </ThemedView>
             );
         }
-        
-        console.log('🔍 Footer retorna null');
         return null;
     };
 

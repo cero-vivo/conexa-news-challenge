@@ -48,10 +48,7 @@ export const SavedNewsScreen = () => {
   const renderEmptyState = () => (
     <ThemedView style={styles(insets).emptyContainer}>
       <IconSymbol name="bookmark.fill" size={64} color={tintColor} style={styles(insets).emptyIcon} />
-      <ThemedText style={styles(insets).emptyText}>{t('saved.empty')}</ThemedText>
-      <ThemedText style={styles(insets).emptySubtext}>
-        Guarda noticias que te interesen para leerlas más tarde
-      </ThemedText>
+      <ThemedText style={styles(insets).emptyText}>{t('saved.empty.title')}</ThemedText>
     </ThemedView>
   )
 
