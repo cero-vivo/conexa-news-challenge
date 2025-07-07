@@ -1,11 +1,8 @@
-import { AuthActions, IAuthActions } from "../../model/actions/AuthActions";
-import { IAuthGateway } from "../../model/gateways/IAuthGateway";
+import { IAuthActions } from "../../model/actions/AuthActions";
 import { IAuthPresenter, IAuthScreen } from "../../model/presenter/IAuthPresenter";
 
-export const AuthPresenter = (gateway: IAuthGateway,screen: IAuthScreen): IAuthPresenter => {
+export const AuthPresenter = (actions: IAuthActions, screen: IAuthScreen): IAuthPresenter => {
   
-  const actions: IAuthActions = AuthActions(gateway);
-
   return {
     login: async (email: string, password: string) => {
       try {

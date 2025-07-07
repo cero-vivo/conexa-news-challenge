@@ -1,6 +1,6 @@
 import { AuthPresenter } from '../../../../features/auth/infrastructure/presenters/AuthPresenter';
+import { IAuthActions } from '../../../../features/auth/model/actions/AuthActions';
 import { AuthUser } from '../../../../features/auth/model/entities/AuthUser';
-import { IAuthGateway } from '../../../../features/auth/model/gateways/IAuthGateway';
 
 describe('AuthPresenter', () => {
   const sampleUser: AuthUser = {
@@ -11,7 +11,7 @@ describe('AuthPresenter', () => {
     createdAt: '2024-01-01T00:00:00Z',
   };
 
-  const createGatewayMock = (): jest.Mocked<IAuthGateway> => ({
+  const createActionsMock = (): jest.Mocked<IAuthActions> => ({
     login: jest.fn(),
     register: jest.fn(),
     loginAnonymous: jest.fn(),
@@ -30,25 +30,25 @@ describe('AuthPresenter', () => {
   });
 
   it('login éxito: debe llamar loginSuccess y devolver success true', async () => {
-    const gateway = createGatewayMock();
-    gateway.login.mockResolvedValue(sampleUser);
+    const actions = createActionsMock();
+    actions.login.mockResolvedValue(sampleUser);
     const screen = createScreenMock();
 
-    const presenter = AuthPresenter(gateway, screen);
+    const presenter = AuthPresenter(actions, screen);
     const result = await presenter.login('john@example.com', '123456');
 
-    expect(gateway.login).toHaveBeenCalledWith('john@example.com', '123456');
+    expect(actions.login).toHaveBeenCalledWith('john@example.com', '123456');
     expect(screen.loginSuccess).toHaveBeenCalledWith(sampleUser);
     expect(result).toEqual({ success: true });
   });
 
   it('login error: debe llamar loginError y devolver success false', async () => {
-    const gateway = createGatewayMock();
+    const actions = createActionsMock();
     const err = new Error('invalid');
-    gateway.login.mockRejectedValue(err);
+    actions.login.mockRejectedValue(err);
     const screen = createScreenMock();
 
-    const presenter = AuthPresenter(gateway, screen);
+    const presenter = AuthPresenter(actions, screen);
     const result = await presenter.login('x', 'y');
 
     expect(screen.loginError).toHaveBeenCalledWith(err);
@@ -56,38 +56,38 @@ describe('AuthPresenter', () => {
   });
 
   it('register éxito: debe llamar registerSuccess', async () => {
-    const gateway = createGatewayMock();
-    gateway.register.mockResolvedValue(sampleUser);
+    const actions = createActionsMock();
+    actions.register.mockResolvedValue(sampleUser);
     const screen = createScreenMock();
 
-    const presenter = AuthPresenter(gateway, screen);
+    const presenter = AuthPresenter(actions, screen);
     await presenter.register('john@example.com', '123', 'John');
 
-    expect(gateway.register).toHaveBeenCalledWith('john@example.com', '123', 'John');
+    expect(actions.register).toHaveBeenCalledWith('john@example.com', '123', 'John');
     expect(screen.registerSuccess).toHaveBeenCalledWith(sampleUser);
   });
 
   it('loginAnonymous éxito', async () => {
-    const gateway = createGatewayMock();
-    gateway.loginAnonymous.mockResolvedValue({ ...sampleUser, isAnonymous: true });
+    const actions = createActionsMock();
+    actions.loginAnonymous.mockResolvedValue({ ...sampleUser, isAnonymous: true });
     const screen = createScreenMock();
 
-    const presenter = AuthPresenter(gateway, screen);
+    const presenter = AuthPresenter(actions, screen);
     await presenter.loginAnonymous();
 
-    expect(gateway.loginAnonymous).toHaveBeenCalled();
+    expect(actions.loginAnonymous).toHaveBeenCalled();
     expect(screen.anonymousLoginSuccess).toHaveBeenCalled();
   });
 
   it('logout éxito', async () => {
-    const gateway = createGatewayMock();
-    gateway.logout.mockResolvedValue();
+    const actions = createActionsMock();
+    actions.logout.mockResolvedValue();
     const screen = createScreenMock();
 
-    const presenter = AuthPresenter(gateway, screen);
+    const presenter = AuthPresenter(actions, screen);
     await presenter.logout();
 
-    expect(gateway.logout).toHaveBeenCalled();
+    expect(actions.logout).toHaveBeenCalled();
     expect(screen.logoutSuccess).toHaveBeenCalled();
   });
 }); 
