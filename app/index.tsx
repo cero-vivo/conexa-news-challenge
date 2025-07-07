@@ -11,15 +11,18 @@ import { useLanguageSync } from '@/hooks/useLanguageSync'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useThemeToggle } from '@/hooks/useThemeToggle'
 import { useAppDispatch, useAppSelector } from '@/store'
+import { persistShowOnboarding } from '@/store/configUiSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function Index() {
 	const { isAuthenticated, user } = useAppSelector((state) => state.auth)
+	const showOnboarding = useAppSelector(state=>state.configUI.showOnboarding)
+	console.log("🚀 ~ Index ~ showOnboarding:", showOnboarding)
 	const { login } = useAuth()
 	const dispatch = useAppDispatch()
 	const router = useRouter()
@@ -41,21 +44,13 @@ export default function Index() {
 		presenter.scheduleWelcomeNotifications().catch(console.error)
 	}, [])
 
-	const [showOnboarding, setShowOnboarding] = useState(true)
-
-	useEffect(() => {
-		const getShowOnboarding = async () => {
-			const value = await AsyncStorage.getItem('show_onboarding')
-			setShowOnboarding(value !== null ? JSON.parse(value) : true)
+	useEffect(()=>{
+		const init=async()=>{
+			const value=await AsyncStorage.getItem('show_onboarding')
+			dispatch(persistShowOnboarding(value!==null?JSON.parse(value):true))
 		}
-		getShowOnboarding()
-
-		if (DEBUG_MODE) {
-			console.log('🐛 Debug mode')
-			return
-		}
-
-	}, [])
+		init()
+	}, [dispatch])
 
 	useEffect(() => {
 		if (DEBUG_MODE) return
@@ -82,7 +77,6 @@ export default function Index() {
 
 			if (result.success) {
 				console.log("✅ DEV Login exitoso, navegando a Home")
-				await AsyncStorage.setItem('show_onboarding', 'false')
 				router.push(Routes.TABS)
 			} else {
 				console.error("❌ Error en login automático:", result.error)
@@ -108,7 +102,7 @@ export default function Index() {
 			// Reset language to Spanish and store state
 			await i18n.changeLanguage('es')
 			// Force reload by updating state
-			await AsyncStorage.setItem('show_onboarding', 'true')
+			dispatch(persistShowOnboarding(true))
 
 			// Reset auth state explicitly
 			dispatch(logout())
@@ -117,7 +111,7 @@ export default function Index() {
 			console.error("❌ Error clearing storage:", error)
 			// Even if there's an error, try to reset the app state
 			try {
-				await AsyncStorage.setItem('show_onboarding', 'true')
+				dispatch(persistShowOnboarding(true))
 			} catch (resetError) {
 				console.error("❌ Error resetting app state:", resetError)
 			}
@@ -142,7 +136,7 @@ export default function Index() {
 							Theme: {isDark ? "Dark" : "Light"}
 						</ThemedText>
 						<ThemedText style={[styles.debugText, { color: textColor }]}>
-							showOnboarding: {showOnboarding ? 'true' : 'false'}
+							showOnboarding: {Boolean(showOnboarding).toString()}
 						</ThemedText>
 						<ThemedText style={[styles.debugText, { color: textColor }]}>
 							isAuthenticated: {isAuthenticated ? 'true' : 'false'}
