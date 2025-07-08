@@ -246,9 +246,12 @@ const styles = StyleSheet.create({
 	submitButton: {
 		marginTop: 8,
 		marginBottom: 20,
+		alignItems: 'center',
+		justifyContent: 'center',
+		gap: 20
 	},
 	loader: {
-		marginRight: 8,
+		height: 10
 	},
 	toggleButton: {
 		alignItems: 'center',
