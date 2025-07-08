@@ -1,7 +1,6 @@
 # React Native Challenge - App de Lectura de Noticias
 
 > ### 📌 Nota importante
-
 >Esta aplicación la he tomado como un desafío y una oportunidad para poner a prueba el desarrollo con IA sujeta a mis conocimientos.
 >
 >Todo lo que aquí está implementado ha sido estricta y celosamente pulido por mí, Luis Espinoza.
@@ -39,9 +38,7 @@
  >   Pruebas (tests)
 >
  >   Estado global
-
 > Y muchos más detalles que hacen de esta app un producto de alta calidad.
-
 > Durante esta prueba he podido demostrar que un desarrollador de mi nivel > puede llevar a cabo este desarrollo en tan solo 15 horas de trabajo.
 
 El objetivo es conseguir una aplicación de lectura de noticias, donde sea posible explorar e interactuar con el contenido navegando entre noticias, usuarios, y permitiendo guardar artículos o marcar usuarios como favoritos. (Opcionalmente, se podrían implementar consultas basadas en esas preferencias).
