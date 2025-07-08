@@ -1,6 +1,72 @@
 # React Native Challenge - App de Lectura de Noticias
 
+> ### 📌 Nota importante
+
+>Esta aplicación la he tomado como un desafío y una oportunidad para poner a prueba el desarrollo con IA sujeta a mis conocimientos.
+>
+>Todo lo que aquí está implementado ha sido estricta y celosamente pulido por mí, Luis Espinoza.
+>
+>He desarrollado con IA de manera exhaustiva y meticulosa, con el objetivo de plasmar mis conocimientos sin perder el control ni la comprensión del código base.
+>
+>Dicho esto, manifiesto mi convicción en abrazar estas herramientas en el desarrollo de software.
+>
+>La siguiente aplicación cuenta con varias funcionalidades:
+>
+ >   Expo Router
+>
+ >   Feed con scroll infinito (paginado)
+>
+ >   Arquitectura limpia
+>
+ >   Custom hooks
+>
+ >   Modo debug (herramientas de desarrollo)
+>
+ >   Multilenguaje (i18n)
+>
+ >   Temas claro y oscuro
+>
+ >   Notificaciones push
+>
+  >  Autenticación (dummy)
+>
+ >   Onboarding
+>
+ >   Animaciones en la navegación (news feed)
+>
+ >   Persistencia de datos
+>
+ >   Pruebas (tests)
+>
+ >   Estado global
+
+Y muchos más detalles que hacen de esta app un producto de alta calidad.
+
+Durante esta prueba he podido demostrar que un desarrollador de mi nivel puede llevar a cabo este desarrollo en tan solo 15 horas de trabajo.
+
 El objetivo es conseguir una aplicación de lectura de noticias, donde sea posible explorar e interactuar con el contenido navegando entre noticias, usuarios, y permitiendo guardar artículos o marcar usuarios como favoritos. (Opcionalmente, se podrían implementar consultas basadas en esas preferencias).
+
+La aplicación permite al usuario:
+
+- Navegar por un listado de noticias actualizadas en formato de tarjetas.
+- Consultar un listado de usuarios de artículos.
+- Guardar noticias como favoritas y acceder a ellas posteriormente desde una pantalla dedicada.
+
+## Pantallas principales
+
+1. **Noticias**: Muestra un feed de noticias. Cada noticia se presenta en una tarjeta. Al presionar una tarjeta, se accede al detalle de la noticia.
+2. **Usuarios**: Lista de usuarios relacionados a los artículos mostrados. Puede incluir información adicional sobre cada autor.
+3. **Noticias guardadas**: Muestra todas las noticias que el usuario haya marcado como favoritas.
+
+## Tecnologías principales utilizadas
+
+- React Native
+- Redux Toolkit
+- TypeScript
+- Axios
+- API Jsonplaceholder
+- AsyncStorage
+- Expo
 
 ## Arquitectura
 
@@ -23,31 +89,53 @@ Utilizo una **Clean Architecture** adaptada a React Native, esto lo hago manteni
    1. **Presenter**: Se implementan los presenters definidos; un evento se procesa y el presenter se encargará de enviar una respuesta, canal de la UI con el modelo.
    2. **Screens**: Aquí dentro hay archivos `.tsx`, lo que haga falta para las screens concretas.
 
+## Patrón de Diseño: Custom Hooks (Contenedor / Vista)
 
-## Descripción general
+ada pantalla sigue un patrón **Contenedor – Vista** inspirado en las Clean Architecture y el enfoque Hooks First de React:
 
-La aplicación permite al usuario:
+1. **Custom Hook** (`use<ScreenName>Screen`) → Contiene toda la lógica de negocio, manejo de estado, llamadas a gateways, side-effects y navegación.
+2. **Componente de Vista** (`<ScreenName>Screen.tsx`) → Consume el hook anterior y se limita a renderizar la UI con los datos y callbacks que éste expone.
 
-- Navegar por un listado de noticias actualizadas en formato de tarjetas.
-- Consultar un listado de usuarios de artículos.
-- Guardar noticias como favoritas y acceder a ellas posteriormente desde una pantalla dedicada.
+Esto aporta:
 
-## Pantallas principales
+• Reutilización y testeo: la lógica queda desacoplada de React Native y puede probarse como función pura.  
+• Responsabilidad única: el componente visual sólo se enfoca en layout/estilos, sin efectos ni estados complejos.  
+• Escalabilidad: nuevos requerimientos se incorporan en el hook sin contaminar la vista.
 
-1. **Noticias**: Muestra un feed de noticias. Cada noticia se presenta en una tarjeta. Al presionar una tarjeta, se accede al detalle de la noticia.
-2. **Usuarios**: Lista de usuarios relacionados a los artículos mostrados. Puede incluir información adicional sobre cada autor.
-3. **Noticias guardadas**: Muestra todas las noticias que el usuario haya marcado como favoritas.
+Ejemplo simplificado:
 
-## Tecnologías utilizadas
+```tsx
+// view/hooks/useNewsFeedScreen.ts
+export function useNewsFeedScreen() {
+  const { data, loading } = useGetNews();
+  const onRefresh = () => refetch();
+  return { data, loading, onRefresh };
+}
 
-- React Native
-- Redux Toolkit
-- TypeScript
-- React Navigation
-- Axios
-- API pública de noticias (por ejemplo: NewsAPI, GNews)
+// view/screens/NewsFeedScreen.tsx
+export default function NewsFeedScreen() {
+  const { data, loading, onRefresh } = useNewsFeedScreen();
+  return <NewsFeedView data={data} loading={loading} onRefresh={onRefresh} />;
+}
+```
+
+Con esto mantenemos una clara separación de preocupaciones y adherimos al principio de inversión de dependencias.
 
 ## Estructura del proyecto
+
+```text
+conexa-rn-test/
+├── app/          # Entradas de ruta (pantallas) gestionadas por Expo Router
+├── features/     # Cada módulo de negocio (auth, news, users, etc.) con su dominio, infraestructura y vista
+├── components/   # Componentes UI reutilizables y agnósticos de negocio
+├── hooks/        # Hooks globales (temas, galería, etc.)
+├── store/        # Configuración y slices globales de Redux
+├── constants/    # Configuraciones compartidas (colores, rutas, i18n…)
+├── __test__/     # Tests unitarios agrupados por feature
+├── assets/       # Imágenes, íconos y fuentes
+```
+
+La estructura favorece la separación de dominios y la escalabilidad sin acoplar código entre features.
 
 ## Comenzar
 
@@ -62,3 +150,19 @@ La aplicación permite al usuario:
    ```bash
    npx expo start
    ```
+
+## Cómo ejecutar los tests
+
+Los tests unitarios están escritos con **Jest** en `__test__/features/<feature>` siguiendo el patrón de gateways mockeables.
+  
+1. Instala dependencias (si no lo hiciste):
+
+```bash
+npm install
+```
+
+2. Ejecuta todos los tests:
+
+```bash
+npm test
+```
