@@ -9,40 +9,21 @@
 >
 >Dicho esto, manifiesto mi convicción en abrazar estas herramientas en el desarrollo de software.
 >
-
-> Durante esta prueba he podido demostrar lo que un desarrollador como yo puede llevar a cabo en tan solo 15 horas de trabajo.
-
->La siguiente aplicación cuenta con varias funcionalidades:
->
- >   Expo Router
->
- >   Feed con scroll infinito (paginado)
->
- >   Arquitectura limpia
->
- >   Custom hooks
->
- >   Modo debug (herramientas de desarrollo)
->
- >   Multilenguaje (i18n)
->
- >   Temas claro y oscuro
->
- >   Notificaciones push
->
-  >  Autenticación (dummy)
->
- >   Onboarding
->
- >   Animaciones en la navegación (news feed)
->
- >   Persistencia de datos
->
- >   Pruebas (tests)
->
- >   Estado global
-> Y muchos más detalles que hacen de esta app un producto de alta calidad.
-
+> En apenas **15 horas** logré un prototipo completo que incluye:
+> - **Expo Router**
+> - Feed con *scroll* infinito (paginado)
+> - Arquitectura limpia + custom hooks
+> - Modo *debug*
+> - Multilenguaje (*i18n*)
+> - Temas claro / oscuro
+> - Notificaciones *push*
+> - Autenticación *dummy*
+> - Onboarding
+> - Animaciones en la navegación (News Feed)
+> - Persistencia local de datos
+> - Estado global (Redux)
+> - Pruebas unitarias (Jest)
+> …y muchos otros detalles que reflejan una aplicación de **alta calidad**.
 
 El objetivo es conseguir una aplicación de lectura de noticias, donde sea posible explorar e interactuar con el contenido navegando entre noticias, usuarios, y permitiendo guardar artículos o marcar usuarios como favoritos. (Opcionalmente, se podrían implementar consultas basadas en esas preferencias).
 
