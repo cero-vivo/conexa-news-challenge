@@ -10,7 +10,7 @@ export const HttpNewsFeedGateway = (): INewsGateway => {
         const response = await apiClient.get<News[]>(Endpoints.newsFeed.getAll);
         return response.data;
       } catch (error) {
-        console.error('Error fetching news feed:', error);
+        console.log('Error fetching news feed:', error);
         throw error;
       }
     },

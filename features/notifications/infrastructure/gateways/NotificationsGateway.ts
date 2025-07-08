@@ -11,7 +11,7 @@ export const createNotificationsGateway = (): INotificationsGateway => {
       const { status } = await Notifications.requestPermissionsAsync()
       return status === 'granted'
     } catch (error) {
-      console.error('Error requesting permissions', error)
+      console.log('Error requesting permissions', error)
       return false
     }
   }
@@ -38,7 +38,7 @@ export const createNotificationsGateway = (): INotificationsGateway => {
       const stored = await AsyncStorage.getItem(STORAGE_KEY)
       return stored ? (JSON.parse(stored) as Notification[]) : []
     } catch (error) {
-      console.error('Error getting notifications', error)
+      console.log('Error getting notifications', error)
       return []
     }
   }
@@ -47,7 +47,7 @@ export const createNotificationsGateway = (): INotificationsGateway => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(notifications))
     } catch (error) {
-      console.error('Error saving notifications', error)
+      console.log('Error saving notifications', error)
     }
   }
 

@@ -10,7 +10,7 @@ export const HttpUsersGateway = () : IUsersGateway => {
                 const response = await apiClient.get<User[]>(Endpoints.usersFeed.getAll)
                 return response.data
             } catch (error) {
-                console.error('Error fetching users:', error);
+                console.log('Error fetching users:', error);
                 throw error;
             }
         }
