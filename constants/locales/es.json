@@ -6,19 +6,19 @@
       "description": "Descubre las últimas noticias y mantente informado con nuestra aplicación de noticias moderna y fácil de usar."
     },
     "features": {
-      "title": "Funcionalidades Principales",
-      "subtitle": "Experiencia de usuario premium",
-      "description": "• Feed de noticias con búsqueda inteligente\n• Sistema de guardado con persistencia\n• Navegación fluida por tabs y modales\n• UI/UX moderna y responsive\n• Búsqueda por título con coincidencias parciales"
+      "title": "Funcionalidades Clave",
+      "subtitle": "Todo lo que ya funciona",
+      "description": "• Feed de noticias en tiempo real con búsqueda inteligente y scroll infinito\n• Guarda tus artículos y léelos sin conexión\n• Explora la comunidad: lista de usuarios y perfiles detallados\n• Organiza tus favoritos en la pestaña Guardadas\n• Cambia entre Español e Inglés al instante\n• Temas claro y oscuro\n• Notificaciones push\n• Inicia sesión, regístrate o navega como anónimo\n• Onboarding guiado y navegación por pestañas fluida"
     },
     "technologies": {
       "title": "Tecnologías y Arquitectura",
-      "subtitle": "Código mantenible y escalable",
-      "description": "• React Native con Expo Router\n• Redux Toolkit para gestión de estado\n• Redux Persist para persistencia de datos\n• Arquitectura modular por features\n• TypeScript para type safety\n• Navegación con expo-router"
+      "subtitle": "Moderna, tipada y escalable",
+      "description": "• React Native 0.79 + Expo SDK 53\n• Expo Router para navegación declarativa\n• TypeScript de extremo a extremo para seguridad de tipos\n• Redux Toolkit & Redux Persist para estado y datos offline\n• Integración REST con Axios\n• Estructura modular por features inspirada en Clean Architecture\n• i18next para internacionalización\n• Pruebas unitarias con Jest siguiendo gateways mockeables\n• ESLint & Prettier para calidad de código"
     },
     "profile": {
-      "title": "¡Hola! Soy Luis Espinoza",
+      "title": "¡Hola Conexa Tech! Soy Luis Espinoza",
       "subtitle": "Software Engineer",
-      "description": "Software Engineer especializado en desarrollo mobile y web, con foco en React, React Native, Node.js y TypeScript. He trabajado en productos de alto impacto para empresas como Pago Fácil y Western Union, desarrollando funcionalidades críticas y asegurando integraciones eficientes con servicios de terceros."
+      "description": "Especializado en desarrollo mobile y web, con foco en React, React Native, Node.js y TypeScript. He trabajado en productos de alto impacto para empresas como Pago Fácil y Western Union, desarrollando funcionalidades críticas y asegurando integraciones eficientes con servicios de terceros."
     },
     "buttons": {
       "enter": "Entrar",

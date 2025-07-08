@@ -6,19 +6,19 @@
       "description": "Discover the latest news and stay informed with our modern and easy-to-use news application."
     },
     "features": {
-      "title": "Main Features",
-      "subtitle": "Premium user experience",
-      "description": "• News feed with intelligent search\n• Save system with persistence\n• Smooth navigation with tabs and modals\n• Modern and responsive UI/UX\n• Title search with partial matches"
+      "title": "Core Features",
+      "subtitle": "What you can already use",
+      "description": "• Real-time news feed with intelligent search & infinite scroll\n• Save your favourite articles and read them offline\n• Discover our community with a list of users & detailed profiles\n• Keep your favourites organised in the Saved tab\n• Switch between English and Spanish instantly\n• Light & Dark themes\n• Notification push• Sign-in, register or continue anonymously – your choice\n• Smooth onboarding and tab-based navigation"
     },
     "technologies": {
-      "title": "Technologies and Architecture",
-      "subtitle": "Maintainable and scalable code",
-      "description": "• React Native with Expo Router\n• Redux Toolkit for state management\n• Redux Persist for data persistence\n• Modular architecture by features\n• TypeScript for type safety\n• Navigation with expo-router"
+      "title": "Tech Stack & Architecture",
+      "subtitle": "Modern, typed & scalable",
+      "description": "• React Native 0.79 + Expo SDK 53\n• Expo Router for declarative navigation\n• TypeScript end-to-end for static safety\n• Redux Toolkit & Redux Persist for state & offline data\n• Axios REST integration layer\n• Feature-based modular folder structure inspired by Clean Architecture\n• i18next for internationalisation\n• Jest unit tests following mockable gateway approach\n• ESLint & Prettier enforced code quality"
     },
     "profile": {
-      "title": "Hello! I'm Luis Espinoza",
+      "title": "Hello Conexa Tech! I'm Luis Espinoza",
       "subtitle": "Software Engineer",
-      "description": "Software Engineer specialized in mobile and web development, with focus on React, React Native, Node.js and TypeScript. I have experience building scalable, modular and high-performance interfaces, as well as robust REST APIs, using both NoSQL and SQL databases."
+      "description": "Specialized in mobile and web development, with focus on React, React Native, Node.js and TypeScript. I have experience building scalable, modular and high-performance interfaces, as well as robust REST APIs, using both NoSQL and SQL databases."
     },
     "buttons": {
       "enter": "Enter",

@@ -240,8 +240,8 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 40,
-        height: 40,
+        width: 60,
+        height: 60,
         marginRight: 10,
         borderRadius: 8,
     },
