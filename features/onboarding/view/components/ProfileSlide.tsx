@@ -20,12 +20,12 @@ export const ProfileSlide: React.FC<Props> = ({ onLogin, onDontShowAgain }) => {
 	const tintColor = useThemeColor({}, 'tint');
 
 	return (
-		<ScrollView>
+		<ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
 			<ThemedView style={[styles.slide, { backgroundColor }]}>
 				<ThemedView
 					style={[styles.content, {
 						paddingTop: insets.top + 40,
-						paddingBottom: insets.bottom + 40 
+						paddingBottom: insets.bottom + 40
 					}]}
 				>
 					<ThemedView style={styles.profileSection}>
@@ -63,9 +63,10 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		flex: 1,
-		width: '100%',
+		width: '90%',
 		paddingHorizontal: 24,
 		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	profileSection: {
 		alignItems: 'center',
