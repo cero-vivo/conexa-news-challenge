@@ -109,10 +109,9 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-    paddingBottom: insets.bottom + 20,
   },
   listContainer: {
-    paddingBottom: insets.bottom + 20,
+    paddingBottom: insets.bottom + 100,
   },
   emptyContainer: {
     flexGrow: 1,

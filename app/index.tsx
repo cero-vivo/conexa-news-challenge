@@ -22,7 +22,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 export default function Index() {
 	const { isAuthenticated, user } = useAppSelector((state) => state.auth)
 	const showOnboarding = useAppSelector(state=>state.configUI.showOnboarding)
-	console.log("🚀 ~ Index ~ showOnboarding:", showOnboarding)
 	const { login } = useAuth()
 	const dispatch = useAppDispatch()
 	const router = useRouter()

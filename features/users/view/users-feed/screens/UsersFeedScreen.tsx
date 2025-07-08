@@ -125,7 +125,7 @@ export const UsersFeedScreen = () => {
                         renderItem={renderUserItem}
                         keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
-                        contentContainerStyle={[styles(insets).listContainer, { paddingBottom: insets.bottom + 20 }]}
+                        contentContainerStyle={[styles(insets).listContainer]}
                         ListEmptyComponent={renderEmptyState}
                     />
                 )}
@@ -149,7 +149,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     content: {
         flexGrow: 1,
-        paddingBottom: insets.bottom + 20,
+        paddingBottom: insets.bottom + 100,
     },
     listContainer: {
         paddingBottom: 20,
