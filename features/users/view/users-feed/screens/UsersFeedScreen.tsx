@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { Colors } from '@/constants/Colors'
 import { Routes } from '@/constants/Routes'
 import { User } from '@/features/users/model/entities/User'
 import { setSelectedUser } from '@/features/users/store/usersSlice'
@@ -9,7 +10,7 @@ import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, FlatList, Platform, StyleSheet, TouchableOpacity } from 'react-native'
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { UserCard } from '../components/UserCard'
 import { useUsersFeedScreen } from '../hooks/useUsersFeedScreen'
@@ -74,7 +75,7 @@ export const UsersFeedScreen = () => {
 
     const renderErrorState = () => (
         <ThemedView style={styles(insets).errorContainer}>
-            <IconSymbol name="shield.fill" size={48} color="#FF3B30" style={styles(insets).errorIcon} />
+            <IconSymbol name="shield.fill" size={48} color={Colors.light.error} style={styles(insets).errorIcon} />
             <ThemedText style={styles(insets).errorText}>
                 {t('users.error')}: {error}
             </ThemedText>
@@ -97,7 +98,7 @@ export const UsersFeedScreen = () => {
                         <ThemedView style={styles(insets).titleSection}>
                             <ThemedText type="title" style={styles(insets).title}>{t('users.title')}</ThemedText>
                             <ThemedView style={styles(insets).statsContainer}>
-                                <IconSymbol name="star.fill" size={12} color="#FFD700" />
+                                <IconSymbol name="star.fill" size={12} color={Colors.light.gold} />
                                 <ThemedText style={styles(insets).statsText}>
                                     {t('users.community', { count: users?.length || 0 })}
                                 </ThemedText>
@@ -149,7 +150,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     content: {
         flexGrow: 1,
-        paddingBottom: insets.bottom + 100,
+        paddingBottom: insets.bottom + (Platform.OS === 'ios' ? 100 : 30),
     },
     listContainer: {
         paddingBottom: 20,
@@ -162,7 +163,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     loadingText: {
         fontSize: 16,
-        color: '#9BA1A6',
+        color: Colors.light.placeholder,
     },
     errorContainer: {
         flex: 1,
@@ -172,7 +173,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     errorText: {
         fontSize: 16,
-        color: '#FF3B30',
+        color: Colors.light.error,
         textAlign: 'center',
     },
     errorIcon: {
@@ -189,7 +190,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     emptyText: {
         fontSize: 16,
-        color: '#9BA1A6',
+        color: Colors.light.placeholder,
         textAlign: 'center',
     },
     headerContent: {
@@ -213,7 +214,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     statsText: {
         fontSize: 12,
-        color: '#9BA1A6',
+        color: Colors.light.placeholder,
         marginLeft: 4,
         width: '85%',
     },
@@ -223,7 +224,7 @@ const styles = (insets: EdgeInsets) => StyleSheet.create({
     },
     subtitle: {
         fontSize: 16,
-        color: '#9BA1A6',
+        color: Colors.light.placeholder,
         marginLeft: 4,
         lineHeight: 20,
     },

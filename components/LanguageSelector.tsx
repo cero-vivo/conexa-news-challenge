@@ -19,11 +19,6 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ compact = fa
   const colorScheme = useColorScheme()
 
   const textColor = useThemeColor({}, 'text')
-  const tintColor = useThemeColor({}, 'tint')
-  const backgroundColor = useThemeColor({}, 'background')
-
-  const isDarkMode = colorScheme === 'dark'
-  const selectedTextColor = isDarkMode ? '#000000' : '#FFFFFF'
 
   const handleLanguageChange = (newLanguage: 'es' | 'en') => {
     dispatch(setLanguage(newLanguage))

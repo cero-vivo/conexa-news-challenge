@@ -1,7 +1,8 @@
 import { ThemedText } from '@/components/ThemedText'
+import { Colors } from '@/constants/Colors'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useThemeToggle } from '@/hooks/useThemeToggle'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
 interface ButtonProps extends TouchableOpacityProps {
@@ -15,12 +16,18 @@ export const Button: React.FC<ButtonProps> = ({ variant = 'primary', size = 'med
 	const tintColor = useThemeColor({}, 'tint')
 	const { isDark } = useThemeToggle()
 
-	const getTextColor = () => {
-		if (variant === 'primary') {
-			return isDark ? '#000000' : '#FFFFFF'
+	// Compute text color according to variant & theme
+	const buttonTextColor = useMemo(() => {
+		switch (variant) {
+			case 'primary':
+				// In dark theme tint background is white, use black text; in light theme background is tint (blue), use white text
+				return isDark ? Colors.dark.black : Colors.light.white
+			case 'secondary':
+			case 'outline':
+			default:
+				return textColor
 		}
-		return textColor
-	}
+	}, [variant, isDark, textColor])
 
 	// Get button styles based on variant
 	const getButtonStyle = () => {
@@ -56,7 +63,7 @@ export const Button: React.FC<ButtonProps> = ({ variant = 'primary', size = 'med
 			<ThemedText style={[
 				styles.text,
 				styles[`${size}Text`],
-				{ color: getTextColor() }
+				{ color: buttonTextColor }
 			]}>
 				{children}
 			</ThemedText>
@@ -104,4 +111,7 @@ const styles = StyleSheet.create({
 	text: {
 		textAlign: 'center',
 	},
+	loadingText: {
+		// This style is no longer used as buttonTextColor is computed inline
+	}
 }) 
