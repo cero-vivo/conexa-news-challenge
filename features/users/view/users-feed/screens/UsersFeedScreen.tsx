@@ -5,6 +5,7 @@ import { Colors } from '@/constants/Colors'
 import { Routes } from '@/constants/Routes'
 import { User } from '@/features/users/model/entities/User'
 import { setSelectedUser } from '@/features/users/store/usersSlice'
+import { useGalleryImage } from '@/hooks/useGalleryImage'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'expo-router'
@@ -29,6 +30,8 @@ export const UsersFeedScreen = () => {
 
     // Evita doble apertura rápida
     const navigatingRef = useRef(false);
+
+    const { imageUri, pickImage } = useGalleryImage();
 
     const handleUserPress = (user: User) => {
         if (navigatingRef.current) return;

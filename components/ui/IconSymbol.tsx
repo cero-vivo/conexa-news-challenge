@@ -38,6 +38,7 @@ const MAPPING = {
   'bolt.fill': 'flash-on',
   'shield.fill': 'security',
   'rocket.fill': 'rocket-launch',
+  'camera.fill': 'photo-camera',
   'magnifyingglass': 'search',
   'clock': 'schedule',
   'envelope': 'email',

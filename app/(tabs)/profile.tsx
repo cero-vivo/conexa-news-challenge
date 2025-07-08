@@ -2,6 +2,7 @@ import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { useAuth } from '@/features/auth/view/hooks/useAuth'
+import { useGalleryImage } from '@/hooks/useGalleryImage'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +20,9 @@ export default function ProfileScreen() {
   const { user, logout } = useAuth()
   const insets = useSafeAreaInsets()
   const { t } = useTranslation()
+
+  // Imagen seleccionada localmente
+  const { imageUri, pickImage } = useGalleryImage()
 
   // Theme colors
   const backgroundColor = useThemeColor({}, 'background')
@@ -69,8 +73,17 @@ export default function ProfileScreen() {
       showsVerticalScrollIndicator={false}
     >
       <ThemedView style={[styles.header, { paddingTop: insets.top + 20 }]}>
-        <TouchableOpacity style={styles.avatarContainer}>
-            <Image source={require('@/assets/images/me.jpeg')} style={styles.avatar} resizeMode='contain' />
+        <TouchableOpacity style={styles.avatarContainer} onPress={pickImage}>
+            <Image
+              source={imageUri ? { uri: imageUri } : require('@/assets/images/me.jpeg')}
+              style={styles.avatar}
+              resizeMode='contain'
+            />
+            {/* Icono de edición */}
+            <ThemedView style={[styles.avatarEditIcon, { backgroundColor: tintColor }]}
+            >
+              <IconSymbol name="camera.fill" size={14} color={backgroundColor} />
+            </ThemedView>
         </TouchableOpacity>
         
         <ThemedText style={[styles.name, { color: textColor }]}>
@@ -165,6 +178,7 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     marginBottom: 16,
+    position: 'relative',
   },
   avatar: {
     width: 100,
@@ -180,6 +194,13 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  avatarEditIcon: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    borderRadius: 12,
+    padding: 4,
   },
   name: {
     fontSize: 24,
